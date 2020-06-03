@@ -73,4 +73,4 @@ user_groups:
 
 I'm a PhD candidate and research assistant at the University of Melbourne. My research interests revolve around improving health outcomes, in particular for Aboriginal and Torres Strait Islander peoples. 
 
-I see myself as an applied statistician; I love thinking about data in the real-world - how it's collected and how you can interpret and use it in research. At the end of the day, I want to contribute to research that ends up improving the lives of others.
+I see myself as an applied biostatistician; I love thinking about data in the real-world - how it's collected and how you can interpret and use it in research. At the end of the day, I want to contribute to research that ends up improving the lives of others.
