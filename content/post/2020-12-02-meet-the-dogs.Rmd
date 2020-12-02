@@ -1,0 +1,31 @@
+---
+title: "Meet the dogs"
+author: "Ben Harrap"
+date: 2020-12-02
+categories: ["Home"]
+tags: ["Dogs", "Home"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+My happy little family at home consists primarily of noodle horses, or greyhounds as they're more commonly known. We've got two greyhounds - Randy (13) and Cheeky (9). We hadn't intended to adopt such old goobers, but that's just how it turned out - we got Randy at 10, and we've only had Cheeky for a few months, but it feels like she's been here for years too now.
+
+![](/img/meet-the-dogs/goobers.png)
+
+## Randy
+
+Randy is my first son and I love him dearly. He's wilful, loves chicken, and has old, creaky bones, but that doesn't stop him from being a delight. He also obliges to being dressed up and having his photo taken:
+
+![](/img/meet-the-dogs/randy.png)
+
+You may have picked up the favicon I've used for this website - it's a clipping from Randy's Western photoshoot.
+
+(P.S if you live in Melbourne and want a silly pet picture we got these done through [dog photog](https://www.dogphotogstudios.com/){target="_blank"}, they are hilarious and excellent.)
+
+## Cheeky
+
+As her namesake suggests she is indeed Cheeky, doing everything in her power to get more food. I'm fairly certain someone replaced her stomach with a bag of holding, although I'm not sure how that would work with all the pooping. When we got Cheeky a few months ago, she had been living with the trainer who had raced her, but she'd only ever lived outside in the back yard. You could've fooled me though, she was immediately on the couch, forcing us to get a second couch just for her (the nice-old-lady-esque floral couch). She has a special affinity for cushions too:
+
+![](/img/meet-the-dogs/cheeky.png)

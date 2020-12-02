@@ -18,13 +18,13 @@ organizations:
   url: ""
 
 # Short bio (displayed in user profile at end of posts)
-bio: My interests revolve around data and it's gathered and used in the real-world.
+bio: Researcher in linked data, Indigenous health, and child removals. Amateur gardener and brewer.
 
 interests:
-- Aboriginal and Torres Strait Islander health
-- Refugee health
-- Survey design
+- Linked Data
+- Aboriginal and Torres Strait Islander Health
 - Science communication
+- Data literacy
 
 education:
   courses:
