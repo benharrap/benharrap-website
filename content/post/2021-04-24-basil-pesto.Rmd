@@ -1,0 +1,52 @@
+---
+title: "Basil Pesto"
+author: "Ben Harrap"
+date: 2021-04-24
+categories: ["Recipes"]
+tags: ["Cooking", "Home", "Food"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+This basil pesto recipe is the result of me making pesto innumerable times and tweaking it each time until I got it just right. My goal was to make a pesto that tastes just like the one you can buy from the Queen Victoria Markets in Melbourne. I think I got pretty close, but you be the judge!
+
+## Ingredients
+
+![](/img/basil-pesto/ingredients.png)
+
+- 3 bunches of basil
+- 150ml extra-virgin olive oil
+- 60g parmesan
+- 60g pine nuts
+- 2 cloves of garlic
+- 3 tablespoons of lemon juice
+- 2 pinches of sea salt flakes
+- 10 turns of a pepper mill
+
+You will also need a food processor to combine the ingredients together, unless you fancy doing it all by hand.
+
+## Instructions
+
+Begin by attaching both the blade and fine-grating attachment to the food processor.
+
+![](/img/basil-pesto/food-processor.png)
+
+Grate the parmesan using the processor.
+
+![](/img/basil-pesto/grated-parmesan.png)
+
+Remove the grating attachment and add all of the remaining ingredients. When you add the basil the food processor should be at least two-thirds full - three bunches usually works for me, but if you have a stingy supplier of basil you might need a fourth.
+
+![](/img/basil-pesto/ingredients-in-processor.png)
+
+Process until smooth. You might need to scrape down the sides of the food processor a couple of times, I find the basil leaves like to stick to the side.
+
+![](/img/basil-pesto/pesto-after.png)
+
+That's it! Your pesto is now ready. If you end up making this let me know what you think on [Twitter](https://twitter.com/BHarrap){target="_blank"}.
+
+You can store it in a jar in the fridge but I find it doesn't keep longer than a week, even with putting an oil seal on the top. What I do, and I'm very sorry if this upsets any nonnas, is divide the pesto into a large ice-cube tray and freeze it. When you need some pesto just microwave a cube in a bowl for 30 seconds or so to defrost.
+
+![](/img/basil-pesto/pesto-cubes.png)
