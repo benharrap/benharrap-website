@@ -17,12 +17,12 @@ date_format = "Jan 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
-  title = "Secretary"
-  company = "Statistical Society of Australia, Vic branch"
+  title = "Wearer of Many Hats"
+  company = "Statistical Society of Australia"
   location = "Melbourne, Australia"
   date_start = "2018-12-01"
   date_end = ""
-  description = """I'm currently the Secretary for the SSA's [Victorian branch](https://www.statsoc.org.au/Victoria). I organise meetings and take the minutes, help out with the running of events, and am always on the lookout for ways to improve the society and give back to the statistical community."""
+  description = """I've had a variety of roles while volunteering for the SSA, including Secretary for the Victorian branch and the Early Career and Student Statistician 2021 conference, member of the Equity, Diversity, and Inclusion committee, and creator of a local Ballarat statistics group. I also helped with the transition to the new website, wrote contributions for the Inferential Interests publication, and developed policies, procedures, and strategic plans."""
 
 [[experience]]
   title = "Data Volunteer"
