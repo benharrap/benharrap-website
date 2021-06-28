@@ -146,12 +146,6 @@ The latter two outcomes at the conclusion stage usually lead to a protection ord
 
 The overall framework of the child protection system is represented in Figure 1.
 
-```{r, fig.cap="An overview of the child protection system in Western Australia", echo=FALSE, out.width="100%"}
-knitr::include_graphics('../../static/img/confirmation-report/system-overview.png')
-```
-
-test
-
 ![Figure 1: An overview of the child protection system in Western Australia](/img/confirmation-report/system-overview.png)
 
 ## Trends in child protection data
@@ -163,7 +157,7 @@ Another trend in child protection data has been children entering out-of-home ca
 An interesting effect of policy change can be observed with the implementation of the *Child and Community Services Act 2004* [@ccsa2004]. There was a sharp rise in the number of notifications and investigations by the Department, however the rate of substantiation did not change [@bilson2017]. This is illustrative of how a policy or operational change can have a great impact on the data being recorded but the reality of the situation is not changing. Figure 2 illustrates the changes in the data - note that the 2004 Act was not implemented until 2006, indicated by the change in shading of the bars representing notifications. A later amendment to the Act [@ccsa2008] also made it mandatory for certain professionals, e.g. police, teachers, to report concerns of sexual abuse, which also resulted in an increase in the number of notifications for sexual abuse.
 
 ![Figure 2: Annual interactions with the child protection system in Western Australia.](/img/confirmation-report/bilson.png)
-Source: [@bilson2017]
+Source: @bilson2017
 
 ## Factors associated with child protection interaction
 
