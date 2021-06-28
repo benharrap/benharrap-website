@@ -8,9 +8,6 @@ link-citations: true
 date: 2021-06-28
 categories: ["Academic"]
 tags: ["Research", "Child Removals", "Child Health"]
-output:
-  blogdown::html_page:
-    toc: true
 ---
 
 ```{r, message=FALSE, echo=FALSE}
