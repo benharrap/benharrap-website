@@ -1,0 +1,13 @@
+---
+title: 'PhD Confirmation Presentation'
+author: 'Ben Harrap'
+date: 2021-06-28
+categories: ["Academic", "Presentation"]
+tags: ["Research", "Child Removals", "Child Health", "PhD"]
+---
+
+This is the video recording of my PhD confirmation presentation delivered at the Centre for Epidemiology and Biostatistics, Melbourne School of Population and Global Health on the 31st of May, 2021.
+
+![](https://youtu.be/P4mnRXCToek)
+
+If you have any questions or comments, let me know on Twitter.
