@@ -2,8 +2,8 @@
 title: "Meet the dogs"
 author: "Ben Harrap"
 date: 2020-12-02
-categories: ["Home"]
-tags: ["Dogs", "Home"]
+categories: ["Self"]
+tags: ["Dogs", "Home", "Self"]
 ---
 
 ```{r setup, include=FALSE}
