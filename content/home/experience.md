@@ -31,7 +31,7 @@ date_format = "Jan 2006"
   location = "Melbourne, Australia"
   date_start = "2019-11-01"
   date_end = ""
-  description = """As part of the International and Immigrant Health Group I have been contributing my statistical expertise to the research team. While here I learned how to conduct Cochrane reviews and undertook my first systematic review."""
+  description = """As part of the International and Immigrant Health Group I have been contributing my statistical expertise to the research team. As part of a randomised trial in a remote Indigenous community I created a flexible implementation of a REDCap database, including the use of tablets for data collection, travelled to the community to deliver training to our local research team and assist with the first week of data collection, and continue to troubleshoot statistical and practical issues that aris."""
 
 [[experience]]
   title = "Biostatistician"
