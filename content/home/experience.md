@@ -22,16 +22,16 @@ date_format = "Jan 2006"
   company = "The University of Melbourne"
   location = "Melbourne, Australia"
   date_start = "2018-05-01"
-  date_end = ""
-  description = """Having worked across multiple faculties and departments, my roles have always been data-focused. Some highlights from my positions include the preparation of Wave 11 of the MABEL survey for public release (including data cleaning and documentation writing), sourcing multiple datasets to examine the trends in skilled migration to Australia, and writing nicely commented code."""
+  date_end = "2022-01-01"
+  description = """Having worked across multiple faculties and departments, my roles have always been data-focused. Some highlights from my positions include the preparation of Wave 11 of the MABEL survey for public release (including data cleaning and documentation), sourcing multiple datasets to examine trends in skilled migration to Australia, publishing my first first-author paper, and writing nicely commented code."""
 
 [[experience]]
-  title = "Research Assistant"
+  title = "Biostatistician"
   company = "The Peter Doherty Institute"
   location = "Melbourne, Australia"
   date_start = "2019-11-01"
   date_end = ""
-  description = """As part of the International and Immigrant Health Group I have been contributing my statistical expertise to the research team. As part of a randomised trial in a remote Indigenous community I created a flexible implementation of a REDCap database, including the use of tablets for data collection, travelled to the community to deliver training to our local research team and assist with the first week of data collection, and continue to troubleshoot statistical and practical issues that aris."""
+  description = """As part of the International and Immigrant Health Group I have been contributing my statistical expertise to the research team. As part of a randomised trial in a remote Indigenous community I created a flexible implementation of a REDCap database, including the use of tablets for data collection, travelled to the community to deliver training to our local research team and assist with the first week of data collection, and continue to troubleshoot statistical and practical issues that arise."""
 
 [[experience]]
   title = "Biostatistician"
