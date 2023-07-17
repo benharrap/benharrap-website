@@ -9,6 +9,8 @@ tags: ["Research", "Consulting", "Training"]
 
 I originally did this talk for Ballarat Health Services (now Grampians Health) back in 2021. I'd intended to upload the recording but unfortunately it didn't materialise! Instead I've put the material from the talk here. I was first asked to do a 'Stats 101' talk for clinicians, but I don't think that's ever going to be useful. So instead, I wrote this talk to try and address the most common problems I face as a consultant biostatistician.
 
+If you want the presentation in a slide format [click here](https://benharrap.com/files/intro-to-research.html). It's a `xaringan` presentation, so press 'p' to see presenter notes.
+
 ## Let's work together
 
 ![](/img/intro-to-research/collaboration.png)
