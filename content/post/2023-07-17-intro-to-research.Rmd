@@ -26,7 +26,7 @@ I'm not trying to make your life difficult by asking you 20 questions, I promise
 ## When to talk to me (or any statistician)
 
 
-![](/img/intro-to-research/talk2.png")
+![](/img/intro-to-research/talk2.png)
 
 
 Quite often I'll have people come seek my help after they've already done the data collection.
@@ -36,7 +36,7 @@ Quite often I'll have people come seek my help after they've already done the da
 ## When to talk to me (or any statistician)
 
 
-![](/img/intro-to-research/talk3.png")
+![](/img/intro-to-research/talk3.png)
 
 If you come to me only at the data analysis stage, the chances of me being able to help are low! Come and see me before then.
 
@@ -45,7 +45,7 @@ If you come to me only at the data analysis stage, the chances of me being able 
 ## When to talk to me (or any statistician)
 
 
-![](/img/intro-to-research/talk4.png")
+![](/img/intro-to-research/talk4.png)
 
 I can help at all of these stages, but we should start chatting at the very early stages of your research.
 
@@ -60,7 +60,7 @@ If you come to me early on in the planning phase we can work together to create 
 ## Let's start at the start
 
 
-![](/img/intro-to-research/step1.png")
+![](/img/intro-to-research/step1.png)
 
 
 Let's start off at the research question stage. It's really important to think carefully and come up with a very explicit research question. It's OK to start off with some general ideas for what you're interested in but you need to pin down exactly what you are trying to find out and write this as a research question. Once you've figured this question out it's a good time to come and chat to me
@@ -171,7 +171,7 @@ An example of a non-randomised study design is a 'before and after' study, where
 ## The protocol 
 
 
-![](/img/intro-to-research/step2.png")
+![](/img/intro-to-research/step2.png)
 
 
 ---
@@ -181,7 +181,7 @@ An example of a non-randomised study design is a 'before and after' study, where
 Use the template: https://www.bhs.org.au/media/koli42au/protocol-template-2018.docx
 
 
-![](/img/intro-to-research/protocol.png")
+![](/img/intro-to-research/protocol.png)
 
 
 Use the template for your protocol. It's helpful, makes it easy to fill in, and is standardised to include all the information you'd expect to find in a protocol.
@@ -201,7 +201,7 @@ The protocol is also what the ethics committee are going to review to determine 
 ## Ethics
 
 
-![](/img/intro-to-research/step3.png")
+![](/img/intro-to-research/step3.png)
 
 
 ---
@@ -224,7 +224,7 @@ Hospital records and other administrative data aren't collected for the purpose 
 ## Plan your data collection
 
 
-![](/img/intro-to-research/step4.png")
+![](/img/intro-to-research/step4.png)
 
 
 ---
@@ -261,7 +261,7 @@ This is especially important if we're getting people to fill in the information 
 Here's a typical (made up) example of a spreadsheet I might receive
 
 
-![](/img/intro-to-research/data1.png")
+![](/img/intro-to-research/data1.png)
 
 
 Let's go through some of the issues!
@@ -271,7 +271,7 @@ Let's go through some of the issues!
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-1.png")
+![](/img/intro-to-research/data1-1.png)
 
 
 Don't use colour coding in spreadsheets - my analysis programs can't see it! Instead create a column to represent that information.
@@ -281,7 +281,7 @@ Don't use colour coding in spreadsheets - my analysis programs can't see it! Ins
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-2.png")
+![](/img/intro-to-research/data1-2.png)
 
 
 What's this cell highlighted for? Don't encode other important information using colours either - create a column to put comments in
@@ -291,7 +291,7 @@ What's this cell highlighted for? Don't encode other important information using
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-3.png")
+![](/img/intro-to-research/data1-3.png)
 
 
 There's a lot of information in this one column! Instead split it into multiple columns
@@ -301,7 +301,7 @@ There's a lot of information in this one column! Instead split it into multiple 
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-4.png")
+![](/img/intro-to-research/data1-4.png)
 
 
 This looks like a typo! Be mindful of manually entering data
@@ -311,7 +311,7 @@ This looks like a typo! Be mindful of manually entering data
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-5.png")
+![](/img/intro-to-research/data1-5.png)
 
 
 Be careful not to include useless identifiable data in the spreadsheet - that goes for email addresses, names, patient numbers, and more!
@@ -321,7 +321,7 @@ Be careful not to include useless identifiable data in the spreadsheet - that go
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-6.png")
+![](/img/intro-to-research/data1-6.png)
 
 
 It's important to make it clear what an empty cell means. Was there no information to record? Write this! Otherwise we can't tell if we just forgot to record the data, or if there's another reason it's missing.
@@ -331,7 +331,7 @@ It's important to make it clear what an empty cell means. Was there no informati
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-7.png")
+![](/img/intro-to-research/data1-7.png)
 
 
 If multiple people are collecting data make sure you're all collecting it consistently. Dates are often the biggest problem - some people record D/M/Y, some people record M/D/Y. It doesn't matter what format you use as long as it's consistent.
@@ -341,7 +341,7 @@ If multiple people are collecting data make sure you're all collecting it consis
 ## Data collection tips
 
 
-![](/img/intro-to-research/data1-8.png")
+![](/img/intro-to-research/data1-8.png)
 
 
 These two variables have the same name, but they have different values? Maybe they were BMI at baseline and follow-up, but this needs to be explicit in the column names!
@@ -351,7 +351,7 @@ These two variables have the same name, but they have different values? Maybe th
 ## Data collection tips
 
 
-![](/img/intro-to-research/data2.png")
+![](/img/intro-to-research/data2.png)
 
 
 This dataset looks much better. One column per variable, one row per observation (in this case a person), no identifying information, no unnecessary information
@@ -461,7 +461,7 @@ Hopefully though we've done enough planning in the protocol and the study has go
 
 Just like baking, you might set out to make the perfect cake
 
-![](/img/intro-to-research/hog3.jpg")
+![](/img/intro-to-research/hog3.jpg)
 
 ---
 
@@ -469,7 +469,7 @@ Just like baking, you might set out to make the perfect cake
 
 By coming to talk to me first, we can avoid disasters...
 
-![](/img/intro-to-research/hog1.jpg")
+![](/img/intro-to-research/hog1.jpg)
 
 
 ---
@@ -478,7 +478,7 @@ By coming to talk to me first, we can avoid disasters...
 
 And produce something pretty reasonable instead!
 
-![](/img/intro-to-research/hog2.jpg")
+![](/img/intro-to-research/hog2.jpg)
 
 ---
 
@@ -589,7 +589,7 @@ Ice cream sales and aggressive behaviour are positively correlated
 Do ice cream sales cause aggressive behaviour?
 
 
-![](/img/intro-to-research/dag1.png")
+![](/img/intro-to-research/dag1.png)
 
 
 ---
@@ -599,8 +599,7 @@ Do ice cream sales cause aggressive behaviour?
 Or does aggressive behaviour cause an increase in ice cream sales?
 
 
-![](/img/intro-to-research/dag2.png")
-
+![](/img/intro-to-research/dag2.png)
 
 ---
 
@@ -608,14 +607,13 @@ Or does aggressive behaviour cause an increase in ice cream sales?
 
 Maybe there's a common cause, like hot weather!
 
-
-![](/img/intro-to-research/dag3.png")
+![](/img/intro-to-research/dag3.png)
 
 This one's a classic, but let's start off from basics. We know that ice cream sales and violent crime are correlated. This means that when one changes, so does the other. In the case of ice cream sales and violent crime, when sales go up so does violent crime - they are positively correlated.
 
 However, just because the two are correlated, it doesn't mean that one causes the other. Increasing ice cream sales does not cause violent crime and conversely increasing violent crime does not cause ice cream sales to go up. 
 
-There's a third common factor here - the temperature. As summer comes along and the temperature goes up, so do ice cream sales (who doesn't like an ice cream on a hot day). Violent crime also goes up during summer - maybe because people are hot and bothered, maybe because people spend more time outdoors so there are more opportunties for violent crime to occur, who knows.
+There's a third common factor here - the temperature. As summer comes along and the temperature goes up, so do ice cream sales (who doesn't like an ice cream on a hot day). Violent crime also goes up during summer - maybe because people are hot and bothered, maybe because people spend more time outdoors so there are more opportunities for violent crime to occur, who knows.
 
 The point here is that just because you find that two things are correlated with each other, it doesn't mean that there's a causal relationship between them.
 
@@ -647,6 +645,6 @@ If you want some more topics to go and read up on, check out my tweet:
 https://twitter.com/BHarrap/status/1443784159168663571
 
 
-![](/img/intro-to-research/tweet.png")
+![](/img/intro-to-research/tweet.png)
 
 And for more reading on 'common statistical myths' see https://discourse.datamethods.org/t/reference-collection-to-push-back-against-common-statistical-myths/1787
