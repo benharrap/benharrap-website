@@ -8,23 +8,21 @@ weight = 40  # Order that this section will appear.
 title = "Experience"
 subtitle = ""
 
-# Date format for experience
-#   Refer to https://sourcethemes.com/academic/docs/customization/#date-format
-date_format = "Jan 2006"
-
-# Experiences.
-#   Add/remove as many `[[experience]]` blocks below as you like.
-#   Required fields are `title`, `company`, and `date_start`.
-#   Leave `date_end` empty if it's your current employer.
-#   Begin/end multi-line descriptions with 3 quotes `"""`.
-
+[[experience]]
+  title = "Quantitative Social Scientist"
+  company = "Australian National University"
+  location = "Canberra, Australia"
+  date_start = "2023-10-16"
+  date_end = ""
+  description = """My work as a research fellow at the Centre for Aboriginal Economic Policy Research involves analysing many and varied datasets to answer a whole range of policy-relevant questions for First Nations organisations and government departments alike. I'm mindful to keep the context of the data in mind and avoid contributing [BADDR data](https://www.researchgate.net/publication/344961693_Indigenous_Data_Sovereignty_in_the_Era_of_Big_Data_and_Open_Data) analyses."""
+  
 [[experience]]
   title = "Clinical Trials Biostatistician"
   company = "Deakin University"
   location = "Ballarat, Australia"
   date_start = "2022-08-01"
-  date_end = ""
-  description = """I am providing study design and statistical oversight for a randomised trial investigating the effectiveness of a low-intensity mental health support service in reducing diabetes distress. This includes sample size calculation, developing a statistical analysis plan and randomisation scheme, advising on technical challenges arising over the course of the trial, and analysing research data."""
+  date_end = "2023-10-13"
+  description = """I provided study design and statistical oversight for a randomised trial investigating the effectiveness of a low-intensity mental health support service in reducing diabetes distress. This includes sample size calculation, developing a statistical analysis plan and randomisation scheme, advising on technical challenges arising over the course of the trial, and analysing research data."""
 
 [[experience]]
   title = "Consultant Biostatistician"

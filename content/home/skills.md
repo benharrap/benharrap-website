@@ -17,20 +17,39 @@ subtitle = ""
 [[feature]]
   icon = "laptop-code"
   #icon_pack = "fab"
-  name = "R and Stata"
-  description = ""
+  name = "R, SQL, Stata"
+  description = "R is my preferred language and I'm proficient with SQL and Stata"
+  
+[[feature]]
+  icon = "comments"
+  #icon_pack = "fas"
+  name = "Consulting"
+  description = "There are a lot of good questions out there being asked, I like helping figure out how to answer them"
+  
+[[feature]]
+  icon = "recycle"
+  #icon_pack = "fab"
+  name = "Reproducible research"
+  description = "From start to finish I like my make sure my reports are reproducible and as automated as possible"
+
+[[feature]]
+  icon = "bath"
+  #icon_pack = "fab"
+  name = "Data cleaning"
+  description = "Who doesn't like taking some dirty data and giving it a good scrub"
   
 [[feature]]
   icon = "chart-line"
   icon_pack = "fas"
   name = "Data Visualisation"
-  description = ""  
+  description = "Sure, pictures speak a thousand words, but they might take a thousand lines of code too"
   
 [[feature]]
   icon = "search"
   #icon_pack = "fas"
   name = "Googling"
-  description = ""
+  description = "The majority of my R knowledge is self-taught, so I'd say my Google-Fu is pretty good"
+
 
 # Uncomment to use emoji icons.
 # [[feature]]

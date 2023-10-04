@@ -8424,7 +8424,7 @@ ul.share li:hover i {
   padding-top: 50px; }
 
 .home-section:nth-of-type(even) {
-  background-color: #dde0ee; }
+  background-color: #FFDDD6; }
 
 .dark .home-section {
   background-color: #272935; }
@@ -9161,7 +9161,7 @@ html[dir="rtl"] body {
   text-align: right; }
 
 a {
-  color: #088EEE; }
+  color: #558061; }
 
 h2 {
   color: #1c0345;

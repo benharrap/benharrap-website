@@ -15,15 +15,19 @@ role: Biostatistician
 # Organizations/Affiliations
 organizations:
 - name: The University of Melbourne
-  url: ""
+  url: "https://mspgh.unimelb.edu.au/centres-institutes/centre-for-epidemiology-and-biostatistics/research/graduate-research-opportunities/phd-profiles/ben-harrap"
+- name: Australian National University
+  url: "https://caepr.cass.anu.edu.au/"
+
 
 # Short bio (displayed in user profile at end of posts)
-bio: Researcher in linked data, Indigenous health, and child removals. Amateur gardener and brewer.
+bio: Researcher in linked data, Indigenous health, and child removals. Amateur gardener and greyhound lover.
 
 interests:
-- Linked Data
-- Aboriginal and Torres Strait Islander Health
-- Science communication
+- Aboriginal and Torres Strait Islander health and wellbeing
+- Indigenous Data Sovereignty
+- Data collection and survey design
+- Statistical consulting
 - Data literacy
 
 education:
@@ -55,6 +59,9 @@ social:
 - icon: github
   icon_pack: fab
   link: https://github.com/benharrap
+- icon: linkedin
+  icon_pack: fab
+  link: https://www.linkedin.com/in/ben-harrap-08612861/
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 # - icon: cv
@@ -71,6 +78,6 @@ user_groups:
 - Visitors
 ---
 
-I'm a PhD candidate and research assistant at the University of Melbourne. My research interests revolve around improving health outcomes, in particular for Aboriginal and Torres Strait Islander peoples. 
+I'm a PhD candidate at the University of Melbourne and research fellow at Australian National University. My PhD research research focuses on the use of linked administrative data to explore the rates of contact by child protective services with Aboriginal and Torres Strait Islander children born in Western Australia, and what the health needs of those children in out-of-home care are. 
 
-I see myself as an applied biostatistician; I love thinking about data in the real-world - how it's collected and how you can interpret and use it in research. At the end of the day, I want to contribute to research that ends up improving the lives of others.
+I see myself as an applied biostatistician; I love thinking about data in the real-world - how our worldview impacts data collection decisions and how data is used in a research context. At the end of the day, I want to contribute to research that ends up improving the lives of others.
