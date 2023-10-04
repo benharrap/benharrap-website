@@ -78,6 +78,6 @@ user_groups:
 - Visitors
 ---
 
-I'm a PhD candidate at the University of Melbourne and research fellow at Australian National University. My PhD research research focuses on the use of linked administrative data to explore the rates of contact by child protective services with Aboriginal and Torres Strait Islander children born in Western Australia, and what the health needs of those children in out-of-home care are. 
+I'm a PhD candidate at the University of Melbourne and research fellow at Australian National University. My PhD research focuses on the use of linked administrative data to explore the rates of contact by child protective services with Aboriginal and Torres Strait Islander children born in Western Australia, and what the health needs of those children in out-of-home care are. 
 
 I see myself as an applied biostatistician; I love thinking about data in the real-world - how our worldview impacts data collection decisions and how data is used in a research context. At the end of the day, I want to contribute to research that ends up improving the lives of others.
