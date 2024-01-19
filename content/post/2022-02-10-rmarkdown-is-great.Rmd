@@ -60,8 +60,6 @@ I have separate folders for my code, data, images, meeting notes, and tables. Th
 
 I always start each project by making a new folder where I'm planning to keep everything and name it using the convention "yyyy-mm-dd-project-name". The date being the date on which I created the folder, and doing so means alphanumerically sorting the folders also sorts them chronologically. Nice!
 
-<iframe src='https://gfycat.com/ifr/AchingAnyAmericansaddlebred' frameborder='0' scrolling='no' allowfullscreen width='640' height='407'></iframe>
-
 ### Workflow
 
 This section is where the basis for the magic begins. Getting this right is critical to automating the numbers, tables, and figures in your write up.

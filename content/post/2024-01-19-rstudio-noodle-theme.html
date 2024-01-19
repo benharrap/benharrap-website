@@ -1,0 +1,292 @@
+---
+title: "Making a custom RStudio theme"
+author: "Ben Harrap"
+date: 2024-01-19
+categories: ["Programming"]
+tags: ["Programming","Rstats","RMarkdown","Research"]
+---
+
+
+
+<p>Today was going to be a productive day, I was going to get lots of work done, but then I had the thought “wouldn’t it be cool if I could make my own RStudio theme?” And now it’s 5pm and I definitely achieved something today but not what I set out to do. Making my own theme sure was fun though!</p>
+<p>My <code>noodle</code> theme is available on <a href="https://github.com/benharrap/noodle-rstheme">github</a> if you want to use it yourself. I’m solidly in my pastel pink era at the moment so I created the theme with that in mind. If you’re wondering why it’s called noodle, I was wearing a pastel pink t-shirt with a greyhound on it today (<a href="https://everpress.com/i-can-fly">this one if you must know</a>) and noodle is a silly nickname for greyhounds. Below are a couple of previews of what the theme looks like.</p>
+<div class="float">
+<img src="/img/rstudio-noodle-theme/rcode-preview.PNG" alt="The noodle theme applied to R code" />
+<div class="figcaption">The noodle theme applied to R code</div>
+</div>
+<div class="float">
+<img src="/img/rstudio-noodle-theme/rmarkdown-preview.PNG" alt="The noodle theme applied to an RMarkdown document" />
+<div class="figcaption">The noodle theme applied to an RMarkdown document</div>
+</div>
+<p>Most of today was a lot of trial and error, so I figured I’d collate what I learned into a blog post to hopefully save you some time. If you’re interested in making your own theme, read on!</p>
+<div id="step-1---copy-an-existing-.rstheme-file" class="section level2">
+<h2>Step 1 - copy an existing <code>.rstheme</code> file</h2>
+<p>There’s no point writing this all from scratch. We’re going to be good little scientists and Frankenstein our theme together.</p>
+<p>To do this, find where RStudio is installed on your machine and navigate to the following directory <code>.\RStudio\resources\app\resources\themes</code>. You’ll see all the default <code>.rstheme</code> files - copy one of these to a location that’s not in the RStudio folder (on Windows it doesn’t like you editing files in this folder). Alternatively you can just download <code>noodle.rstheme</code> from my github and use that as your basis. The difference between my file and the default ones is I had a go at grouping the arguments into colours for not-text, colours for text, and other bits.</p>
+<p>Once you’ve got a copy of an existing theme, open it in RStudio. Initially RStudio won’t know what the hell it is, so using the language drop-down in the corner of the source pane, update the language to CSS. This is useful because RStudio will preview what the colours in your file look like.</p>
+</div>
+<div id="step-2---start-testing-out-different-colours" class="section level2">
+<h2>Step 2 - start testing out different colours</h2>
+<p>This is where the fun begins. There’s lots of different aspects to RStudio that you can control. I was using the guidance from <a href="https://docs.posit.co/ide/user/ide/guide/ui/appearance.html#creating-an-rstheme">Posit’s website</a>, but there was a lot of back and forth and testing and being confused. I’ve embedded the webpage here so you can scroll through the list of selectors to see what Posit say about them.</p>
+<iframe width="100%" height="400" src="https://docs.posit.co/ide/user/ide/guide/ui/appearance.html#creating-an-rstheme" frameborder="0">
+</iframe>
+<p>It wouldn’t be <code>css</code> if it wasn’t confusing though, so I’ll step through some of the different options. I’ll go through changing the colours of not-text first, then is-text second. Delineating these things makes sense to me, you’ll see it in <code>noodle.rstheme</code> where I define <code>css</code> for the editor theme twice, once for the background colour and once for the default text colour.</p>
+<p>Before you press on you’ll also want to have either a colour scheme handy or some kind of colour picking tool so you can get the hex codes.</p>
+<div id="background-colour" class="section level3">
+<h3>Background colour</h3>
+<pre class="css"><code>.ace_editor, .ace_editor_theme .profvis-flamegraph, .ace_editor_theme {
+  background-color: #F7DCF0
+}</code></pre>
+<style type="text/css">
+.ace_editor, .ace_editor_theme .profvis-flamegraph, .ace_editor_theme {
+  background-color: #F7DCF0
+}
+</style>
+<p>This changes the background colour of RStudio’s panes, except for the terminal tab. It also doesn’t change the colour of the ‘gutter’, which is the part of the source pane where the line numbers appear.</p>
+</div>
+<div id="gutter-colour" class="section level3">
+<h3>Gutter colour</h3>
+<pre class="css"><code>.ace_gutter {
+  background: #F7DCF0
+}</code></pre>
+<style type="text/css">
+.ace_gutter {
+  background: #F7DCF0
+}
+</style>
+<p>This will change the background colour of the ‘gutter’. I made it the same colour as the main part of the source pane but you can do whatever you like.</p>
+</div>
+<div id="terminal-colour" class="section level3">
+<h3>Terminal colour</h3>
+<pre class="css"><code>.terminal {
+  background-color: #F7DCF0;
+  color: #000000;
+}</code></pre>
+<style type="text/css">
+.terminal {
+  background-color: #F7DCF0;
+  color: #000000;
+}
+</style>
+<p>In the default <code>rstheme</code> files there’s a bunch of other options in the <code>terminal</code> argument. Don’t know what they do, and I don’t really use terminal much either, I just wanted it all to be consistently coloured. <code>background-color</code> changes the background and <code>color</code> changes the cursor colour.</p>
+</div>
+<div id="cursor-colour" class="section level3">
+<h3>Cursor colour</h3>
+<pre class="css"><code>.ace_cursor {
+  color: #000000
+}</code></pre>
+<style type="text/css">
+.ace_cursor {
+  color: #000000
+}
+</style>
+<p>This changes the colour of the cursor (the little bar indicating where you’re typing).</p>
+</div>
+<div id="selection-colour" class="section level3">
+<h3>Selection colour</h3>
+<pre class="css"><code>.ace_marker-layer .ace_selection {
+  background: #82C28273
+}</code></pre>
+<style type="text/css">
+.ace_marker-layer .ace_selection {
+  background: #82C28273
+}
+</style>
+<p>This is one of my favourites. When you select code it’ll have this colour as the background. <span style="background-color: #82C28273">In the example it would highlight code in this colour!</span></p>
+</div>
+<div id="bracket-highlights" class="section level3">
+<h3>Bracket highlights</h3>
+<pre class="css"><code>.ace_bracket {
+  margin: 0 !important;
+  border: 0 !important;
+  background-color: rgba(0, 184, 25, 0.5);
+}</code></pre>
+<style type="text/css">
+.ace_bracket {
+  margin: 0 !important;
+  border: 0 !important;
+  background-color: rgba(0, 184, 25, 0.5);
+}
+</style>
+<p>This is my other favourite! When your code has brackets, putting the cursor one of a pair of brackets will highlight them both so you can see where the bracketed code starts and end. Super useful when you’re working with bracketception. Some of the default themes weren’t obvious enough for me so I made it pretty clear with this green. Note in this instance I used <code>rgba</code> rather than a colour hex code - the last input (0.5 in this case) defines the transparency. You can define transparency with hex codes too but this works fine.</p>
+</div>
+<div id="code-chunks" class="section level3">
+<h3>Code chunks</h3>
+<pre class="css"><code>.ace_marker-layer .ace_foreign_line {
+  position: absolute;
+  z-index: -1;
+  background-color: #f6d1ed;
+}</code></pre>
+<style type="text/css">
+.ace_marker-layer .ace_foreign_line {
+  position: absolute;
+  z-index: -1;
+  background-color: #f6d1ed;
+}
+</style>
+<p>This one sets the colour of code chunks.</p>
+</div>
+<div id="default-text" class="section level3">
+<h3>Default text</h3>
+<pre class="css"><code>.ace_editor, .ace_editor_theme .profvis-flamegraph, .ace_editor_theme {
+  color: #00006B
+}</code></pre>
+<style type="text/css">
+.ace_editor, .ace_editor_theme .profvis-flamegraph, .ace_editor_theme {
+  color: #00006B
+}
+</style>
+<p>This is the colour the majority of the text in your editor will be, basically any text that isn’t one of the special types defined later.</p>
+</div>
+<div id="gutter-text" class="section level3">
+<h3>Gutter text</h3>
+<pre class="css"><code>.ace_gutter {
+  color: #333
+}</code></pre>
+<style type="text/css">
+.ace_gutter {
+  color: #333
+}
+</style>
+<p>Remember the gutter? Well this is how you define what colour the line numbers will be.</p>
+</div>
+<div id="keywords" class="section level3">
+<h3>Keywords</h3>
+<pre class="css"><code>.ace_keyword {
+  color: #9D00FF !important;
+}</code></pre>
+<style type="text/css">
+.ace_keyword {
+  color: #9D00FF !important;
+}
+</style>
+<p>Special words like <code>if</code> and <code>function</code> will be this colour</p>
+</div>
+<div id="metadata" class="section level3">
+<h3>Metadata</h3>
+<pre class="css"><code>.ace_meta,
+.ace_support.ace_constant.ace_property-value {
+  color: #6585ae
+}</code></pre>
+<style type="text/css">
+.ace_meta,
+.ace_support.ace_constant.ace_property-value {
+  color: #6585ae
+}
+</style>
+<p>Text in document headers will be this colour, like titles, YAML and the like.</p>
+</div>
+<div id="truefalse-and-italics" class="section level3">
+<h3>TRUE/FALSE and italics</h3>
+<pre class="css"><code>.ace_constant.ace_language {
+  color: #D29380
+}</code></pre>
+<style type="text/css">
+.ace_constant.ace_language {
+  color: #D29380
+}
+</style>
+<p>This sets the colour of the words <code>TRUE</code> and <code>FALSE</code>, plus any italicised text in markdown docs. You can specify a more general argument than this by just using <code>.ace_constant</code> on its own, but I like to be able to easily tell the difference between bolded and italicised text when I’m writing RMarkdown documents.</p>
+</div>
+<div id="numeric-constants-and-bold-text" class="section level3">
+<h3>Numeric constants and bold text</h3>
+<pre class="css"><code>.ace_constant.ace_numeric {
+  color: #FF8080
+}</code></pre>
+<style type="text/css">
+.ace_constant.ace_numeric {
+  color: #FF8080
+}
+</style>
+<p>This sets the colour of numeric constants, for example the <code>8</code> in <code>mutate(x = 8)</code> would be <span style="background-color: #FF8080">this colour</span>. It’s also the color that bolded text in markdown documents will be.</p>
+</div>
+<div id="strings" class="section level3">
+<h3>Strings</h3>
+<pre class="css"><code>.ace_string {
+  color: #009E18
+}</code></pre>
+<style type="text/css">
+.ace_string {
+  color: #009E18
+}
+</style>
+<p>This sets the colour of strings.</p>
+</div>
+<div id="comments" class="section level3">
+<h3>Comments</h3>
+<pre class="css"><code>.ace_comment {
+  color: #5E5E5E
+}</code></pre>
+<style type="text/css">
+.ace_comment {
+  color: #5E5E5E
+}
+</style>
+<p>This sets the colour of comments (you better be writing comments!).</p>
+</div>
+<div id="rainbow-indent-lines" class="section level3">
+<h3>Rainbow indent lines</h3>
+<pre class="css"><code>.rstudio_rainbow_indent_guides .ace_line .ace_indent-guide:nth-child(2n+1){
+    background: linear-gradient(to left, #f38989 1px, transparent 1px, transparent);
+}
+.rstudio_rainbow_indent_guides .ace_line .ace_indent-guide:nth-child(2n+2){
+    background: linear-gradient(to left, #78c1a3 1px, transparent 1px, transparent);
+}</code></pre>
+<style type="text/css">
+.rstudio_rainbow_indent_guides .ace_line .ace_indent-guide:nth-child(2n+1){
+    background: linear-gradient(to left, #f38989 1px, transparent 1px, transparent);
+}
+.rstudio_rainbow_indent_guides .ace_line .ace_indent-guide:nth-child(2n+2){
+    background: linear-gradient(to left, #78c1a3 1px, transparent 1px, transparent);
+}
+</style>
+<p>If you don’t know what indents are, you can find them by going through the menus <code>Tools -&gt; Global Options -&gt; Code -&gt; Display -&gt; Indentation guidelines</code>. You can have a bit of fun changing these. The two things you need to pay attention to are the colours (obviously) and the <code>nth-child(2n+1)</code> statements. I’m making an assumption here, but I think the number before <code>n</code> indicates how many colours there are in your set of rainbow indent colours, and the number following the <code>+</code> indicate the ordering of the colours. So in the above example, <span style="background-color: #f38989">#f38989</span> comes first and <span style="background-color: #78c1a3">#78c1a3</span> comes second and repeats for however many indents you have.</p>
+</div>
+<div id="rainbow-indent-fills" class="section level3">
+<h3>Rainbow indent fills</h3>
+<pre class="css"><code>.rstudio_rainbow_indent_fills .ace_line .ace_indent-guide:nth-child(2n+1){
+    background: linear-gradient(to left, #f3898977 1px, #f3898977 1px, #f3898977);
+}
+.rstudio_rainbow_indent_fills .ace_line .ace_indent-guide:nth-child(2n+2){
+    background: linear-gradient(to left, #78c1a377 1px, #78c1a377 1px, #78c1a377);
+}</code></pre>
+<style type="text/css">
+.rstudio_rainbow_indent_fills .ace_line .ace_indent-guide:nth-child(2n+1){
+    background: linear-gradient(to left, #f3898977 1px, #f3898977 1px, #f3898977);
+}
+.rstudio_rainbow_indent_fills .ace_line .ace_indent-guide:nth-child(2n+2){
+    background: linear-gradient(to left, #78c1a377 1px, #78c1a377 1px, #78c1a377);
+}
+</style>
+<p>These are similar to the indent lines, except it fills the indents in blocks (vertically). The main difference here is the addition of two numbers at the end of the hex code, controlling the transparency. I’d suggest keeping the transparency, it looks weird with block colours!</p>
+</div>
+<div id="grey-line-indents" class="section level3">
+<h3>Grey line indents</h3>
+<p>This the final thing I’ll mention, and I think the most interesting!</p>
+<pre class="css"><code>.ace_indent-guide {
+  background: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAANSURBVBhXY9jYWl4GAAW8AiRaxbuHAAAAAElFTkSuQmCC&quot;) right repeat-y
+}</code></pre>
+<style type="text/css">
+.ace_indent-guide {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAANSURBVBhXY9jYWl4GAAW8AiRaxbuHAAAAAElFTkSuQmCC") right repeat-y
+}
+</style>
+<p>It turns out that the grey line indents are actually tiny base64 images, so if you want to modify the colour to make them more visible you’ll need to create a new 1-pixel image. When I was creating my theme, the default colour of the theme I’d Frankensteined was too light to clearly see, so I ended up making a darker pixel for better contrast. I just made a 1-pixel image in paint and uploaded it to <a href="https://www.base64-image.de/" class="uri">https://www.base64-image.de/</a> to get the base64 code used here.</p>
+</div>
+</div>
+<div id="step-3---add-your-theme-to-rstudio" class="section level2">
+<h2>Step 3 - add your theme to RStudio</h2>
+<p>There’s heaps more settings you can change, but hopefully the ones above are enough to get you going. Before you add your theme to RStudio there’s one final thing you’ll need to change! At the top of the file you’ll see two lines of code:</p>
+<pre class="css"><code>/* rs-theme-name: Noodle */
+/* rs-theme-is-dark: FALSE */</code></pre>
+<style type="text/css">
+/* rs-theme-name: Noodle */
+/* rs-theme-is-dark: FALSE */
+</style>
+<p>The first one is where you give it a name and the second is where you specify if you want RStudio’s broader theme to be light (FALSE) or dark (TRUE). Once you’ve changed this last bit, save the file. In order to add your theme to RStudio, navigate to the themes menu (<code>Tools -&gt; Global Options -&gt; Appearance</code>) and click the <code>Add</code> button. Navigate to wherever you’ve been keeping your <code>.rstheme</code> file and select it. It’ll appear in the list of themes, so just select it and click apply. Hey presto!</p>
+</div>
+<div id="step-4---tinkering" class="section level2">
+<h2>Step 4 - tinkering</h2>
+<p>If you’re anything like me you’ll spend several hours tinkering with colours to see what the options do and what your colour palette looks like together. Since you can’t edit the theme file while it’s loaded into RStudio, make the edits to the <code>.rstheme</code> file you created that <em>wasn’t</em> in the RStudio folder. When you’re ready to test your updates, head back to the <code>Appearance</code> menu, change the theme to something else, remove your theme by highlighting it and clicking the <code>Remove</code> button, then add it again.</p>
+<p>There’s probably a smarter way of doing it but it worked for me. I hope you’ve found this useful! If I’ve made a mistake or misunderstood something in this blog post, be a good scientist and (kindly) let me know.</p>
+</div>

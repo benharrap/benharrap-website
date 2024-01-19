@@ -12,26 +12,25 @@ categories: ["Academic", "Programming"]
 tags: ["Programming","Rstats","RMarkdown","Research"]
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#stuff-that-made-my-life-easier">Stuff that made my life easier</a>
+<li><a href="#stuff-that-made-my-life-easier" id="toc-stuff-that-made-my-life-easier">Stuff that made my life easier</a>
 <ul>
-<li><a href="#folder-structure">Folder structure</a></li>
-<li><a href="#workflow">Workflow</a></li>
-<li><a href="#easy-citations">Easy citations</a></li>
-<li><a href="#automatic-numbering-for-tables-and-figures">Automatic numbering for tables and figures</a></li>
-<li><a href="#automatic-in-text-numbers">Automatic in-text numbers</a></li>
+<li><a href="#folder-structure" id="toc-folder-structure">Folder structure</a></li>
+<li><a href="#workflow" id="toc-workflow">Workflow</a></li>
+<li><a href="#easy-citations" id="toc-easy-citations">Easy citations</a></li>
+<li><a href="#automatic-numbering-for-tables-and-figures" id="toc-automatic-numbering-for-tables-and-figures">Automatic numbering for tables and figures</a></li>
+<li><a href="#automatic-in-text-numbers" id="toc-automatic-in-text-numbers">Automatic in-text numbers</a></li>
 </ul></li>
-<li><a href="#minor-gripes">Minor gripes</a>
+<li><a href="#minor-gripes" id="toc-minor-gripes">Minor gripes</a>
 <ul>
-<li><a href="#spell-checking">Spell checking</a></li>
-<li><a href="#word-count">Word count</a></li>
-<li><a href="#figuring-stuff-out-is-hard">Figuring stuff out is hard</a></li>
+<li><a href="#spell-checking" id="toc-spell-checking">Spell checking</a></li>
+<li><a href="#word-count" id="toc-word-count">Word count</a></li>
+<li><a href="#figuring-stuff-out-is-hard" id="toc-figuring-stuff-out-is-hard">Figuring stuff out is hard</a></li>
 </ul></li>
-<li><a href="#acknowledgements">Acknowledgements</a></li>
-<li><a href="#references">References</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
 
@@ -40,7 +39,7 @@ tags: ["Programming","Rstats","RMarkdown","Research"]
 <p lang="en" dir="ltr">
 I gotta say, it's so incredibly satisfying having written this paper using RMarkdown and automating every number in the text.<br><br>Just knowing that if my cleaning or analysis changes it automatically flows down into the paper is magical<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a>
 </p>
-— Ben Harrap (<span class="citation">(<a href="#ref-BHarrap" role="doc-biblioref"><strong>BHarrap?</strong></a>)</span>) <a href="https://twitter.com/BHarrap/status/1491560780717826050?ref_src=twsrc%5Etfw">February 9, 2022</a>
+— Ben Harrap (<span class="citation">(<a href="#ref-BHarrap"><strong>BHarrap?</strong></a>)</span>) <a href="https://twitter.com/BHarrap/status/1491560780717826050?ref_src=twsrc%5Etfw">February 9, 2022</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>The above tweet seemed to be well received and someone asked if there was a tutorial. There probably is already, but I figured I would write my own mini-guide on the things I do that make writing so much easier in RMarkdown. This isn’t going to be comprehensive but hopefully it gives you enough of an idea that if you run into trouble you can google your way out of it.</p>
@@ -76,8 +75,6 @@ writeup.Rmd
 writeup.pdf</code></pre>
 <p>I have separate folders for my code, data, images, meeting notes, and tables. Then in the main directory I have the R project file, my references, and my RMarkdown file with the write up in it. I do often end up with other random files in the folder that I don’t have a home for and that’s fine, but at least most things have a home. This is what works for me, if it doesn’t work for you, you do you.</p>
 <p>I always start each project by making a new folder where I’m planning to keep everything and name it using the convention “yyyy-mm-dd-project-name”. The date being the date on which I created the folder, and doing so means alphanumerically sorting the folders also sorts them chronologically. Nice!</p>
-<iframe src="https://gfycat.com/ifr/AchingAnyAmericansaddlebred" frameborder="0" scrolling="no" allowfullscreen width="640" height="407">
-</iframe>
 </div>
 <div id="workflow" class="section level3">
 <h3>Workflow</h3>
@@ -128,9 +125,9 @@ writeup.pdf</code></pre>
 }</code></pre>
 <p>Note at the beginning of the citation immediately after the opening bracket <code>{</code> it says <code>eaton2019</code>. This string is what you will use when citing that article in the text of your RMarkdown document. Pick a convention for this string and stick to it so you don’t need to keep looking through your reference file to find the name you gave to the citation. My preference is first author’s last name and year of publication. If they have multiple publications in a year I just put a/b/c at the end of each publication to distinguish them as you can’t have two citations with the same name.</p>
 <p>With your <code>references.bib</code> filled in and ready to go, now you need to make your citations in text. Every citation begins with the <code>@</code> symbol followed by the string for the article you want to cite. In the above example recall it was <code>eaton2019</code> so in our RMarkdown text we would type something like <code>@eaton2019 found...</code> or <code>greater incidence of first episode psychosis [@eaton2019]</code>. Note the use of square brackets in the second example.</p>
-<p><code>@eaton2019 found...</code> becomes “<span class="citation"><a href="#ref-eaton2019" role="doc-biblioref">Eaton et al.</a> (<a href="#ref-eaton2019" role="doc-biblioref">2019</a>)</span> found…”</p>
+<p><code>@eaton2019 found...</code> becomes “<span class="citation">Eaton et al. (<a href="#ref-eaton2019">2019</a>)</span> found…”</p>
 <p>whereas</p>
-<p><code>greater incidence of first episode psychosis [@eaton2019]</code> becomes “greater incidence of first episode psychosis <span class="citation">(<a href="#ref-eaton2019" role="doc-biblioref">Eaton et al. 2019</a>)</span>”</p>
+<p><code>greater incidence of first episode psychosis [@eaton2019]</code> becomes “greater incidence of first episode psychosis <span class="citation">(<a href="#ref-eaton2019">Eaton et al. 2019</a>)</span>”</p>
 <p>Now you know how to add citations to your references file, add everything you read in there. It doesn’t matter if it’s full of unused citations, only the ones you cite in text will appear in your references list.</p>
 <p>There are two final pieces to this puzzle. The first is the citation format. Depending on the requirements of the journal you’re submitting to, or professor you’re writing an assignment for, download the appropriate <code>csl</code> file for the citation format. You can find an enormous list of <code>csl</code> files on <a href="https://www.zotero.org/styles" target="_blank">Zotero’s website</a>, which is where the <code>bookdown</code> authors suggest you look.</p>
 <p>The beauty of being able to switch your citation style by changing one line of code brings a tear to my eye. If only I knew about this in my undergraduate degree, I wouldn’t have missed those couple of marks for correct formatting. You do need to tell RMarkdown to use the <code>csl</code> file though, so in the header of your document you need to include the following code</p>
@@ -163,29 +160,29 @@ kable(rating, caption = &quot;Average cost and rating by style&quot;)</code></pr
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Tcdhwgscbbmosneipa</td>
-<td align="right">11.9</td>
-<td align="right">4</td>
+<td align="left">Witbier</td>
+<td align="right">10.0</td>
+<td align="right">3.0</td>
 </tr>
 <tr class="even">
-<td align="left">Double Neipa</td>
-<td align="right">9.0</td>
-<td align="right">2</td>
+<td align="left">Pale Ale</td>
+<td align="right">9.4</td>
+<td align="right">2.4</td>
 </tr>
 <tr class="odd">
+<td align="left">Scotch Ale</td>
+<td align="right">2.5</td>
+<td align="right">2.0</td>
+</tr>
+<tr class="even">
 <td align="left">Barrel Aged Sour</td>
 <td align="right">11.9</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">Belgian Tripel</td>
-<td align="right">5.0</td>
-<td align="right">1</td>
+<td align="right">4.0</td>
 </tr>
 <tr class="odd">
-<td align="left">Session Ipa</td>
-<td align="right">10.0</td>
-<td align="right">3</td>
+<td align="left">Black Forest Stout</td>
+<td align="right">14.5</td>
+<td align="right">3.0</td>
 </tr>
 </tbody>
 </table>
@@ -259,7 +256,7 @@ kable(prior, caption = &quot;Average rating by number of beers consumed prior&qu
 </div>
 <div id="acknowledgements" class="section level2">
 <h2>Acknowledgements</h2>
-<p>To write this blog post I used <code>R</code> <span class="citation">(<a href="#ref-r" role="doc-biblioref">R Core Team 2021</a>)</span>, <code>RMarkdown</code> <span class="citation">(<a href="#ref-rmarkdown" role="doc-biblioref">Allaire et al. 2021</a>)</span>, <code>knitr</code> <span class="citation">(<a href="#ref-knitr" role="doc-biblioref">Xie 2015</a>)</span>, <code>tidyverse</code> <span class="citation">(<a href="#ref-tidyverse" role="doc-biblioref">Wickham et al. 2019</a>)</span>, and <code>blogdown</code> <span class="citation">(<a href="#ref-blogdown" role="doc-biblioref">Xie, Hill &amp; Thomas 2017</a>)</span></p>
+<p>To write this blog post I used <code>R</code> <span class="citation">(<a href="#ref-r">R Core Team 2021</a>)</span>, <code>RMarkdown</code> <span class="citation">(<a href="#ref-rmarkdown">Allaire et al. 2021</a>)</span>, <code>knitr</code> <span class="citation">(<a href="#ref-knitr">Xie 2015</a>)</span>, <code>tidyverse</code> <span class="citation">(<a href="#ref-tidyverse">Wickham et al. 2019</a>)</span>, and <code>blogdown</code> <span class="citation">(<a href="#ref-blogdown">Xie, Hill &amp; Thomas 2017</a>)</span></p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
@@ -269,13 +266,13 @@ kable(prior, caption = &quot;Average rating by number of beers consumed prior&qu
 Allaire, J, Xie, Y, McPherson, J, Luraschi, J, Ushey, K, Atkins, A, Wickham, H, Cheng, J, Chang, W &amp; Iannone, R 2021, <em>Rmarkdown: Dynamic documents for r</em>, accessed from &lt;<a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>&gt;.
 </div>
 <div id="ref-eaton2019" class="csl-entry">
-Eaton, S, Harrap, B, Downey, L, Thien, K, Bowtell, M, Bardell-Williams, M, Ratheesh, A, McGorry, P &amp; O’Donoghue, B 2019, <span>‘Incidence of treated first episode psychosis from an australian early intervention service and its association with neighbourhood characteristics,’</span> <em>Schizophrenia Research</em>, vol. 209, pp. 206–211.
+Eaton, S, Harrap, B, Downey, L, Thien, K, Bowtell, M, Bardell-Williams, M, Ratheesh, A, McGorry, P &amp; O’Donoghue, B 2019, <span>‘Incidence of treated first episode psychosis from an australian early intervention service and its association with neighbourhood characteristics’</span>, <em>Schizophrenia Research</em>, vol. 209, pp. 206–211.
 </div>
 <div id="ref-r" class="csl-entry">
 R Core Team 2021, <em>R: A language and environment for statistical computing</em>, R Foundation for Statistical Computing, Vienna, Austria, accessed from &lt;<a href="https://www.R-project.org/">https://www.R-project.org/</a>&gt;.
 </div>
 <div id="ref-tidyverse" class="csl-entry">
-Wickham, H, Averick, M, Bryan, J, Chang, W, McGowan, LD, François, R, Grolemund, G, Hayes, A, Henry, L, Hester, J, Kuhn, M, Pedersen, TL, Miller, E, Bache, SM, Müller, K, Ooms, J, Robinson, D, Seidel, DP, Spinu, V, Takahashi, K, Vaughan, D, Wilke, C, Woo, K &amp; Yutani, H 2019, <span>‘Welcome to the <span class="nocase">tidyverse</span>,’</span> <em>Journal of Open Source Software</em>, vol. 4, no. 43, p. 1686.
+Wickham, H, Averick, M, Bryan, J, Chang, W, McGowan, LD, François, R, Grolemund, G, Hayes, A, Henry, L, Hester, J, Kuhn, M, Pedersen, TL, Miller, E, Bache, SM, Müller, K, Ooms, J, Robinson, D, Seidel, DP, Spinu, V, Takahashi, K, Vaughan, D, Wilke, C, Woo, K &amp; Yutani, H 2019, <span>‘<a href="https://doi.org/10.21105/joss.01686">Welcome to the <span class="nocase">tidyverse</span></a>’</span>, <em>Journal of Open Source Software</em>, vol. 4, no. 43, p. 1686.
 </div>
 <div id="ref-knitr" class="csl-entry">
 Xie, Y 2015, <em>Dynamic documents with <span>R</span> and knitr</em> 2nd edn, Chapman; Hall/CRC, Boca Raton, Florida, accessed from &lt;<a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>&gt;.
