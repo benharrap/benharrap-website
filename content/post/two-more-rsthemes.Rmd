@@ -1,0 +1,35 @@
+---
+title: "Two new RStudio themes"
+author: "Ben Harrap"
+date: 2024-04-29
+categories: ["Programming"]
+tags: ["Programming","Rstats","RMarkdown"]
+---
+
+Sometimes you see a picture and think to yourself "oh I like the colour composition here". Well when I think that, I also think "this would make a great RStudio theme". So I've created two more RStudio themes!
+
+I've renamed my original `noodle` repository, where I kept the first theme I created, to `rsthemes` since it made sense to keep all of the themes I've made together. You can find it here: [https://github.com/benharrap/rsthemes](https://github.com/benharrap/rsthemes)
+
+## Knitted
+
+The knitted theme came from a jumper that I got for my kid. My partner and I were at a market for locally made goods and came across this stand where a nanna was selling little knitted jumpers that she made. It was the *coolest* jumper I'd ever seen and I wish she made them in adult sizes too. There's no point trying to describe it, just take a look:
+
+![The incredible jumper](/img/two-more-rsthemes/jumper.jpeg)
+
+I love the bright colours in the jumper and the pale colours looked like they'd work as a background, so I turned it into an RStudio theme. I'm pretty happy with the results:
+
+![The knitted theme applied to code](/img/two-more-rsthemes/knitted-code.PNG)
+
+![The knitted theme applied to RMarkdown](/img/two-more-rsthemes/knitted-rmd.PNG)
+
+## Corymbia
+
+I was out for a walk in Canberra's botanic gardens and walked past this beautiful plant, later identified by my dad as *corymbia ficifolia*. It's an Australian native with gorgeous blooms. While I'd already walked past it I thought it was such a lovely colour scheme that I went back to snap a picture. Here's what I took:
+
+![Corymbia ficifolia](/img/two-more-rsthemes/corymbia.jpeg)
+
+And here's what the theme ended up like:
+
+![The corymbia theme applied to code](/img/two-more-rsthemes/corymbia-code.PNG)
+
+![The corymbia theme applied to RMarkdown](/img/two-more-rsthemes/corymbia-rmd.PNG)
