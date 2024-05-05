@@ -8,13 +8,17 @@ tags: ["Programming","Rstats","RMarkdown","Research"]
 
 Today was going to be a productive day, I was going to get lots of work done, but then I had the thought "wouldn't it be cool if I could make my own RStudio theme?" And now it's 5pm and I definitely achieved something today but not what I set out to do. Making my own theme sure was fun though!
 
-My `noodle` theme is available on [github](https://github.com/benharrap/noodle-rstheme) if you want to use it yourself. I'm solidly in my pastel pink era at the moment so I created the theme with that in mind. If you're wondering why it's called noodle, I was wearing a pastel pink t-shirt with a greyhound on it today ([this one if you must know](https://everpress.com/i-can-fly)) and noodle is a silly nickname for greyhounds. Below are a couple of previews of what the theme looks like.
+My `noodle` theme is available on [github](https://github.com/benharrap/rsthemes) if you want to use it yourself. I'm solidly in my pastel pink era at the moment so I created the theme with that in mind. If you're wondering why it's called noodle, I was wearing a pastel pink t-shirt with a greyhound on it today ([this one if you must know](https://everpress.com/i-can-fly)) and noodle is a silly nickname for greyhounds. Below are a couple of previews of what the theme looks like.
 
 ![The noodle theme applied to R code](/img/rstudio-noodle-theme/rcode-preview.PNG)
 
 ![The noodle theme applied to an RMarkdown document](/img/rstudio-noodle-theme/rmarkdown-preview.PNG)
 
 Most of today was a lot of trial and error, so I figured I'd collate what I learned into a blog post to hopefully save you some time. If you're interested in making your own theme, read on!
+
+## Protip
+
+While the following tips will help you get started, RStudio is rendered like a website, so you can right-click and click on inspect element to have a look at the thing you want to modify. Two useful ways to identify the thing you want to change are to look at the class it has - the element will usually begin something like `<div class="ace_content">`, so you'd search the `rstheme` file for that class. Alternatively, you could look for the colour which will usually be specified as a hex code (`#f7dcf0`) or as an rgb or rgba value `rgba(0, 184, 25, 0.5)`.
 
 ## Step 1 - copy an existing `.rstheme` file
 
