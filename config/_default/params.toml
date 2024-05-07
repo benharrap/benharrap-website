@@ -22,7 +22,7 @@ day_night = false
 #   Latest font sets (may require updating): https://sourcethemes.com/academic/themes/
 #   Browse built-in font sets in `themes/academic/data/fonts/`
 #   Browse user installed font sets in `data/fonts/`
-font = ""
+font = "Nunito"
 
 # Choose a font size.
 # Sizes: XS (extra small), S (small), M (medium), L (large - DEFAULT), XL (extra large)
@@ -38,14 +38,6 @@ font_size = "L"
 #   For organizations and projects, choose from https://schema.org/Organization#subtypes
 #   E.g. Person, Organization, LocalBusiness, Project, EducationalOrganization
 site_type = "Person"
-
-# Local business type (optional)
-# If you entered "LocalBusiness" above, choose the type of business from https://schema.org/LocalBusiness#subtypes
-local_business_type = ""
-
-# Organization name (optional)
-# Enter an organization or project name. Defaults to the site title from `config.toml`.
-org_name = ""
 
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
 description = ""
@@ -75,7 +67,7 @@ privacy_pack = false
 
 # Enable visitors to edit pages?
 #   `repo` defines the repository URL. `editable` defines which page types can be edited.
-edit_page = {repo_url = "https://github.com/gcushen/hugo-academic", content_dir = "", repo_branch = "master", editable = {docs = true, page = false, post = false}}
+# edit_page = {repo_url = "https://github.com/gcushen/hugo-academic", content_dir = "", repo_branch = "master", editable = {docs = true, page = false, post = false}}
 
 # Show related content at the bottom of pages?
 show_related = {docs = true, page = false, post = true, project = true, publication = true, talk = true}
@@ -93,30 +85,21 @@ phone = ""
 
 # Address
 # For country_code, use the 2-letter ISO code (see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 )
-address = {street = "207 Bouverie St", city = "Carlton", region = "Victoria", postcode = "3053", country = "Australia", country_code = "AU"}
+address = {street = "Centre for Indigenous Policy Research", city = "Acton", region = "ACT", postcode = "2601", country = "Australia", country_code = "AU"}
 
 # Geographic coordinates
-# To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
-# coordinates = {latitude = "37.4275", longitude = "-122.1697"}
+coordinates = {latitude = "-35.27735531706361", longitude = "149.1237489123528"}
 
 # Directions for visitors to locate you.
-directions = "I'm in the Indigenous Health and Epidemiology Unit on Level 3"
+directions = "My office is on the 2nd floor of the Copland building"
 
 # Office hours
-# A list of your office hours. To remove, set to an empty list `[]`.
 office_hours = ["Monday to Friday 09:00 to 17:00"]
-
-# Enter an optional link for booking appointments (e.g. calendly.com).
-appointment_url = ""
 
 # Contact links
 #   Set to `[]` to disable, or comment out unwanted lines with a hash `#`.
 contact_links = [
   {icon = "twitter", icon_pack = "fab", name = "DM Me", link = "https://twitter.com/BHarrap"},
-  #{icon = "skype", icon_pack = "fab", name = "Skype Me", link = "skype:echo123?call"},
-  #{icon = "keybase", icon_pack = "fab", name = "Chat on Keybase", link = "https://keybase.io/"},
-  #{icon = "comments", icon_pack = "fas", name = "Discuss on Forum", link = "https://discourse.gohugo.io"},
-  # {icon = "telegram", icon_pack = "fab", name = "Telegram Me", link = "https://telegram.me/@Telegram"},
   ]
 
 ############################

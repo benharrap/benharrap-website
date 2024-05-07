@@ -22,15 +22,15 @@ date_format = "Jan 2006"
   location = "Melbourne, Australia"
   date_start = "2018-12-01"
   date_end = ""
-  description = """I'm currently the President of the Victorian and Tasmanian branch, however I've had a variety of roles while volunteering for the SSA, including Secretary for the same branch, organiser of the Early Career and Student Statistician 2021 conference, and member of the Equity, Diversity, and Inclusion committee. I also helped with the transition to the new website, conducted a survey of our members on equity, diversity, and inclusion issues, and developed policies, procedures, and strategic plans."""
+  description = """I've had a variety of roles while volunteering for the SSA, including Secretary then President of the Victorian & Tasmanian branch, organiser of the Early Career and Student Statistician 2021 conference, and member of the Equity, Diversity, and Inclusion committee. I also helped with the transition to the new website, conducted a survey of our members on equity, diversity, and inclusion issues, and developed policies, procedures, and strategic plans."""
 
-[[experience]]
-  title = "Data Volunteer"
-  company = "Asylum Seeker Resource Centre"
-  location = "Melbourne, Australia"
-  date_start = "2018-02-01"
-  date_end = "2019-05-01"
-  description = """The Asylum seeker Resource Centre is a proudly independent not-for-profit that supports people seeking asylum. During my time there I helped out with data management and reporting, testing and documenting internal systems, and contributed to their roadmap for data management into the future."""
+# [[experience]]
+#   title = "Data Volunteer"
+#   company = "Asylum Seeker Resource Centre"
+#   location = "Melbourne, Australia"
+#   date_start = "2018-02-01"
+#   date_end = "2019-05-01"
+#   description = """The Asylum seeker Resource Centre is a proudly independent not-for-profit that supports people seeking asylum. During my time there I helped out with data management and reporting, testing and documenting internal systems, and contributed to their roadmap for data management into the future."""
 
 
 +++

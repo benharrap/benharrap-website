@@ -53,15 +53,18 @@ social:
 - icon: twitter
   icon_pack: fab
   link: https://twitter.com/BHarrap
-- icon: google-scholar
-  icon_pack: ai
-  link: https://scholar.google.com/citations?user=Gago-6IAAAAJ&hl=en
-- icon: github
-  icon_pack: fab
-  link: https://github.com/benharrap
 - icon: linkedin
   icon_pack: fab
   link: https://www.linkedin.com/in/ben-harrap-08612861/
+- icon: google-scholar
+  icon_pack: ai
+  link: https://scholar.google.com/citations?user=Gago-6IAAAAJ&hl=en
+- icon: orcid
+  icon_pack: ai
+  link: https://orcid.org/0000-0002-0889-6214
+- icon: github
+  icon_pack: fab
+  link: https://github.com/benharrap
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 # - icon: cv
