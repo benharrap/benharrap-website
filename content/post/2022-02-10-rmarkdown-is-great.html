@@ -147,8 +147,11 @@ csl: &quot;harvard-the-university-of-melbourne.csl&quot;</code></pre>
 <pre><code>output:   
   bookdown::pdf_document2</code></pre>
 <p>Next, you need to give a name to each code chunk that you want to include in your text. For consistency you could name all the code chunks in your document but I only bother if it’s a table or figure I’m including in the text. In the below example I have a couple of summary tables from my beer spreadsheet. Notice in the code chunks below I have called the two tables <code>rating</code> and <code>prior</code>, which is what we’ll use for our referencing.</p>
-<pre><code>{r rating}
-kable(rating, caption = &quot;Average cost and rating by style&quot;)</code></pre>
+<!-- ``` -->
+<!-- {r rating} -->
+<!-- kable(rating, caption = "Average cost and rating by style") -->
+<!-- ``` -->
+<pre class="r"><code>kable(rating, caption = &quot;Average cost and rating beer by style&quot;)</code></pre>
 <table>
 <caption><span id="tab:beer">Table 1: </span>Average cost and rating beer by style</caption>
 <thead>
@@ -160,34 +163,37 @@ kable(rating, caption = &quot;Average cost and rating by style&quot;)</code></pr
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Witbier</td>
-<td align="right">10.0</td>
+<td align="left">Oatmeal Stout</td>
+<td align="right">6.83</td>
+<td align="right">2.7</td>
+</tr>
+<tr class="even">
+<td align="left">Dark Lager</td>
+<td align="right">11.75</td>
 <td align="right">3.0</td>
 </tr>
-<tr class="even">
-<td align="left">Pale Ale</td>
-<td align="right">9.4</td>
-<td align="right">2.4</td>
-</tr>
 <tr class="odd">
-<td align="left">Scotch Ale</td>
-<td align="right">2.5</td>
-<td align="right">2.0</td>
-</tr>
-<tr class="even">
 <td align="left">Barrel Aged Sour</td>
-<td align="right">11.9</td>
+<td align="right">11.90</td>
 <td align="right">4.0</td>
 </tr>
-<tr class="odd">
-<td align="left">Black Forest Stout</td>
-<td align="right">14.5</td>
+<tr class="even">
+<td align="left">Session Pale Ale</td>
+<td align="right">7.00</td>
 <td align="right">3.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Dneipa</td>
+<td align="right">9.50</td>
+<td align="right">2.0</td>
 </tr>
 </tbody>
 </table>
-<pre><code>{r prior}
-kable(prior, caption = &quot;Average rating by number of beers consumed prior&quot;)</code></pre>
+<!-- ``` -->
+<!-- {r prior} -->
+<!-- kable(prior, caption = "Average rating by number of beers consumed prior") -->
+<!-- ``` -->
+<pre class="r"><code>kable(prior, caption = &quot;Average rating by number of beers consumed prior&quot;)</code></pre>
 <table>
 <caption><span id="tab:prior">Table 2: </span>Average rating by number of beers consumed prior</caption>
 <thead>

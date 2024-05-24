@@ -118,9 +118,7 @@ Data covering 2000 to 2019
 
 ## Published paper [@harrap2023]
 
-```{r, echo=FALSE, out.width="80%"}
-include_graphics("img/completion-seminar/paper_1.PNG")
-```
+![](/img/completion-seminar/paper_1.PNG)
 
 ## Aims
 
@@ -142,21 +140,15 @@ Analysis
 
 ## Cumulative incidence of first contacts with CPS, 2000 to 2015
 
-```{r, out.width="70%"}
-include_graphics("img/completion-seminar/cps_all.pdf")
-```
+![](/img/completion-seminar/cps_all.PNG)
 
 ## Cumulative incidence of first contacts with CPS, 2000 to 2015, by year of birth
 
-```{r, out.width="70%"}
-include_graphics("img/completion-seminar/cps_year.pdf")
-```
+![](/img/completion-seminar/cps_year.PNG)
 
 ## Siblings
 
-```{r, out.width="50%"}
-include_graphics("img/completion-seminar/cps_family.png")
-```
+![](/img/completion-seminar/cps_family.png)
 
 ## Timing of contacts within maternal sibling groups, 2000-2015
 
@@ -185,15 +177,11 @@ read_csv("../../static/post/completion-seminar/cps_sib.csv") |>
 
 ## Siblings
 
-```{r, out.width="50%"}
-include_graphics("img/completion-seminar/cps_family.png")
-```
+![](/img/completion-seminar/cps_family.png)
 
 ## Cumulative incidence of contacts by birth relative to first contact
 
-```{r, out.width="80%"}
-include_graphics("img/completion-seminar/cps_sib.pdf")
-```
+![](/img/completion-seminar/cps_sib.PNG)
 
 # Chapter 4 - Mental and neurodevelopmental health needs of Aboriginal children with experience of out-of-home care: a Western Australian data-linkage study
 
@@ -241,9 +229,7 @@ read_csv("../../static/post/completion-seminar/hp_a1.csv") |>
 
 ## Results
 
-```{r, out.width="60%"}
-include_graphics("img/completion-seminar/hp_cond.pdf")
-```
+![](/img/completion-seminar/hp_cond.PNG)
 
 ## Prevalence estimates for placement pre vs. post 1-yr old (N=3,432)
 
@@ -444,15 +430,11 @@ Estimated average causal effect: IRR 0.89 (95% CI 0.82 - 0.97)
 
 ## Marginal rates per 1,000 days at risk across follow-up
 
-```{r, out.width = "80%"}
-include_graphics("img/completion-seminar/margins_ra.png")
-```
+![](/img/completion-seminar/margins_ra.png)
 
 ## Marginal rates per 100,000 days at risk by condition
 
-```{r, out.width = "80%"}
-include_graphics("img/completion-seminar/margins_diag.png")
-```
+![](/img/completion-seminar/margins_diag.png)
 
 # Bringing it together
 
