@@ -10,7 +10,7 @@ authors:
 superuser: true
 
 # Role/position
-role: Biostatistician
+role: Doer of data things
 
 # Organizations/Affiliations
 organizations:
@@ -21,7 +21,7 @@ organizations:
 
 
 # Short bio (displayed in user profile at end of posts)
-bio: Researcher in linked data, Indigenous health, and child removals. Amateur gardener and greyhound lover.
+bio: I do stuff with data, mainly in R. I love greyhounds and being a dad.
 
 interests:
 - Aboriginal and Torres Strait Islander health and wellbeing
@@ -81,6 +81,4 @@ user_groups:
 - Visitors
 ---
 
-I'm a PhD candidate at the University of Melbourne and research fellow at Australian National University. My PhD research focuses on the use of linked administrative data to explore the rates of contact by child protective services with Aboriginal and Torres Strait Islander children born in Western Australia, and what the health needs of those children in out-of-home care are. 
-
-I see myself as an applied biostatistician; I love thinking about data in the real-world - how our worldview impacts data collection decisions and how data is used in a research context. At the end of the day, I want to contribute to research that ends up improving the lives of others.
+Biostatistics, quantitative social science, data science. There's a lot of names to describe what I do, which, fundamentally, is things with data. I love thinking about data in the real-world - how our worldview impacts data collection decisions, how data are used in a research context, and how I can best use data to help people answer the questions they have. At the end of the day, I want to contribute to research that ends up improving the lives of others.
