@@ -1,0 +1,102 @@
+---
+title: "Stata to R code translations"
+author: "Ben Harrap"
+date: 2024-07-03
+output:
+    blogdown::html_page:
+      toc: true
+categories: ["Academic", "Programming"]
+tags: ["Programming","Rstats","RMarkdown","Research","Stata"]
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#regression" id="toc-regression">Regression</a>
+<ul>
+<li><a href="#linear-regression" id="toc-linear-regression">Linear regression</a></li>
+<li><a href="#logistic-regression" id="toc-logistic-regression">Logistic regression</a></li>
+<li><a href="#poisson-regression" id="toc-poisson-regression">Poisson regression</a></li>
+<li><a href="#negative-binomial-regression" id="toc-negative-binomial-regression">Negative binomial regression</a></li>
+<li><a href="#zero-inflated-regression" id="toc-zero-inflated-regression">Zero inflated regression</a></li>
+</ul></li>
+<li><a href="#generalised-estimating-equations" id="toc-generalised-estimating-equations">Generalised estimating equations</a></li>
+<li><a href="#mixed-effects-models" id="toc-mixed-effects-models">Mixed-effects models</a></li>
+</ul>
+</div>
+
+<p>Making the transition from Stata to R can be challenging as the two languages are quite different. My initial training in biostatistics was using Stata, however I made a concerted effort to learn R by doing my entire PhD using the language. There are some things that I still struggle with in R that I found a lot easier in Stata, but that’s ok - we’re all still learning!</p>
+<p>This post acts as a reference to provide Stata and R code side-by-side to help people switching between the two languages. There’s a few things to note before diving in:</p>
+<ul>
+<li>All examples are based on the <code>auto</code> dataset from Stata.
+<ul>
+<li>In Stata this is accessed using <code>sysuse auto</code>.</li>
+<li>In R this is accessed by reading the Stata dataset using <code>auto &lt;- haven::read_dta("path-to-stata/auto.dta")</code>.</li>
+</ul></li>
+<li>I’ve tested these examples using Stata version 15.</li>
+<li>R packages are stated where relevant, however <code>tidyverse</code> is generally used over base R.</li>
+<li>The ChatGPT <img src="https://chatgpt.com/g/g-dDlKTFvbT-stata-to-r-code-translator" target="_blank" alt="Stata to R Code Translator" /> provided some assistance.</li>
+</ul>
+<!-- ## Data cleaning -->
+<div id="regression" class="section level2">
+<h2>Regression</h2>
+<p>The correspondences here represent the models that you need to run to generate the same results, not the code that will produce the same output. If you simply run the R code it will output something minimal, instead you will want to assign the model to an object. For the linear regression example, this would be <code>model &lt;- lm(price ~ mpg, data = auto)</code> followed by using the summary function on that object <code>summary(model)</code>.</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="20%" />
+<col width="55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Code</th>
+<th align="left">Stata</th>
+<th align="left">R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Simple linear regression</td>
+<td align="left"><code>reg price mpg</code></td>
+<td align="left"><code>lm(price ~ mpg, data = auto)</code></td>
+</tr>
+<tr class="even">
+<td align="left">Logistic regression</td>
+<td align="left"><code>logit foreign mpg</code></td>
+<td align="left"><code>glm(foreign ~ mpg, data = auto, family = "binomial")</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>|</code></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<div id="linear-regression" class="section level3">
+<h3>Linear regression</h3>
+</div>
+<div id="logistic-regression" class="section level3">
+<h3>Logistic regression</h3>
+</div>
+<div id="poisson-regression" class="section level3">
+<h3>Poisson regression</h3>
+</div>
+<div id="negative-binomial-regression" class="section level3">
+<h3>Negative binomial regression</h3>
+</div>
+<div id="zero-inflated-regression" class="section level3">
+<h3>Zero inflated regression</h3>
+</div>
+</div>
+<div id="generalised-estimating-equations" class="section level2">
+<h2>Generalised estimating equations</h2>
+</div>
+<div id="mixed-effects-models" class="section level2">
+<h2>Mixed-effects models</h2>
+<!-- ## Data visualisation -->
+<!-- ### Histograms -->
+<!-- ### Density plots -->
+<!-- ### Bar charts -->
+<!-- ### Line charts -->
+<!-- ### Box plots -->
+</div>
