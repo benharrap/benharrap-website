@@ -81,4 +81,6 @@ user_groups:
 - Visitors
 ---
 
-Biostatistics, quantitative social science, data science. There's a lot of names to describe what I do, which, fundamentally, is things with data. I love thinking about data in the real-world - how our worldview impacts data collection decisions, how data are used in a research context, and how I can best use data to help people answer the questions they have. At the end of the day, I want to contribute to research that ends up improving the lives of others.
+Biostatistics, quantitative social science, data science. There's a lot of names to describe what I do, which, fundamentally, is things with data. I love thinking about data in the real-world - how our worldview impacts data collection decisions, how data are used in a research context, and how I can best use data to help people answer the questions they have. At the end of the day, I want to contribute to research that ends up improving the lives of others. 
+
+I also think it's important that Aboriginal and Torres Strait Islander people are leading the research agenda, my place as a non-Indigenous person is to listen, collaborate, and support that agenda as best I can with the skills that I have.
