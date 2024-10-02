@@ -9,12 +9,12 @@ title = "Experience"
 subtitle = ""
 
 [[experience]]
-  title = "Quantitative Social Scientist"
+  title = "Research Fellow"
   company = "Australian National University"
   location = "Canberra, Australia"
   date_start = "2023-10-16"
   date_end = ""
-  description = """My work as a research fellow at the Centre for Indigenous Policy Research involves analysing many and varied datasets to answer a whole range of policy-relevant questions for First Nations organisations and government departments alike. I'm mindful to keep the context of the data in mind and avoid contributing [BADDR data](https://www.researchgate.net/publication/344961693_Indigenous_Data_Sovereignty_in_the_Era_of_Big_Data_and_Open_Data) analyses."""
+  description = """Currently I work at Yardhura Walani on the Mayi Kuwayu study, helping out with all things data - from survey design and data management to data cleaning and documentation. Prior to this I was at the Centre for Indigenous Policy Research, where I developed a structural equation model of social and emotional wellbeing using the Longitudinal Study of Indigenous Children, and co-authored a review of how Closing the Gap targets are measured - proposing an alternative, simulation-based method of assessing progress."""
   
 [[experience]]
   title = "Clinical Trials Biostatistician"
