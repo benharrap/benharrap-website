@@ -14,10 +14,10 @@ role: Doer of data things
 
 # Organizations/Affiliations
 organizations:
-- name: The University of Melbourne
-  url: "https://mspgh.unimelb.edu.au/centres-institutes/centre-for-epidemiology-and-biostatistics/research/graduate-research-opportunities/phd-profiles/ben-harrap"
-- name: Australian National University
-  url: "https://caepr.cass.anu.edu.au/"
+# - name: The University of Melbourne
+  # url: "https://mspgh.unimelb.edu.au/centres-institutes/centre-for-epidemiology-and-biostatistics/research/graduate-research-opportunities/phd-profiles/ben-harrap"
+- name: Yardhura Walani, Australian National University
+  url: "https://yardhurawalani.com.au/"
 
 
 # Short bio (displayed in user profile at end of posts)
@@ -34,7 +34,7 @@ education:
   courses:
   - course: PhD in Indigenous Epidemiology and Health
     institution: The University of Melbourne
-    year: in progress
+    year: submitted
   - course: Master of Biostatistics
     institution: The University of Melbourne
     year: 2018

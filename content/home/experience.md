@@ -14,7 +14,7 @@ subtitle = ""
   location = "Canberra, Australia"
   date_start = "2023-10-16"
   date_end = ""
-  description = """Currently I work at Yardhura Walani on the Mayi Kuwayu study, helping out with all things data - from survey design and data management to data cleaning and documentation. Prior to this I was at the Centre for Indigenous Policy Research, where I developed a structural equation model of social and emotional wellbeing using the Longitudinal Study of Indigenous Children, and co-authored a review of how Closing the Gap targets are measured - proposing an alternative, simulation-based method of assessing progress."""
+  description = """Currently I work at <a href="https://yardhurawalani.com.au/" target="_blank">Yardhura Walani</a> on the <a href="https://mkstudy.com.au/" target="_blank">Mayi Kuwayu</a> study, helping out with all things data - from survey design and data management to data cleaning and documentation. Prior to this I was at the <a href="https://caepr.cass.anu.edu.au/" target="_blank">Centre for Indigenous Policy Research</a>, where I developed a structural equation model of social and emotional wellbeing using the Longitudinal Study of Indigenous Children, and co-authored a review of how Closing the Gap targets are measured - proposing an alternative, simulation-based method of assessing progress."""
   
 [[experience]]
   title = "Clinical Trials Biostatistician"
@@ -22,7 +22,7 @@ subtitle = ""
   location = "Ballarat, Australia"
   date_start = "2022-08-01"
   date_end = "2023-10-13"
-  description = """I provided study design and statistical oversight for a randomised trial investigating the effectiveness of a low-intensity mental health support service in reducing diabetes distress. This includes sample size calculation, developing a statistical analysis plan and randomisation scheme, advising on technical challenges arising over the course of the trial, and analysing research data."""
+  description = """I provided study design and statistical oversight for a randomised trial investigating the effectiveness of a low-intensity mental health support service in reducing diabetes distress. This included sample size calculation, developing a statistical analysis plan and randomisation scheme, advising on technical challenges arising over the course of the trial, and analysing research data."""
 
 [[experience]]
   title = "Consultant Biostatistician"

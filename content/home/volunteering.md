@@ -22,7 +22,7 @@ date_format = "Jan 2006"
   location = "Melbourne, Australia"
   date_start = "2018-12-01"
   date_end = ""
-  description = """I've had a variety of roles while volunteering for the SSA, including Secretary then President of the Victorian & Tasmanian branch, organiser of the Early Career and Student Statistician 2021 conference, and member of the Equity, Diversity, and Inclusion committee. I also helped with the transition to the new website, conducted a survey of our members on equity, diversity, and inclusion issues, and developed policies, procedures, and strategic plans."""
+  description = """I've had many different roles volunteering for the SSA, including Secretary then President of the Victorian & Tasmanian branch, organiser of the Early Career and Student Statistician 2021 conference, and member of the Equity, Diversity, and Inclusion committee. I also helped with the transition to the new website, conducted a survey of our members on equity, diversity, and inclusion issues, and developed policies, procedures, and strategic plans."""
 
 # [[experience]]
 #   title = "Data Volunteer"
