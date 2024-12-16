@@ -31,7 +31,7 @@ You can always contact me on social media too:
 <input type="text" name="name" id="name" class="form-control" required>
 
 <label for="email-address">Email address</label>
-<input type="email" name="_replyto" id="email-address" class="form-control" required>
+<input type="email" name="email" id="email-address" class="form-control" required>
 
 <label for="message">Message</label>
   <textarea rows="6" name="message" id="message" class="form-control" required></textarea>
