@@ -276,7 +276,7 @@ The point I want to make is that if you are reading this blog post and trying to
 
 ## Acknowledgements
 
-To write this blog post I used `R` [@r], `RMarkdown` [@rmarkdown], `knitr` [@knitr], `tidyverse` [@tidyverse], and `blogdown` [@blogdown]
+To write this blog post I used `R` [@r], `RMarkdown` [@rmarkdown], `knitr` [@knitr], and `tidyverse` [@tidyverse].
 
 ## References
 
