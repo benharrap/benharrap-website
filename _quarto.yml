@@ -13,6 +13,7 @@ website:
     right:
       - post.qmd
       - cv.qmd
+      - contact.qmd
   
 format:
   html:

@@ -1,0 +1,44 @@
+---
+title: "Contact"
+---
+
+::: {.grid}
+
+::: {.g-col-5 #note}
+
+Want to say hi? Send me a message! 
+
+You can always contact me on social media too:
+
+{{< fa brands bluesky >}} [Bluesky](https://bsky.app/profile/bharrap.bsky.social){target="_blank"}
+
+{{< fa brands linkedin >}} [LinkedIn](https://www.linkedin.com/in/ben-harrap-08612861/){target="_blank"}
+
+{{< fa brands github >}}  [GitHub](https://github.com/Benharrap){target="_blank"}
+
+{{< fa mug-hot >}} [Buy me a coffee](https://buymeacoffee.com/benharrap){target="_blank"}
+
+:::
+
+::: {.g-col-1}
+:::
+
+::: {.g-col-6 #form}
+
+<form action="https://formspree.io/f/benharrap@gmail.com" method="POST">
+
+<label for="name">Your name</label>
+<input type="text" name="name" id="name" class="form-control" required>
+
+<label for="email-address">Email address</label>
+<input type="email" name="_replyto" id="email-address" class="form-control" required>
+
+<label for="message">Message</label>
+  <textarea rows="6" name="message" id="message" class="form-control" required></textarea>
+
+<button type="submit" class="btn btn-primary mt-4">Send message</button>
+</form>
+:::
+
+:::
+<!-- end grid -->
