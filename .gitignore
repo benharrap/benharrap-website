@@ -5,3 +5,5 @@
 public/
 Thumbs.db
 .DS_Store
+/.quarto/
+/_site/
