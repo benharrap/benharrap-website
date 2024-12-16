@@ -1,0 +1,36 @@
+---
+title: "Ben Harrap"
+subtitle: "Doer of data things<br/>Yardhura Walani, Australian National University"
+image: "img/ben.jpg"
+about:
+  template: trestles
+  image-shape: round
+  image-alt: "A portrait photo of Ben, they've got their hair up in a bun, are wearing a white and navy striped jumper, and are smiling."
+  links:
+    - text: "{{< fa brands bluesky >}}"
+      href: https://scholar.google.com/citations?user=Gago-6IAAAAJ&hl=en
+    - text: "{{< fa brands linkedin >}}"
+      href: https://www.linkedin.com/in/ben-harrap-08612861/
+    - text: "{{< fa brands github >}}"
+      href: https://github.com/Benharrap
+    - text: "{{< fa brands orcid >}}"
+      href: https://orcid.org/0000-0002-0889-6214
+    - text: "{{< fa brands google-scholar >}}"
+      href: https://scholar.google.com/citations?user=Gago-6IAAAAJ&hl=en
+    - text: "{{< fa mug-hot >}}"
+      href: https://buymeacoffee.com/benharrap
+---
+
+## About me
+
+Biostatistics, quantitative social science, data science. There’s a lot of names to describe what I do, which, fundamentally, is things with data. I love thinking about data in the real-world; how our worldview impacts data collection decisions, how data are used in a research context, and how I can best use data to help people answer questions they have. At the end of the day, I want to contribute to research that ends up improving the lives of others.
+
+I also think it’s important that Aboriginal and Torres Strait Islander people are leading the research agenda, my place as a non-Indigenous person is to listen, collaborate, and support that agenda as best I can with the skills that I have.
+
+## My interests
+
+-   Aboriginal and Torres Strait Islander health and wellbeing
+-   Indigenous Data Sovereignty
+-   Data collection and survey design
+-   Statistical consulting
+-   Data literacy

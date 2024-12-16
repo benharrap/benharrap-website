@@ -1,0 +1,15 @@
+{
+  "hash": "be60a383156eb2d4e1f5735c0695f982",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Why are cows bad at the tightrope?\"\nauthor: \"Ben Harrap\"\ndate: 2021-11-29\ncategories: [\"Self\"]\ntags: [\"Self\", \"Joke\"]\n---\n\n\nBecause they lactose.",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,123 @@
+---
+title: "Stata to R code translations"
+author: "Ben Harrap"
+date: 2024-07-03
+toc: true
+categories: 
+  - code
+  - R
+  - Stata
+  - research
+image: false
+draft: true
+---
+
+```{r echo = F, warning = F, message = F}
+library(knitr)
+library(tidyverse)
+# auto <- haven::read_dta("/Applications/Stata/auto.dta")
+```
+
+Making the transition from Stata to R can be challenging as the two languages are quite different. My initial training in biostatistics was using Stata, however I made a concerted effort to learn R by doing my entire PhD using the language. There are some things that I still struggle with in R that I found a lot easier in Stata, but that's ok - we're all still learning! 
+
+This post acts as a reference to provide Stata and R code side-by-side to help people switching between the two languages. There's a few things to note before diving in:
+
+- All examples are based on the `auto` dataset from Stata.
+  - In Stata this is accessed using `sysuse auto`.
+  - In R this is accessed by reading the Stata dataset using `auto <- haven::read_dta("<path-to-stata-goes-here>/auto.dta")`.
+- I've tested these examples using Stata version 15.
+- R packages are stated where relevant, however `tidyverse` is generally used over base R.
+- The ChatGPT <a href="https://chatgpt.com/g/g-dDlKTFvbT-stata-to-r-code-translator" target="_blank">Stata to R Code Translator</a> provided some assistance.
+
+## Workflow differences
+
+I'll briefly outline some important things to know when switching from Stata to R, because while R can do everything Stata can do, it goes about it differently.
+
+### Pipes
+
+Instead of executing each bit of code line by line as you 
+
+### Assigning output
+
+One of the main things to adjust to in R is the need to assign your output. In Stata, if you were to create a new variable, you would just write `gen new_var = old_var*2` and it would automatically create `new_var` in the current dataset. Similarly, if you run a regression model, Stata stores a bunch of information in the background that you can access, such as the `lincom` and `margins` functions.
+
+In R, the default is to display the output of your code in the console (similar to Stata's results window). So if you were to run `auto |> mutate(new_var = 1)` it would just print the result in the console. Instead, you need to assign the output using the assignment operator `<-` to an object, either an existing or a new one. For example:
+
+-   `auto <- auto |> mutate(new_var = 1)` writes over the auto object (our dataset)
+-   `auto_new <- auto |> mutate(new_var = 1)` creates a new object called auto_new and leaves the original auto object unchanged
+
+### Further resources
+
+The books I would recommend using to keep learning from are:
+
+-   [R for Data Science](https://r4ds.hadley.nz/)
+-   [Advanced R](https://adv-r.hadley.nz/)
+-   [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/)
+-   [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
+
+Note that Fundamentals of Data Visualization doesn't include the R code by default. Instead, Claus provides a link on the welcome page to the book's GitHub repo, which you can search through to find the code to replicate the graphs in the book.
+
+<!-- ## Data cleaning -->
+
+## Regression
+
+The correspondences here represent the models that you need to run to generate (usually) the same results, not the code that will produce the same output. If you simply run the R code it will output something minimal, instead you will want to assign the model to an object. For the linear regression example, this would be `model <- lm(price ~ mpg, data = auto)` followed by using the summary function on that object `summary(model)`. 
+
+I say 'usually' the same results because for some methods there seems to be some minor difference under the hood that means estimates differ slightly. For example, in the negative binomial example the standard errors for `mpg` are different at the 4th decimal. Always check your outputs :)
+
+```{r, echo = F}
+tibble(
+  Model = "Simple linear regression",
+  Stata = "`reg price mpg`",
+  R = "`lm(price ~ mpg, data = auto)`",
+  Note = ""
+) |> 
+  add_row(
+    Model = "Logistic regression",
+    Stata = "`logit foreign mpg`",
+    R = "`glm(foreign ~ mpg, data = auto, family = \"binomial\")`",
+    Note = ""
+  ) |> 
+  add_row(
+    Model = "Poisson regression",
+    Stata = "`poisson rep78 mpg`",
+    R = "`glm(rep78 ~ mpg, data = auto, family = \"poisson\")`",
+    Note = ""
+  ) |> 
+  add_row(
+    Model = "Negative binomial regression",
+    Stata = "`nbreg displacement mpg`",
+    R = "`MASS::glm.nb(displacement ~ mpg, data = auto)`",
+    Note = "Requires the `MASS` package"
+  ) |> 
+  kable()
+```
+
+## Generalised estimating equations
+
+
+
+## Mixed-effects models
+
+
+
+<!-- ## Data visualisation -->
+
+<!-- ### Histograms -->
+
+
+
+<!-- ### Density plots -->
+
+
+
+<!-- ### Bar charts -->
+
+
+
+<!-- ### Line charts -->
+
+
+
+<!-- ### Box plots -->
+

@@ -1,0 +1,8 @@
+---
+title: "Why are cows bad at the tightrope?"
+author: "Ben Harrap"
+date: 2021-11-29
+categories: joke
+---
+
+Because they lactose.

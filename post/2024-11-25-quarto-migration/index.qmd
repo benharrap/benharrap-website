@@ -1,0 +1,150 @@
+---
+title: "Migrating from blogdown/Hugo to Quarto"
+author: "Ben Harrap"
+date: 2024-11-25
+toc: true
+categories: 
+  -   quarto
+  -   R
+---
+
+So my old website became too painful to keep updated thanks to version differences across the blogdown and Hugo system I was using, so I've migrated it to a Quarto website. There were a few things that I had to figure out along the way so I've documented them here for your sake.
+
+## Replicating the Hugo Academic URL structure
+
+The main thing I wanted to do was replicate my old website in that the home page contained my bio and some external links, with my blog posts on a separate page. To do this I started off making a new 'Quarto Blog' project in RStudio following the [documentation on Quarto's website](https://quarto.org/docs/websites/website-blog.html). It's important to select blog, not website at this step.
+
+The very first thing you want to do is swap the YAML between the `about.qmd` and `index.qmd` files. This is because the index is the home page for your website. Quarto's default is to make the blog your home page, but we don't want that. Swapping the YAML puts your bio as the home page. I also renamed the `posts` folder to `post`, just in case that mattered but I'm not sure it does.
+
+The next thing is to rename `about.qmd`, calling it `post.qmd`. This is now your main page for your blog and it has the same URL structure as the old Hugo Academic template. This means when you migrate your blog posts from your old to your new website, the URLs won't break. Yay!
+
+## Changing the website font
+
+To change the font on your website, edit `_quarto.yml`. I like Nunito which is listed on Google Fonts, you can see it added here:
+
+```
+format:
+  html:
+    theme: custom.scss
+    header-includes: |
+      <link href=https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap rel="stylesheet">
+
+mainfont: Nunito
+```
+
+On Google Fonts, when you find the font you like click on the 'Get font' button, then '<> Get embed code', then copy the third `<link>` tag from the box with code that goes in your HTML `<head>` section and replace the above accordingly, then update the `mainfont` option with the name of the font.
+
+## Migrating blog posts
+
+### Keeping URLs consistent
+
+Quarto's method of organising files used in blog posts is way better than blogdown/Hugo. Instead of having a `.Rmd` file in the `post` folder and keeping all the content in a separate location (was it in `static`? I never remember), you have one folder per blog post and all the files go in that folder. I.e.:
+
+```
+-   post
+  -   2024-11-25-quarto-migration
+  -   2024-08-10-phd-reflection
+  -   etc.
+```
+
+The name of each blog post's folder will be used to create the URL. This means if you want to keep the URLs of your blog posts the same, you must give each blog post's folder the same name as the original `.Rmd` file. To copy the content across, just copy and paste the original `.Rmd` file and rename it to `index.qmd`. Note the change in extension from `.Rmd` to `.qmd`.
+
+For example, my blog post reflecting on my PhD experience was originally written in a file called `2024-08-10-phd-reflection.Rmd`. This means I would create a folder within the `post` folder called `2024-08-10-phd-reflection`, put my original blog post file `2024-08-10-phd-reflection.Rmd` inside this folder and rename the file to `index.qmd`. Building on the above example, this would look like:
+
+```
+-   post
+  -   2024-11-25-quarto-migration
+  -   2024-08-10-phd-reflection
+    -   index.qmd
+  -   etc.
+```
+
+### Translating `.Rmd` to `.qmd` files
+
+Now you've changed your original `.Rmd` files to `.qmd` files by just renaming them, you'll need to fix some of the YAML.
+
+The main thing is to delete `tags: []`. Quarto only uses `categories`. Without knowing what other YAML options you were using it's hard to say what else needs to change but if you try and render your website it will either work or not work, and if it doesn't work something still needs fixing.
+
+An example of the YAML for my PhD reflection blog post is seen below:
+
+::: {.panel-tabset}
+
+## Old Rmd YAML
+
+```
+title: "Reflecting on my PhD experience"
+author: "Ben Harrap"
+date: 2024-08-10
+categories: ["Academic", "Self"]
+tags: ["Academic","PhD","Research","Learning"]
+```
+
+## New qmd YAML
+
+```
+title: "Reflecting on my PhD experience"
+author: "Ben Harrap"
+date: 2024-08-10
+categories: 
+  -   academia
+  -   self
+  -   phd
+```
+
+:::
+
+### Moving images, files, etc.
+
+If your blog post referenced any files, such as images, you'll need to move them to the blog post's folder and update the path in your blog post file. My confirmation report blog post is a good example of this, it uses images, a bibliography, and a `.csl` file. After moving all the resources to the blog post's folder, I updated the YAML:
+
+::: {.panel-tabset}
+
+## Old Rmd YAML
+
+```
+bibliography: [../../static/post/confirmation-report/references.bib]
+csl: [../../static/post/confirmation-report/harvard-the-university-of-melbourne.csl]
+```
+
+## New YAML
+
+```
+bibliography: references.bib
+csl: "harvard-the-university-of-melbourne.csl"
+```
+
+:::
+
+And I updated the locations of the images:
+
+::: {.panel-tabset}
+
+## Old image tag
+
+```
+![](/img/confirmation-report/system-overview.png)
+```
+
+## New image tag
+
+```
+![](system-overview.png)
+```
+
+:::
+
+### Setting preview images
+
+If your blog post has images in it, the default setting is to pick an image to use as a preview on your main blog page. You can specify which image you want to be used as the preview using in the post's YAML:
+
+```
+image: "talk.png"
+```
+
+If you don't want any images displayed, set the option to be false:
+
+```
+image: false
+```
+
+If you don't have any images in your blog post but you still specify `image: false`, Quarto will crash when trying to render your website. I had a few moments of madness figuring this out!

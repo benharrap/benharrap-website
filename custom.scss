@@ -1,0 +1,84 @@
+/*-- scss:defaults --*/
+
+$primary: rgb(31,35,61);
+
+// Components
+
+$border-radius: .4rem !default;
+$border-radius-lg: .6rem !default;
+$border-radius-sm: .3rem !default;
+$navbar-toggler-icon-bg: url("/img/randy.png");
+
+// Text
+
+$body-color: $primary !default;
+$headings-color: $primary !default;
+
+// Tables
+
+$table-border-color: rgba(0, 0, 0, .05) !default;
+$table-bg-scale: 0% !default;
+
+/*-- scss:rules --*/
+
+.navbar {
+  background-color: #ffddd6;
+}
+
+/* Fix the centering of the title in mobile view */
+.navbar-title {
+  padding-right: 2em;
+}
+
+.navbar-brand, .navbar-toggler, navbar-brand-hover-color {
+  color: $primary !important;
+}
+
+.navbar-active {
+  color: #558061;
+}
+
+.navbar li.nav-item a.nav-link {
+  color: $primary !important;
+}
+
+.about-link-text {
+  font-size: 2rem;
+}
+
+.about-link {
+  border: none !important;
+  padding-top: 0px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+/* Set the about links to be in a row, not col */
+.about-links {
+  flex-direction: row !important;
+}
+
+.about-image {
+  width: 15rem !important;
+  height: 15rem !important;
+  margin-top: 20px;
+}
+
+/* center the text and icons on the CV page in the centered blocks */
+.centered {
+  text-align: center;
+}
+
+.centered i {
+  font-size: 3rem;
+  color: #558061;
+}
+
+.quarto-title-banner {
+  background: none;
+  padding-bottom: 0px !important;
+}
+
+.quarto-title-banner h1 {
+  color: $primary !important;
+}

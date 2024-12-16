@@ -1,0 +1,235 @@
+---
+title: "CV"
+toc: true
+---
+
+## Skills
+
+::: {.columns .centered}
+::: {.column width="30%"}
+{{< fa code >}}
+**R, SQL, Stata**
+
+R is my preferred language and I’m proficient with SQL and Stata
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="30%"}
+{{< fa comments >}}
+**Consulting**
+
+There are a lot of good questions out there being asked, I like helping figure out how to answer them
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="30%"}
+{{< fa recycle >}}
+**Reproducible research**
+
+From start to finish I like my make sure my reports are reproducible and as automated as possible
+:::
+:::
+
+::: {.columns .centered}
+::: {.column width="30%"}
+{{< fa bath >}}
+
+**Data cleaning**
+
+Who doesn’t like taking some dirty data and giving it a good scrub
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="30%"}
+{{< fa chart-pie >}}
+**Data visualisation**
+
+Sure, pictures speak a thousand words, but they might take a thousand lines of code too
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="30%"}
+{{< fa magnifying-glass >}}
+**Googling**
+
+The majority of my R knowledge is self-taught, so I’d say my Google-Fu is pretty good
+:::
+:::
+
+## Qualifications
+
+::: {.columns .centered}
+::: {.column width="30%"}
+{{< fa graduation-cap >}}
+**Doctor of Philosophy**
+
+Completed in 2024 at the University of Melbourne
+
+Thesis title "The Health of Aboriginal Children born in Western Australia in the Context of Out-of-Home Care"
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="30%"}
+{{< fa graduation-cap >}}
+**Master of Biostatistics**
+
+Completed in 2018 at the University of Melbourne
+
+Included survival analysis, modelling longitudinal and correlated data, and survey design and analysis
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="30%"}
+{{< fa graduation-cap >}}
+**Bachelor of Arts (Honours)**
+
+Completed in 2015 at the University of Western Australia
+
+Double major in psychology, minor in anthropology
+:::
+:::
+
+## Employment
+
+### Biostatistician, Data Manager, Research Fellow
+
+-   Yardhura Walani, Australian National University
+    -   October 2024 – Present
+
+My time is spent mostly on the Mayi Kuwayu Study, The National Study of Aboriginal & Torres Strait Islander Wellbeing. The first thing I did was take the lead on finishing the study's operational manual. In doing this, I converted the existing Word draft into a HTML document using Quarto, making the manual more user-friendly, improving the interface, and making the maintenance of documentation easier.
+
+I'm also working on building a data management pipeline in R, using `targets` to manage the structure and evaluation of the pipeline, `pointblank` and `testthat` for unit testing and data validation, `renv` to manage package dependencies across user systems, and having the different stages of data cleaning and management feed into a user manual, data dictionary, and survey data quality report, all using R and Quarto to automate the majority of their generation.
+
+### Quantitative Social Scientist, Research Fellow
+
+-   Centre for Indigenous Policy Research, Australian National University
+    -   October 2023 – October 2024
+
+In my short time at CIPR I worked on two major reports. For the first, I examined social and emotional wellbeing for Aboriginal and Torres Strait Islander children and youth in the Longitudinal Study of Indigenous Children (LSIC). This was done by starting with an Aboriginal and Torres Strait Islander theory of social and emotional wellbeing and using exploratory factor analysis and structural equation modelling to map data items in LSIC to different domains of social and emotional wellbeing.
+
+The second was a technical report commissioned by the Productivity Commission and Coalition of Peaks, where my co-authors and I proposed a more statistically rigorous method for measuring progress toward Closing the Gap targets. The report covered improvements in measuring progress, recommendations for increasing the quality, frequency, and relevance of data collected for these measures, and guidelines on how to communicate probabilistic statements from statistical models in easy to understand ways.
+
+### PhD Candidate
+
+-   Indigenous Health and Epidemiology Group, University of Melbourne
+    -   March 2020 – June 2024
+
+Throughout my PhD I translated findings from Aboriginal-led qualitative research and community reference group conversations into questions I could address using linked administrative datasets. This included how child protection is clustered within sibling groups, the prevalence and cumulative incidence of mental and neurodevelopmental health conditions. I used a variety of statistical methods, including survival analysis, matching methods for causal inference, and descriptive statistics and data visualisation. All of my research was written in R and RMarkdown, where I created a reproducible pipeline from data cleaning through to multiple journal articles and my final thesis.
+
+### Biostatistician
+
+-   Deakin University
+    -   August 2022 – October 2023
+-   Grampians Health
+    - September 2021 – October 2023
+
+In these two biostatistician roles I acted as the sole statistical expert in clinical research and academic settings. Across these roles I provided study design and statistical oversight for a randomised trials, including sample size calculations, developing a statistical analysis plans and randomisation schemes, advising on technical challenges arising, and analysing trial data. I also developed educational materials and delivered seminars for clinicians on the topic of good research practices.
+
+### Research assistant
+
+-   Peter Doherty Institute for Infection and Immunity, University of Melbourne
+    -   September 2019 – January 2023
+
+As part of the International and Immigrant Health Group I provided statistical support to the research team. Major achievements included the development of a REDCap database and provision of on-site research training for local staff for an evaluation of a dietary and lifestyle intervention in a remote Aboriginal community in the Northern Territory, and a systematic review of type 2 diabetes in resettled refugee and asylum seeker populations.
+
+-   Centre for Health Policy, University of Melbourne
+    -   April 2018 – January 2022
+
+I supported Emeritus Professor Lesleyanne Hawthorne in the examination of skilled migration to Australia. My work revolved around sourcing data, understanding its complexities, and summarising it to capture quantitative trends in skilled migration to Australia. ABS data products, including the census, were used, as well as administrative data from the Department of Home Affairs, the Australian Health Practitioner Regulation Agency, and the Occupational English Test. We also collaborated with Canadian colleagues to produce a comparison between Australia and Canada's migration programmes.
+
+-   Melbourne Institute, University of Melbourne
+    -   May 2019 – February 2020
+
+In this short-term role I prepared the final wave of the Medicine in Australia: Balancing Employment and Life survey for release. This involved data cleaning, consistency checking, and updating the user manual to reflect changes to the survey, a process which was technical and required great attention to detail. I was also the data custodian, managing the secure transfer of data for research purposes. This role was challenging as I inherited a great deal of code with minimal documentation, however I spent the time to understand how it worked, added the necessary updates, and wrote my own documentation for future reference.
+
+### Biostatistician
+
+-   Melbourne EpiCentre, Royal Melbourne Hospital
+    -   November 2017 – May 2019
+
+I worked as a statistical consultant providing support to clinicians engaged in medical research. The consulting process began with meetings to identify the clinicians' specific research questions and how they could be answered with data and statistical techniques, and concluded with the analysis and writing up of results suitable for publication. During my time here I also set up a REDCap database for the IMPETUS-D multi-centre randomised clinical trial and managed the integration of existing administrative data into the database.
+
+## Volunteering
+
+### Wearer of many hats
+
+-   Statistical Society of Australia
+    -   December 2018 – Present
+
+Since joining the SSA back in 2018 I have taken on many different voluntary roles, including:
+
+-   Secretary and then President of the Victorian and Tasmanian Branch
+-   Coordinator of the 2021 Early Career and Student Statisticians Conference
+-   Committee member and Secretary of the Equity, Diversity, and Inclusion (EDI) committee
+-   Committee member of the Reconciliation Action Plan committee
+-   Mentor in the SSA's Mentoring Program
+
+Across these roles I coordinated strategic planning, managed teams, maintained relationships with external organisations, surveyed and reported on EDI in the Australian statistics profession, and wrote EDI recommendations for the Society.
+
+## Research supervision
+
+Fourth-year psychology honours research: Madeley, B. *Intentions and preferences of adults with diabetes toward seeking psychological support*.
+
+Fourth-year psychology honours research: Chhatiawala, A. *Differences in coping self-efficacy between adults with type 1 and type 2 diabetes and the association with emotional-well-being*.
+
+Medical student one-semester research project: Haussegger, Z. *Sleep and Mental Health in Aboriginal and Torres Strait Islander Young People: A retrospective data analysis*.
+
+Medical student one-semester research project: Moffroid, H. *‘Next Generation Youth Well-being Study:’ The importance of cultural connectedness for Aboriginal adolescent health and wellbeing.*
+
+## Awards
+
+T-shirt design competition winner — Australian Statistical Conference — December 2023
+
+President's Award for Leadership in Statistics — Statistical Society of Australia — August 2022
+
+T-shirt design competition winner — Statistical Society of Australia — February 2021
+
+## Memberships and Accreditations
+
+Public Health Association Australia — 2024 – Present
+
+International Society of Non-Binary Scientists — 2021 – Present
+
+International Population Data Linkage Network — 2020 – Present
+
+Accredited Graduate Statistician, Statistical Society of Australia — 2018 – 2026
+
+Statistical Society of Australia — 2017 – Present
+
+## Professional Development
+
+### Workshops
+
+Aug 2024 — Spatial Analysis in R — Australian Consortium for Social and Political Research Incorporated
+
+Jun 2024 — Working Smarter with Targets presented by Miles McBain — Statistical Society of Australia
+
+Nov 2021 — A Crash Course in SQL — Statistical Society of Australia
+
+Jul 2021 — AMSI Winter School for Statistical Data Science — Australian Mathematical Sciences Institute
+
+Dec 2020 — Data wrangling with R — Statistical Society of Australia
+
+Nov 2020 — Data visualisation with R — Statistical Society of Australia
+
+Oct 2020 — Semiparametric regression in R — Statistical Society of Australia
+
+### Conferences
+
+Dec 2023 — Attendee — Australian Statistical Conference and Australian Conference on Teaching Statistics
+
+Oct 2023 — Attendee — Aboriginal and Torres Strait Islander Mathematics Alliance Conference
+
+Sep 2022 — Presenter — International Population Data Linkage Network Conference
+
+Dec 2021 — Attendee — 9th SNAICC Annual Conference
+
+Jul 2021 — Presenter — The Early Career and Student Statisticians Conference
+
+Nov 2020 — Attendee — International Population Data Linkage Network Conference
+
+Oct 2018 — Presenter — International Metropolis Conference
+
+Aug 2018 — Attendee — Joint International Society for Clinical Biostatistics and Australian Statistical Conference
+
+Jul 2018 — Attendee — useR! Conference Brisbane

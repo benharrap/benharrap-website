@@ -1,0 +1,13 @@
+---
+title: "What I Didn't Learn at University"
+author: 'Ben Harrap'
+date: 2021-08-03
+categories: 
+  - academia
+---
+
+I presented this talk at the Early Career and Student Statistician's Conference in 2021. I found that while I learned a lot at university about statistics and data, I didn't learn a great deal about what it's like practising statistics in an applied setting. So I made this talk, where I talk about all the things I learned in the first few years of working after graduating from university.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NT6hW_G5D_g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+If you have any thoughts about the video or wanted to chat about your experience transitioning out of the student life, let me know on Bluesky!

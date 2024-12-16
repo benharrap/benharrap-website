@@ -1,9 +1,0 @@
----
-title: "Why was Christmas ruined for the Germans?"
-author: "Ben Harrap"
-date: 2020-12-03
-categories: ["Self"]
-tags: ["Self", "Joke"]
----
-
-Because all their cakes were stollen.
