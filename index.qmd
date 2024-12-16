@@ -8,7 +8,7 @@ about:
   image-alt: "A portrait photo of Ben, they've got their hair up in a bun, are wearing a white and navy striped jumper, and are smiling."
   links:
     - text: "{{< fa brands bluesky >}}"
-      href: https://scholar.google.com/citations?user=Gago-6IAAAAJ&hl=en
+      href: https://bsky.app/profile/bharrap.bsky.social
     - text: "{{< fa brands linkedin >}}"
       href: https://www.linkedin.com/in/ben-harrap-08612861/
     - text: "{{< fa brands github >}}"

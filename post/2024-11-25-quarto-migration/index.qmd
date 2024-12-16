@@ -1,7 +1,7 @@
 ---
 title: "Migrating from blogdown/Hugo to Quarto"
 author: "Ben Harrap"
-date: 2024-11-25
+date: 2024-12-16
 toc: true
 categories: 
   -   quarto
@@ -14,25 +14,9 @@ So my old website became too painful to keep updated thanks to version differenc
 
 The main thing I wanted to do was replicate my old website in that the home page contained my bio and some external links, with my blog posts on a separate page. To do this I started off making a new 'Quarto Blog' project in RStudio following the [documentation on Quarto's website](https://quarto.org/docs/websites/website-blog.html). It's important to select blog, not website at this step.
 
-The very first thing you want to do is swap the YAML between the `about.qmd` and `index.qmd` files. This is because the index is the home page for your website. Quarto's default is to make the blog your home page, but we don't want that. Swapping the YAML puts your bio as the home page. I also renamed the `posts` folder to `post`, just in case that mattered but I'm not sure it does.
+The very first thing you want to do is swap the YAML between the `about.qmd` and `index.qmd` files. This is because `index.qmd` is the home page for your website. Quarto's default is to make the blog your home page, but we don't want that. Swapping the YAML puts your bio as the home page. I also renamed the `posts` folder to `post`, just in case that mattered but I'm not sure it does.
 
-The next thing is to rename `about.qmd`, calling it `post.qmd`. This is now your main page for your blog and it has the same URL structure as the old Hugo Academic template. This means when you migrate your blog posts from your old to your new website, the URLs won't break. Yay!
-
-## Changing the website font
-
-To change the font on your website, edit `_quarto.yml`. I like Nunito which is listed on Google Fonts, you can see it added here:
-
-```
-format:
-  html:
-    theme: custom.scss
-    header-includes: |
-      <link href=https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap rel="stylesheet">
-
-mainfont: Nunito
-```
-
-On Google Fonts, when you find the font you like click on the 'Get font' button, then '<> Get embed code', then copy the third `<link>` tag from the box with code that goes in your HTML `<head>` section and replace the above accordingly, then update the `mainfont` option with the name of the font.
+The next thing is to rename `about.qmd` to `post.qmd`. This is now your main page for your blog and it has the same URL structure as the old Hugo Academic template. This means when you migrate your blog posts from your old to your new website, the URLs won't break. Yay!
 
 ## Migrating blog posts
 
@@ -47,7 +31,9 @@ Quarto's method of organising files used in blog posts is way better than blogdo
   -   etc.
 ```
 
-The name of each blog post's folder will be used to create the URL. This means if you want to keep the URLs of your blog posts the same, you must give each blog post's folder the same name as the original `.Rmd` file. To copy the content across, just copy and paste the original `.Rmd` file and rename it to `index.qmd`. Note the change in extension from `.Rmd` to `.qmd`.
+The name of each blog post's folder will be used to create the URL. This means if you want to keep the URLs of your blog posts the same, you must give each blog post's folder the same name as the original `.Rmd` file. 
+
+To copy the content across, just copy and paste the original `.Rmd` file and rename it to `index.qmd`. Note the change in extension from `.Rmd` to `.qmd`.
 
 For example, my blog post reflecting on my PhD experience was originally written in a file called `2024-08-10-phd-reflection.Rmd`. This means I would create a folder within the `post` folder called `2024-08-10-phd-reflection`, put my original blog post file `2024-08-10-phd-reflection.Rmd` inside this folder and rename the file to `index.qmd`. Building on the above example, this would look like:
 
@@ -65,11 +51,11 @@ Now you've changed your original `.Rmd` files to `.qmd` files by just renaming t
 
 The main thing is to delete `tags: []`. Quarto only uses `categories`. Without knowing what other YAML options you were using it's hard to say what else needs to change but if you try and render your website it will either work or not work, and if it doesn't work something still needs fixing.
 
-An example of the YAML for my PhD reflection blog post is seen below:
+An example of the YAML for my PhD reflection blog post is:
 
 ::: {.panel-tabset}
 
-## Old Rmd YAML
+## Old .Rmd YAML
 
 ```
 title: "Reflecting on my PhD experience"
@@ -79,7 +65,7 @@ categories: ["Academic", "Self"]
 tags: ["Academic","PhD","Research","Learning"]
 ```
 
-## New qmd YAML
+## New .qmd YAML
 
 ```
 title: "Reflecting on my PhD experience"
@@ -95,7 +81,7 @@ categories:
 
 ### Moving images, files, etc.
 
-If your blog post referenced any files, such as images, you'll need to move them to the blog post's folder and update the path in your blog post file. My confirmation report blog post is a good example of this, it uses images, a bibliography, and a `.csl` file. After moving all the resources to the blog post's folder, I updated the YAML:
+If your old blog posts referenced any files, such as images, you'll need to move them to the new blog post's folder and update the path in your blog post's new `index.qmd` file. My confirmation report blog post is a good example of this, it uses images, a bibliography, and a `.csl` file. After moving all the resources to the blog post's folder, I updated the YAML:
 
 ::: {.panel-tabset}
 
@@ -119,13 +105,13 @@ And I updated the locations of the images:
 
 ::: {.panel-tabset}
 
-## Old image tag
+## Old image location
 
 ```
 ![](/img/confirmation-report/system-overview.png)
 ```
 
-## New image tag
+## New image location
 
 ```
 ![](system-overview.png)
@@ -148,3 +134,137 @@ image: false
 ```
 
 If you don't have any images in your blog post but you still specify `image: false`, Quarto will crash when trying to render your website. I had a few moments of madness figuring this out!
+
+## Modifying the home page layout
+
+I liked the home page layout of the academic theme so I wanted to replicate it somewhat. There were a few things that needed to be changed, including the social buttons and the profile picture. If you haven't already created a `custom.scss` file, go ahead and create one (see the [Quarto documentation](https://quarto.org/docs/output-formats/html-themes.html#custom-themes){target="_blank"}), as we'll need it for this section.
+
+Next, in `_quarto.yml`, add the following:
+
+```
+theme: custom.scss
+```
+
+Which tells Quarto to use your custom styles.
+
+### Tinkering with your picture
+
+Refer to the Quarto [About Page documentation](https://quarto.org/docs/websites/website-blog.html#about-page){target="_blank"} for more templates, but the `trestles` template was the one that gave me Hugo Academic vibes. To use this template, add the following to your site's `index.qmd`:
+
+```
+image: "img/ben.jpg"
+about:
+  template: trestles
+  image-shape: round
+  image-alt: "A portrait photo of Ben, they've got their hair up in a bun, are wearing a white and navy striped jumper, and are smiling."
+```
+
+The `image` argument points to the profile picture you want to use. The main problem with the image in the `trestles` template is in mobile view - it touches the navigation bar at the top and I don't like that. To fix it, add the following to your `custom.scss` file:
+
+```
+.about-image {
+  margin-top: 20px;
+  width: 15rem !important;
+  height: 15rem !important;
+}
+```
+
+The `margin-top` is the argument that stops the image and navbar from touching, the width and height arguments are personal preference. I find in mobile the default size of the image is so large that it bumps the start of the 'About me' text off-screen. By making the image slightly smaller, a couple of lines of text are visible and we hopefully entice people to read more!
+
+### Social buttons
+
+The default layout of the social links in the Quarto blog (see the [About Page documentation](https://quarto.org/docs/websites/website-blog.html#about-page){target="_blank"}) is to create rectangular buttons. This isn't the worst, but I like the look of just using the company logos. The other downside of the Quarto default is that in mobile view it looks shit, the buttons are arranged vertically and take up the whole screen. That means if you have a lot of links people have to scroll past them to find out more about you.
+
+#### Including extra icons 
+
+To get the buttons looking like they do on my home page we need to include the `fontawesome` extension and add some custom styling. The `fontawesome` extension is needed for a couple of icons which aren't included in the default Bootstrap pack. To install the extension, run:
+
+`quarto add quarto-ext/fontawesome`
+
+from the RStudio terminal. Then add the links like you would according to the About Page documentation. The Font Awesome icons are included as follows:
+
+```
+links:
+    - text: "{{{< fa brands bluesky >}}}"
+      href: https://bsky.app/profile/bharrap.bsky.social
+```
+
+The Font Awesome website has a list of all available icons ([https://fontawesome.com/search](https://fontawesome.com/search){target="_blank"}), just make sure you tick the 'Free' filter.
+
+#### Changing the icon orientation
+
+Add the following three styles to your `custom.scss` file:
+
+```
+.about-link-text {
+  font-size: 2rem;
+}
+```
+
+This increases the size of the icons, they look comically small otherwise. Make it larger if you like.
+
+```
+.about-link {
+  border: none !important;
+}
+```
+
+This removes the rounded border from the icons. It's ugly and we don't need it.
+
+```
+.about-links {
+  flex-direction: row !important;
+}
+```
+
+This is **the most important bit**. This changes the orientation of the icons to be in a row, rather than a column, when viewing the website in a narrow window (e.g. on mobile or a small browser window).
+
+## Other bits
+
+There were a couple of other bits that I found annoying to do but weren't directly related to replicating the Hugo Academic theme, so I've included them here.
+
+### Changing fonts
+
+There seem to be a few ways to change fonts in Quarto but only the following way worked for me - in particular for the monospaced font. I like Nunito for regular text and Noto Sans Mono for monospaced text. To change the font, head over to Google Fonts and find the fonts you like.
+
+When you find the fonts you like click on the 'Get font' button, then '<> Get embed code', then copy the third `<link>` tag from the HTML `<head>` code. Paste that tag into `_quarto.yml` as follows:
+
+```
+format:
+  html:
+    theme: custom.scss
+    header-includes: |
+      <link href=https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap rel="stylesheet">
+```
+
+Next, add the following to the `scss:defaults` section of your `custom.scss` file:
+
+```
+/*-- scss:defaults --*/
+
+$web-font-path: "Break";
+$font-family-sans-serif: "Nunito", sans-serif !default;
+$font-family-monospace: "Noto Sans Mono", monospace !default;
+```
+
+The reason for the `$web-font-path` argument is that I couldn't figure out how to override the default monospace font being used until I came across [this handy Stack Overflow answer](https://stackoverflow.com/questions/75464776/how-to-override-the-default-font-using-locally-stored-fonts-in-themes){target="_blank"}. The following two arguments just set the fonts for your sans-serif and monospace text.
+
+### Adding the 'Buy me a coffee' widget
+
+Cailin, my first coffee supporter, very generously offered to buy me a coffee as thanks for the RStudio themes I made, which prompted me to create a [Buy me a coffee](https://buymeacoffee.com/benharrap){target="_blank"} account. Then I needed to add the widget to my website, which is a pretty simple task.
+
+First, create an account if you don't already have one, then find your way to 'Website widget' in the 'Buttons & Graphics' menu. Once you've create the button, copy the script.
+
+Next, paste it in to your `_quarto.yml` file in the `header-includes` argument. Building on our example before where we already included the Google Font link, we paste the Buy me a coffee script on a new line with the same indentation as the link.
+
+```
+format:
+  html:
+    header-includes: |
+      <link href=https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap rel="stylesheet">
+      <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="benharrap" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ffddd6" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+```
+
+To change the colour of the widget, update the hex code in the `data-color` argument. If you entered a widget message when you generated it, there will be text in the `data-message` argument. Personally I would recommend turning this off as it is pops up every single time a new page is loaded and gets very annoying very quickly. If you leave the argument blank (i.e. `data-message=""`) the button sits there quietly.
+
+That's all my advice for now - and hey if you found it useful, why not buy me a coffee!

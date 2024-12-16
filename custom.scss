@@ -11,6 +11,10 @@ $navbar-toggler-icon-bg: url("/img/randy.png");
 
 // Text
 
+$web-font-path: "Break";
+$font-family-sans-serif: "Nunito", sans-serif !default;
+$font-family-monospace: "Noto Sans Mono", monospace !default;
+
 $body-color: $primary !default;
 $headings-color: $primary !default;
 
@@ -25,7 +29,7 @@ $table-bg-scale: 0% !default;
   background-color: #ffddd6;
 }
 
-/* Fix the centering of the title in mobile view */
+// Fix the centering of the title in mobile view
 .navbar-title {
   padding-right: 2em;
 }
@@ -48,12 +52,9 @@ $table-bg-scale: 0% !default;
 
 .about-link {
   border: none !important;
-  padding-top: 0px !important;
-  padding-left: 5px !important;
-  padding-right: 5px !important;
 }
 
-/* Set the about links to be in a row, not col */
+// Set the about links to be in a row, not col
 .about-links {
   flex-direction: row !important;
 }
@@ -64,14 +65,14 @@ $table-bg-scale: 0% !default;
   margin-top: 20px;
 }
 
-/* center the text and icons on the CV page in the centered blocks */
+// center the text and icons on the CV page in the centered blocks
 .centered {
   text-align: center;
 }
 
 .centered i {
   font-size: 3rem;
-  color: #558061;
+  color: #1f233d;
 }
 
 .quarto-title-banner {

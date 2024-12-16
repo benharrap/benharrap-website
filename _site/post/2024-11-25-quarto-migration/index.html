@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ben Harrap">
-<meta name="dcterms.date" content="2024-11-25">
+<meta name="dcterms.date" content="2024-12-16">
 
-<title>Ben Harrap - Migrating from blogdown/Hugo to Quarto</title>
+<title>Migrating from blogdown/Hugo to Quarto – Ben Harrap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,10 +34,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a49b6220cb553e10736a99cfad3fdb80.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-96a7fbfa78fef49f6b6144206709ecb2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -53,11 +53,11 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;family=Source+Sans+3:ital,wght@0,200..900;1,200..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet">
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="benharrap" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ffddd6" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
 
-<meta property="og:title" content="Ben Harrap - Migrating from blogdown/Hugo to Quarto">
+<meta property="og:title" content="Migrating from blogdown/Hugo to Quarto – Ben Harrap">
 <meta property="og:description" content="">
 <meta property="og:site_name" content="Ben Harrap">
 <meta property="og:locale" content="en_AU">
@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Ben Harrap</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -104,13 +104,22 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#replicating-the-hugo-academic-url-structure" id="toc-replicating-the-hugo-academic-url-structure" class="nav-link active" data-scroll-target="#replicating-the-hugo-academic-url-structure">Replicating the Hugo Academic URL structure</a></li>
-  <li><a href="#changing-the-website-font" id="toc-changing-the-website-font" class="nav-link" data-scroll-target="#changing-the-website-font">Changing the website font</a></li>
   <li><a href="#migrating-blog-posts" id="toc-migrating-blog-posts" class="nav-link" data-scroll-target="#migrating-blog-posts">Migrating blog posts</a>
   <ul class="collapse">
   <li><a href="#keeping-urls-consistent" id="toc-keeping-urls-consistent" class="nav-link" data-scroll-target="#keeping-urls-consistent">Keeping URLs consistent</a></li>
   <li><a href="#translating-.rmd-to-.qmd-files" id="toc-translating-.rmd-to-.qmd-files" class="nav-link" data-scroll-target="#translating-.rmd-to-.qmd-files">Translating <code>.Rmd</code> to <code>.qmd</code> files</a></li>
   <li><a href="#moving-images-files-etc." id="toc-moving-images-files-etc." class="nav-link" data-scroll-target="#moving-images-files-etc.">Moving images, files, etc.</a></li>
   <li><a href="#setting-preview-images" id="toc-setting-preview-images" class="nav-link" data-scroll-target="#setting-preview-images">Setting preview images</a></li>
+  </ul></li>
+  <li><a href="#modifying-the-home-page-layout" id="toc-modifying-the-home-page-layout" class="nav-link" data-scroll-target="#modifying-the-home-page-layout">Modifying the home page layout</a>
+  <ul class="collapse">
+  <li><a href="#tinkering-with-your-picture" id="toc-tinkering-with-your-picture" class="nav-link" data-scroll-target="#tinkering-with-your-picture">Tinkering with your picture</a></li>
+  <li><a href="#social-buttons" id="toc-social-buttons" class="nav-link" data-scroll-target="#social-buttons">Social buttons</a></li>
+  </ul></li>
+  <li><a href="#other-bits" id="toc-other-bits" class="nav-link" data-scroll-target="#other-bits">Other bits</a>
+  <ul class="collapse">
+  <li><a href="#changing-fonts" id="toc-changing-fonts" class="nav-link" data-scroll-target="#changing-fonts">Changing fonts</a></li>
+  <li><a href="#adding-the-buy-me-a-coffee-widget" id="toc-adding-the-buy-me-a-coffee-widget" class="nav-link" data-scroll-target="#adding-the-buy-me-a-coffee-widget">Adding the ‘Buy me a coffee’ widget</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -141,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 25, 2024</p>
+      <p class="date">December 16, 2024</p>
     </div>
   </div>
   
@@ -157,20 +166,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="replicating-the-hugo-academic-url-structure" class="level2">
 <h2 class="anchored" data-anchor-id="replicating-the-hugo-academic-url-structure">Replicating the Hugo Academic URL structure</h2>
 <p>The main thing I wanted to do was replicate my old website in that the home page contained my bio and some external links, with my blog posts on a separate page. To do this I started off making a new ‘Quarto Blog’ project in RStudio following the <a href="https://quarto.org/docs/websites/website-blog.html">documentation on Quarto’s website</a>. It’s important to select blog, not website at this step.</p>
-<p>The very first thing you want to do is swap the YAML between the <code>about.qmd</code> and <code>index.qmd</code> files. This is because the index is the home page for your website. Quarto’s default is to make the blog your home page, but we don’t want that. Swapping the YAML puts your bio as the home page. I also renamed the <code>posts</code> folder to <code>post</code>, just in case that mattered but I’m not sure it does.</p>
-<p>The next thing is to rename <code>about.qmd</code>, calling it <code>post.qmd</code>. This is now your main page for your blog and it has the same URL structure as the old Hugo Academic template. This means when you migrate your blog posts from your old to your new website, the URLs won’t break. Yay!</p>
-</section>
-<section id="changing-the-website-font" class="level2">
-<h2 class="anchored" data-anchor-id="changing-the-website-font">Changing the website font</h2>
-<p>To change the font on your website, edit <code>_quarto.yml</code>. I like Nunito which is listed on Google Fonts, you can see it added here:</p>
-<pre><code>format:
-  html:
-    theme: custom.scss
-    header-includes: |
-      &lt;link href=https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;family=Source+Sans+3:ital,wght@0,200..900;1,200..900&amp;display=swap rel="stylesheet"&gt;
-
-mainfont: Nunito</code></pre>
-<p>On Google Fonts, when you find the font you like click on the ‘Get font’ button, then ‘&lt;&gt; Get embed code’, then copy the third <code>&lt;link&gt;</code> tag from the box with code that goes in your HTML <code>&lt;head&gt;</code> section and replace the above accordingly, then update the <code>mainfont</code> option with the name of the font.</p>
+<p>The very first thing you want to do is swap the YAML between the <code>about.qmd</code> and <code>index.qmd</code> files. This is because <code>index.qmd</code> is the home page for your website. Quarto’s default is to make the blog your home page, but we don’t want that. Swapping the YAML puts your bio as the home page. I also renamed the <code>posts</code> folder to <code>post</code>, just in case that mattered but I’m not sure it does.</p>
+<p>The next thing is to rename <code>about.qmd</code> to <code>post.qmd</code>. This is now your main page for your blog and it has the same URL structure as the old Hugo Academic template. This means when you migrate your blog posts from your old to your new website, the URLs won’t break. Yay!</p>
 </section>
 <section id="migrating-blog-posts" class="level2">
 <h2 class="anchored" data-anchor-id="migrating-blog-posts">Migrating blog posts</h2>
@@ -181,7 +178,8 @@ mainfont: Nunito</code></pre>
   -   2024-11-25-quarto-migration
   -   2024-08-10-phd-reflection
   -   etc.</code></pre>
-<p>The name of each blog post’s folder will be used to create the URL. This means if you want to keep the URLs of your blog posts the same, you must give each blog post’s folder the same name as the original <code>.Rmd</code> file. To copy the content across, just copy and paste the original <code>.Rmd</code> file and rename it to <code>index.qmd</code>. Note the change in extension from <code>.Rmd</code> to <code>.qmd</code>.</p>
+<p>The name of each blog post’s folder will be used to create the URL. This means if you want to keep the URLs of your blog posts the same, you must give each blog post’s folder the same name as the original <code>.Rmd</code> file.</p>
+<p>To copy the content across, just copy and paste the original <code>.Rmd</code> file and rename it to <code>index.qmd</code>. Note the change in extension from <code>.Rmd</code> to <code>.qmd</code>.</p>
 <p>For example, my blog post reflecting on my PhD experience was originally written in a file called <code>2024-08-10-phd-reflection.Rmd</code>. This means I would create a folder within the <code>post</code> folder called <code>2024-08-10-phd-reflection</code>, put my original blog post file <code>2024-08-10-phd-reflection.Rmd</code> inside this folder and rename the file to <code>index.qmd</code>. Building on the above example, this would look like:</p>
 <pre><code>-   post
   -   2024-11-25-quarto-migration
@@ -193,9 +191,9 @@ mainfont: Nunito</code></pre>
 <h3 class="anchored" data-anchor-id="translating-.rmd-to-.qmd-files">Translating <code>.Rmd</code> to <code>.qmd</code> files</h3>
 <p>Now you’ve changed your original <code>.Rmd</code> files to <code>.qmd</code> files by just renaming them, you’ll need to fix some of the YAML.</p>
 <p>The main thing is to delete <code>tags: []</code>. Quarto only uses <code>categories</code>. Without knowing what other YAML options you were using it’s hard to say what else needs to change but if you try and render your website it will either work or not work, and if it doesn’t work something still needs fixing.</p>
-<p>An example of the YAML for my PhD reflection blog post is seen below:</p>
+<p>An example of the YAML for my PhD reflection blog post is:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Old Rmd YAML</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">New qmd YAML</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Old .Rmd YAML</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">New .qmd YAML</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <pre><code>title: "Reflecting on my PhD experience"
@@ -218,7 +216,7 @@ categories:
 </section>
 <section id="moving-images-files-etc." class="level3">
 <h3 class="anchored" data-anchor-id="moving-images-files-etc.">Moving images, files, etc.</h3>
-<p>If your blog post referenced any files, such as images, you’ll need to move them to the blog post’s folder and update the path in your blog post file. My confirmation report blog post is a good example of this, it uses images, a bibliography, and a <code>.csl</code> file. After moving all the resources to the blog post’s folder, I updated the YAML:</p>
+<p>If your old blog posts referenced any files, such as images, you’ll need to move them to the new blog post’s folder and update the path in your blog post’s new <code>index.qmd</code> file. My confirmation report blog post is a good example of this, it uses images, a bibliography, and a <code>.csl</code> file. After moving all the resources to the blog post’s folder, I updated the YAML:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Old Rmd YAML</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">New YAML</a></li></ul>
 <div class="tab-content">
@@ -234,7 +232,7 @@ csl: "harvard-the-university-of-melbourne.csl"</code></pre>
 </div>
 <p>And I updated the locations of the images:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Old image tag</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">New image tag</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Old image location</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">New image location</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <pre><code>![](/img/confirmation-report/system-overview.png)</code></pre>
@@ -252,6 +250,93 @@ csl: "harvard-the-university-of-melbourne.csl"</code></pre>
 <p>If you don’t want any images displayed, set the option to be false:</p>
 <pre><code>image: false</code></pre>
 <p>If you don’t have any images in your blog post but you still specify <code>image: false</code>, Quarto will crash when trying to render your website. I had a few moments of madness figuring this out!</p>
+</section>
+</section>
+<section id="modifying-the-home-page-layout" class="level2">
+<h2 class="anchored" data-anchor-id="modifying-the-home-page-layout">Modifying the home page layout</h2>
+<p>I liked the home page layout of the academic theme so I wanted to replicate it somewhat. There were a few things that needed to be changed, including the social buttons and the profile picture. If you haven’t already created a <code>custom.scss</code> file, go ahead and create one (see the <a href="https://quarto.org/docs/output-formats/html-themes.html#custom-themes" target="_blank">Quarto documentation</a>), as we’ll need it for this section.</p>
+<p>Next, in <code>_quarto.yml</code>, add the following:</p>
+<pre><code>theme: custom.scss</code></pre>
+<p>Which tells Quarto to use your custom styles.</p>
+<section id="tinkering-with-your-picture" class="level3">
+<h3 class="anchored" data-anchor-id="tinkering-with-your-picture">Tinkering with your picture</h3>
+<p>Refer to the Quarto <a href="https://quarto.org/docs/websites/website-blog.html#about-page" target="_blank">About Page documentation</a> for more templates, but the <code>trestles</code> template was the one that gave me Hugo Academic vibes. To use this template, add the following to your site’s <code>index.qmd</code>:</p>
+<pre><code>image: "img/ben.jpg"
+about:
+  template: trestles
+  image-shape: round
+  image-alt: "A portrait photo of Ben, they've got their hair up in a bun, are wearing a white and navy striped jumper, and are smiling."</code></pre>
+<p>The <code>image</code> argument points to the profile picture you want to use. The main problem with the image in the <code>trestles</code> template is in mobile view - it touches the navigation bar at the top and I don’t like that. To fix it, add the following to your <code>custom.scss</code> file:</p>
+<pre><code>.about-image {
+  margin-top: 20px;
+  width: 15rem !important;
+  height: 15rem !important;
+}</code></pre>
+<p>The <code>margin-top</code> is the argument that stops the image and navbar from touching, the width and height arguments are personal preference. I find in mobile the default size of the image is so large that it bumps the start of the ‘About me’ text off-screen. By making the image slightly smaller, a couple of lines of text are visible and we hopefully entice people to read more!</p>
+</section>
+<section id="social-buttons" class="level3">
+<h3 class="anchored" data-anchor-id="social-buttons">Social buttons</h3>
+<p>The default layout of the social links in the Quarto blog (see the <a href="https://quarto.org/docs/websites/website-blog.html#about-page" target="_blank">About Page documentation</a>) is to create rectangular buttons. This isn’t the worst, but I like the look of just using the company logos. The other downside of the Quarto default is that in mobile view it looks shit, the buttons are arranged vertically and take up the whole screen. That means if you have a lot of links people have to scroll past them to find out more about you.</p>
+<section id="including-extra-icons" class="level4">
+<h4 class="anchored" data-anchor-id="including-extra-icons">Including extra icons</h4>
+<p>To get the buttons looking like they do on my home page we need to include the <code>fontawesome</code> extension and add some custom styling. The <code>fontawesome</code> extension is needed for a couple of icons which aren’t included in the default Bootstrap pack. To install the extension, run:</p>
+<p><code>quarto add quarto-ext/fontawesome</code></p>
+<p>from the RStudio terminal. Then add the links like you would according to the About Page documentation. The Font Awesome icons are included as follows:</p>
+<pre><code>links:
+    - text: "{{&lt; fa brands bluesky &gt;}}"
+      href: https://bsky.app/profile/bharrap.bsky.social</code></pre>
+<p>The Font Awesome website has a list of all available icons (<a href="https://fontawesome.com/search" target="_blank">https://fontawesome.com/search</a>), just make sure you tick the ‘Free’ filter.</p>
+</section>
+<section id="changing-the-icon-orientation" class="level4">
+<h4 class="anchored" data-anchor-id="changing-the-icon-orientation">Changing the icon orientation</h4>
+<p>Add the following three styles to your <code>custom.scss</code> file:</p>
+<pre><code>.about-link-text {
+  font-size: 2rem;
+}</code></pre>
+<p>This increases the size of the icons, they look comically small otherwise. Make it larger if you like.</p>
+<pre><code>.about-link {
+  border: none !important;
+}</code></pre>
+<p>This removes the rounded border from the icons. It’s ugly and we don’t need it.</p>
+<pre><code>.about-links {
+  flex-direction: row !important;
+}</code></pre>
+<p>This is <strong>the most important bit</strong>. This changes the orientation of the icons to be in a row, rather than a column, when viewing the website in a narrow window (e.g.&nbsp;on mobile or a small browser window).</p>
+</section>
+</section>
+</section>
+<section id="other-bits" class="level2">
+<h2 class="anchored" data-anchor-id="other-bits">Other bits</h2>
+<p>There were a couple of other bits that I found annoying to do but weren’t directly related to replicating the Hugo Academic theme, so I’ve included them here.</p>
+<section id="changing-fonts" class="level3">
+<h3 class="anchored" data-anchor-id="changing-fonts">Changing fonts</h3>
+<p>There seem to be a few ways to change fonts in Quarto but only the following way worked for me - in particular for the monospaced font. I like Nunito for regular text and Noto Sans Mono for monospaced text. To change the font, head over to Google Fonts and find the fonts you like.</p>
+<p>When you find the fonts you like click on the ‘Get font’ button, then ‘&lt;&gt; Get embed code’, then copy the third <code>&lt;link&gt;</code> tag from the HTML <code>&lt;head&gt;</code> code. Paste that tag into <code>_quarto.yml</code> as follows:</p>
+<pre><code>format:
+  html:
+    theme: custom.scss
+    header-includes: |
+      &lt;link href=https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap rel="stylesheet"&gt;</code></pre>
+<p>Next, add the following to the <code>scss:defaults</code> section of your <code>custom.scss</code> file:</p>
+<pre><code>/*-- scss:defaults --*/
+
+$web-font-path: "Break";
+$font-family-sans-serif: "Nunito", sans-serif !default;
+$font-family-monospace: "Noto Sans Mono", monospace !default;</code></pre>
+<p>The reason for the <code>$web-font-path</code> argument is that I couldn’t figure out how to override the default monospace font being used until I came across <a href="https://stackoverflow.com/questions/75464776/how-to-override-the-default-font-using-locally-stored-fonts-in-themes" target="_blank">this handy Stack Overflow answer</a>. The following two arguments just set the fonts for your sans-serif and monospace text.</p>
+</section>
+<section id="adding-the-buy-me-a-coffee-widget" class="level3">
+<h3 class="anchored" data-anchor-id="adding-the-buy-me-a-coffee-widget">Adding the ‘Buy me a coffee’ widget</h3>
+<p>Cailin, my first coffee supporter, very generously offered to buy me a coffee as thanks for the RStudio themes I made, which prompted me to create a <a href="https://buymeacoffee.com/benharrap" target="_blank">Buy me a coffee</a> account. Then I needed to add the widget to my website, which is a pretty simple task.</p>
+<p>First, create an account if you don’t already have one, then find your way to ‘Website widget’ in the ‘Buttons &amp; Graphics’ menu. Once you’ve create the button, copy the script.</p>
+<p>Next, paste it in to your <code>_quarto.yml</code> file in the <code>header-includes</code> argument. Building on our example before where we already included the Google Font link, we paste the Buy me a coffee script on a new line with the same indentation as the link.</p>
+<pre><code>format:
+  html:
+    header-includes: |
+      &lt;link href=https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;family=Source+Sans+3:ital,wght@0,200..900;1,200..900&amp;display=swap rel="stylesheet"&gt;
+      &lt;script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="benharrap" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ffddd6" data-position="Right" data-x_margin="18" data-y_margin="18"&gt;&lt;/script&gt;</code></pre>
+<p>To change the colour of the widget, update the hex code in the <code>data-color</code> argument. If you entered a widget message when you generated it, there will be text in the <code>data-message</code> argument. Personally I would recommend turning this off as it is pops up every single time a new page is loaded and gets very annoying very quickly. If you leave the argument blank (i.e.&nbsp;<code>data-message=""</code>) the button sits there quietly.</p>
+<p>That’s all my advice for now - and hey if you found it useful, why not buy me a coffee!</p>
 
 
 </section>
@@ -293,18 +378,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -336,15 +410,35 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/nimble-pithivier-ca6481\.netlify\.app");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -441,7 +535,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
