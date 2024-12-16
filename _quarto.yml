@@ -8,6 +8,7 @@ website:
   open-graph:
     locale: en_AU
     site-name: "Ben Harrap"
+  google-analytics: "UA-447320706"
   navbar:
     right:
       - post.qmd
