@@ -1,0 +1,11 @@
+---
+title: "Publications"
+format: html
+bibliography: works.bib
+csl: apa.csl
+nocite: |
+  @*
+---
+
+:::{#refs}
+:::

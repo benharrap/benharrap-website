@@ -12,6 +12,7 @@ website:
   navbar:
     right:
       - post.qmd
+      - publications.qmd
       - cv.qmd
       - contact.qmd
   

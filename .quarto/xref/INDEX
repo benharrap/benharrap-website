@@ -70,5 +70,11 @@
   },
   "contact.qmd": {
     "contact.html": "7fe566b1"
+  },
+  "publications.qmd": {
+    "publications.html": "49f38a0b"
+  },
+  "post/2024-12-18-publications-on-your-website/index.qmd": {
+    "index.html": "270fadee"
   }
 }

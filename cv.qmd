@@ -114,7 +114,9 @@ The second was a technical report commissioned by the Productivity Commission an
 -   Indigenous Health and Epidemiology Group, University of Melbourne
     -   March 2020 – June 2024
 
-Throughout my PhD I translated findings from Aboriginal-led qualitative research and community reference group conversations into questions I could address using linked administrative datasets. This included how child protection is clustered within sibling groups, the prevalence and cumulative incidence of mental and neurodevelopmental health conditions. I used a variety of statistical methods, including survival analysis, matching methods for causal inference, and descriptive statistics and data visualisation. All of my research was written in R and RMarkdown, where I created a reproducible pipeline from data cleaning through to multiple journal articles and my final thesis.
+Throughout my PhD I translated findings from Aboriginal-led qualitative research and community reference group conversations into questions I could address using linked administrative datasets. This included how contacts by child protective services are clustered within sibling groups, the prevalence and cumulative incidence of mental and neurodevelopmental health conditions, and estimating the effect of placement in out-of-home care on rates of potentially preventable hospitalisations. 
+
+I used a variety of statistical methods, including descriptive statistics, various regression models, survival analysis, and matching methods. All of my research was written in R and RMarkdown, where I created a reproducible pipeline from data cleaning through to multiple journal articles and my final thesis.
 
 ### Biostatistician
 
@@ -123,14 +125,14 @@ Throughout my PhD I translated findings from Aboriginal-led qualitative research
 -   Grampians Health
     - September 2021 – October 2023
 
-In these two biostatistician roles I acted as the sole statistical expert in clinical research and academic settings. Across these roles I provided study design and statistical oversight for a randomised trials, including sample size calculations, developing a statistical analysis plans and randomisation schemes, advising on technical challenges arising, and analysing trial data. I also developed educational materials and delivered seminars for clinicians on the topic of good research practices.
+In these two biostatistician roles I acted as the sole statistical expert in clinical research and academic settings. Across these roles I provided study design and statistical oversight for a randomised trials, including sample size calculations, developing statistical analysis plans and randomisation schemes, advising on technical challenges arising, and analysing trial data. I also developed educational materials and delivered seminars for clinicians on the topic of good research practices.
 
 ### Research assistant
 
 -   Peter Doherty Institute for Infection and Immunity, University of Melbourne
     -   September 2019 – January 2023
 
-As part of the International and Immigrant Health Group I provided statistical support to the research team. Major achievements included the development of a REDCap database and provision of on-site research training for local staff for an evaluation of a dietary and lifestyle intervention in a remote Aboriginal community in the Northern Territory, and a systematic review of type 2 diabetes in resettled refugee and asylum seeker populations.
+As part of the International and Immigrant Health Group I provided data and statistical support to the research team. Major achievements included the development of a REDCap database and provision of on-site research training for local staff for an evaluation of a dietary and lifestyle intervention in a remote Aboriginal community in the Northern Territory, and a systematic review of type 2 diabetes in resettled refugee and asylum seeker populations.
 
 -   Centre for Health Policy, University of Melbourne
     -   April 2018 – January 2022
@@ -142,12 +144,12 @@ I supported Emeritus Professor Lesleyanne Hawthorne in the examination of skille
 
 In this short-term role I prepared the final wave of the Medicine in Australia: Balancing Employment and Life survey for release. This involved data cleaning, consistency checking, and updating the user manual to reflect changes to the survey, a process which was technical and required great attention to detail. I was also the data custodian, managing the secure transfer of data for research purposes. This role was challenging as I inherited a great deal of code with minimal documentation, however I spent the time to understand how it worked, added the necessary updates, and wrote my own documentation for future reference.
 
-### Biostatistician
+<!-- ### Biostatistician -->
 
--   Melbourne EpiCentre, Royal Melbourne Hospital
-    -   November 2017 – May 2019
+<!-- -   Melbourne EpiCentre, Royal Melbourne Hospital -->
+<!--     -   November 2017 – May 2019 -->
 
-I worked as a statistical consultant providing support to clinicians engaged in medical research. The consulting process began with meetings to identify the clinicians' specific research questions and how they could be answered with data and statistical techniques, and concluded with the analysis and writing up of results suitable for publication. During my time here I also set up a REDCap database for the IMPETUS-D multi-centre randomised clinical trial and managed the integration of existing administrative data into the database.
+<!-- I worked as a statistical consultant providing support to clinicians engaged in medical research. The consulting process began with meetings to identify the clinicians' specific research questions and how they could be answered with data and statistical techniques, and concluded with the analysis and writing up of results suitable for publication. I also set up a REDCap database for the IMPETUS-D multi-centre randomised clinical trial and managed the integration of existing administrative data into the database. -->
 
 ## Volunteering
 
@@ -172,9 +174,9 @@ Fourth-year psychology honours research: Madeley, B. *Intentions and preferences
 
 Fourth-year psychology honours research: Chhatiawala, A. *Differences in coping self-efficacy between adults with type 1 and type 2 diabetes and the association with emotional-well-being*.
 
-Medical student one-semester research project: Haussegger, Z. *Sleep and Mental Health in Aboriginal and Torres Strait Islander Young People: A retrospective data analysis*.
+Master of Medicine research project: Haussegger, Z. *Sleep and Mental Health in Aboriginal and Torres Strait Islander Young People: A retrospective data analysis*.
 
-Medical student one-semester research project: Moffroid, H. *‘Next Generation Youth Well-being Study:’ The importance of cultural connectedness for Aboriginal adolescent health and wellbeing.*
+Master of Medicine research project: Moffroid, H. *‘Next Generation Youth Well-being Study:’ The importance of cultural connectedness for Aboriginal adolescent health and wellbeing.*
 
 ## Awards
 

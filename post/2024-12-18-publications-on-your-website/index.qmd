@@ -1,0 +1,158 @@
+---
+title: "Including your publications on your Quarto website"
+author: "Ben Harrap"
+date: 2024-12-18
+toc: true
+categories: 
+  -   quarto
+  -   R
+  -   academic
+---
+
+In my efforts to continue to replicate my old website, I added a list of my publications. Read on if you'd like to do the same for your own Quarto website!
+
+## Get a `.bib` file
+
+The first thing you need to get is a bibliography with your publications in it. I would recommend getting yours from [ORCiD](https://orcid.org/){target="_blank"}. If you don't already have a profile, now's a good time to get one and start aggregating your publications in one place.
+
+Once you're logged in to your ORCiD account, scroll down to your 'Works' section, click the 'Actions' drop-down and click 'Export ALL works'. This will export all your publications to a `.bib` file. Perfect!
+
+You can of course get a `.bib` file from other places, such as Google Scholar, my issue was that Google Scholar didn't include the DOIs, which meant the list did not have clickable links for people to easily go to the articles.
+
+## Tidy up the `.bib` file
+
+Put the `.bib` file somewhere in your Quarto website folder. Mine just sits in the root folder.
+
+Next, open up the file with RStudio or whatever text editor you prefer. We need to check the entries are sensible and are going to be formatted as you expect. 
+
+### Check the titles
+
+While it does depend on what citation style you are using, it seems the majority of styles will format your article title in sentence case, which is a problem for proper nouns. For example, my paper "Mental and neurodevelopmental health needs of Aboriginal children with experience of out-of-home care: a Western Australian data-linkage study" would get formatted such that 'Aboriginal' and 'Western Australia' would be entirely lower-case, which isn't correct.
+
+To fix this, we have to 'protect' the letters we want capitalised by putting them in curly brackets `\{}`. See the example below where I have the original `.bib` entry from ORCiD and the protected entry which will preserve the capitalisation of the proper nouns.
+
+::: {.panel-tabset}
+
+## Original entry
+
+\@article{Harrap_2024,<br/>title={Mental and neurodevelopmental health needs of Aboriginal children with experience of\<0xa0>out-of-home care: a Western Australian data-linkage study},<br/>volume={48},<br/>ISSN={1326-0200},<br/>url={http://dx.doi.org/10.1016/j.anzjph.2024.100181}, DOI={10.1016/j.anzjph.2024.100181},<br/>number={5},<br/>journal={Australian and New Zealand Journal of Public Health},<br/>publisher={Elsevier BV},<br/>author={Harrap, Benjamin and Gibberd, Alison and O’Donnell, Melissa and Jones, Jocelyn and Chenhall, Richard and McNamara, Bridgette and Simons, Koen and Eades, Sandra},<br/>year={2024},<br/>month=oct,<br/>pages={100181}<br/>}
+
+## Protected entry
+
+\@article{Harrap_2024,<br/>title={Mental and neurodevelopmental health needs of {A}boriginal children with experience of\<0xa0>out-of-home care: a {W}estern {A}ustralian data-linkage study},<br/>volume={48},<br/>ISSN={1326-0200},<br/>url={http://dx.doi.org/10.1016/j.anzjph.2024.100181}, DOI={10.1016/j.anzjph.2024.100181},<br/>number={5},<br/>journal={Australian and New Zealand Journal of Public Health},<br/>publisher={Elsevier BV},<br/>author={Harrap, Benjamin and Gibberd, Alison and O’Donnell, Melissa and Jones, Jocelyn and Chenhall, Richard and McNamara, Bridgette and Simons, Koen and Eades, Sandra},<br/>year={2024},<br/>month=oct,<br/>pages={100181}<br/>}
+
+:::
+
+### Check for wacky symbols
+
+You may have noticed in the title of the above citation that `<0xa0>` appears in the title. This should just be a space but for some reason ORCiD has exported it as a non-breaking space. Just replace it with a space.
+
+Make sure you have a look through the entries for other wacky things. In my `.bib` file, the journal 'Child Abuse & Neglect' was entered as `Child Abuse {\&}amp$\mathsemicolon$ Neglect`, which should instead have been `Child Abuse {\&} Neglect`. Similarly, my coauthor Melissa O'Donnell had been listed as `Melissa O{\textquotesingle}Donnell`, which can just be replaced with `Melissa O'Donnell`.
+
+Don't worry if you can't find everything at this stage, you'll probably notice anything you missed when you check the page on your website.
+
+## Get a `.csl` file
+
+Next we need to pick the citation style you want to use. Zotero have a [great repository](https://www.zotero.org/styles){target="_blank"} of `.csl` files to choose from. Which style you pick is personal preference, I went with [APA 7th](https://www.zotero.org/styles/apa).
+
+Just like the `.bib` file, put the `.csl` file in your Quarto website folder. Again, mine just sits in the root folder.
+
+### Change the sort order
+
+It varies with the style you use, but the default sort order for APA 7th is to order citations by author and then ascending by date. Instead, I want the citations to be sorted by year of publication first, then by author. To change this, open the `.csl` file in RStudio and find the start of the `<bibliography>` tag. Searching for `<bibliography` should take you there, but if not, it should be somewhere near the bottom.
+
+To change the sort order, switch around the arguments inside the `<sort>` tag and change "ascending" to "descending". The example below demonstrates.
+
+::: {.panel-tabset}
+
+## Original
+
+\<bibliography hanging-indent="true" et-al-min="21" et-al-use-first="19" et-al-use-last="true" entry-spacing="0" line-spacing="2"><br/>
+    \<sort><br/>
+      \<key macro="author-sort"/><br/>
+      \<key macro="date-sort-group" sort="ascending"/><br/>
+      \<key macro="date-sort" sort="ascending"/><br/>
+      \<key variable="status"/><br/>
+      \<key macro="title"/><br/>
+    \</sort><br/>
+    ⋮
+
+## Descending year
+
+\<bibliography hanging-indent="true" et-al-min="21" et-al-use-first="19" et-al-use-last="true" entry-spacing="0" line-spacing="2"><br/>
+    \<sort><br/>
+      \<key macro="date-sort-group" sort="descending"/><br/>
+      \<key macro="date-sort" sort="descending"/><br/>
+      \<key macro="author-sort"/><br/>
+      \<key variable="status"/><br/>
+      \<key macro="title"/><br/>
+    \</sort><br/>
+    ⋮
+
+:::
+
+### Change the citation spacing
+
+The other thing we need to do is change the spacing between citations. The default is to have no line between them, which looks horrible and claustrophobic on a website. Instead we want to add a line spacing. In the same `<bibliography>` tag as before, change the `entry-spacing` argument from 0 to 2, as per below.
+
+::: {.panel-tabset}
+
+## No spacing
+
+\<bibliography hanging-indent="true" et-al-min="21" et-al-use-first="19" et-al-use-last="true" entry-spacing="0" line-spacing="2"><br/>
+    \<sort><br/>
+      \<key macro="date-sort-group" sort="descending"/><br/>
+      \<key macro="date-sort" sort="descending"/><br/>
+      \<key macro="author-sort"/><br/>
+      \<key variable="status"/><br/>
+      \<key macro="title"/><br/>
+    \</sort>
+    ⋮
+
+## Some spacing
+
+\<bibliography hanging-indent="true" et-al-min="21" et-al-use-first="19" et-al-use-last="true" entry-spacing="2" line-spacing="2"><br/>
+    \<sort><br/>
+      \<key macro="date-sort-group" sort="descending"/><br/>
+      \<key macro="date-sort" sort="descending"/><br/>
+      \<key macro="author-sort"/><br/>
+      \<key variable="status"/><br/>
+      \<key macro="title"/><br/>
+    \</sort>
+    ⋮
+
+:::
+
+## Create your publications page
+
+The last thing we need to do is create the page on your website! Create an empty Quarto file in your root directory and call it `publications.qmd`. Open this up and paste in the below. 
+
+```
+---
+title: "Publications"
+format: html
+bibliography: works.bib
+csl: apa.csl
+nocite: |
+  @*
+---
+
+:::{#refs}
+:::
+```
+
+We're using the `.bib` and `.csl` files we just sorted out. The `nocite` argument with the `@*` wildcard is what gets Quarto to print all citations from the bibliography.
+
+Ok the *actual* last thing we need to do is add the publications page to your navigation bar. Open up your site's `_quarto.yml` file and add it to the `website` argument as follows:
+
+```
+website:
+  navbar:
+    right:
+      - post.qmd
+      - publications.qmd
+      - cv.qmd
+      - contact.qmd
+```
+
+That's it! Feel free to keep tinkering with the layout etc., at least you've got something in place now.
