@@ -17,7 +17,7 @@ The first thing you need to get is a bibliography with your publications in it. 
 
 Once you're logged in to your ORCiD account, scroll down to your 'Works' section, click the 'Actions' drop-down and click 'Export ALL works'. This will export all your publications to a `.bib` file. Perfect!
 
-You can of course get a `.bib` file from other places, such as Google Scholar, my issue was that Google Scholar didn't include the DOIs, which meant the list did not have clickable links for people to easily go to the articles.
+You can of course get a `.bib` file from other places, such as Google Scholar. My issue with Google Scholar was that it didn't include DOIs, which meant the list of publications did not have clickable links for people to easily go to the articles.
 
 ## Tidy up the `.bib` file
 
@@ -29,7 +29,7 @@ Next, open up the file with RStudio or whatever text editor you prefer. We need 
 
 While it does depend on what citation style you are using, it seems the majority of styles will format your article title in sentence case, which is a problem for proper nouns. For example, my paper "Mental and neurodevelopmental health needs of Aboriginal children with experience of out-of-home care: a Western Australian data-linkage study" would get formatted such that 'Aboriginal' and 'Western Australia' would be entirely lower-case, which isn't correct.
 
-To fix this, we have to 'protect' the letters we want capitalised by putting them in curly brackets `\{}`. See the example below where I have the original `.bib` entry from ORCiD and the protected entry which will preserve the capitalisation of the proper nouns.
+To fix this, we have to 'protect' the letters we want capitalised by putting them in curly brackets `{}`. See the example below where I have the original `.bib` entry from ORCiD and the protected entry which will preserve the capitalisation of the proper nouns.
 
 ::: {.panel-tabset}
 
