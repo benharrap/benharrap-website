@@ -6,7 +6,7 @@ toc: true
 categories: 
   -   quarto
   -   R
-  -   academic
+  -   academia
 ---
 
 In my efforts to continue to replicate my old website, I added a list of my publications. Read on if you'd like to do the same for your own Quarto website!

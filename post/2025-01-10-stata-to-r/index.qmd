@@ -35,13 +35,13 @@ I'll briefly outline some important things to know when switching from Stata to 
 
 ### Packages
 
-I mentioned packages already, they're the reason that R is such a powerful tool. Packages can be thought of as a collection of functions, typically centered around a particular theme or method. Base R is refers to the functions included by default when you install R on your machine. The main thing to know with R packages if you can imagine a function someone's probably already written a package for it.
+Packages are the reason that R is such a powerful tool. Packages can be thought of as a collection of functions, typically centered around a particular theme or method. Base R is refers to the functions included by default when you install R on your machine. The main thing to know with R packages is that if you can imagine a function, someone's probably already written a package for it.
 
-I personally find that base R code can be quite arcane to read, which is why I'm such a `tidyverse` fan. The `tidyverse` is a collection of packages that is incredibly popular and for good reason, the design of the packages share consistent philophy around how code should be written (see [their website](https://www.tidyverse.org/packages/){target="_blank"} if you want to learn more).
+I personally find that base R code can be quite arcane to read, which is why I'm such a `tidyverse` fan. The `tidyverse` is a collection of packages that is incredibly popular and for good reason; the design of the packages share consistent philosophy around how code should be written (see [their website](https://www.tidyverse.org/packages/){target="_blank"} if you want to learn more).
 
 To install R packages just run `install.packages("<package name>")`. To use the package, run `library(<package name>)` to load in all the functions from that package into your current R session.
 
-You can also use specific functions from packages by loading them in specifically (using `include.only`) or by explicitly calling the function without loading the package (using `::`), demonstrated in the example below.
+You can also use specific functions from packages by loading the functions in specifically (using `include.only`), or by explicitly calling the function without loading the package (using `::`), demonstrated in the example below.
 
 ::: {.panel-tabset}
 ## Load specific function
@@ -63,7 +63,7 @@ Stata can *sort of* do this but nothing like how R does. Instead of using `frame
 
 ### Pipes
 
-Using the `auto` dataset as an example, say we wanted to create a dataset of only domestic cars and analyse their weight to length ratio by brand. In Stata, your each line of your code would be executed sequentially and independently with the results window returning something after each step:
+Using the `auto` dataset as an example, say we wanted to create a dataset of only domestic cars and analyse their weight to length ratio by brand. In Stata, each line of your code would be executed sequentially and independently with the results window returning something after each step:
 
 ```
 sysuse auto
@@ -74,7 +74,7 @@ sort brand
 by brand: summarize wgt_len_ratio
 ```
 
-You can write R code in this fashion too but there's something nice about using pipes. You can think of pipes as literal pipes, you put something in at one end of the pipe and something comes out the other end. In our case, data goes in one end, your code is what happens inside of the pipe, and the result of your code is what comes out the other end. In R there's two different pipes, the base pipe `|>` and the `magrittr` pipe `%>%`. You probably don't need to worry about the difference, but for those interested see [this post on the tidyverse website](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/){target="_blank"}.
+You can write R code in this fashion too but there's something nice about using pipes. You can think of pipes as literal pipes, you put something in at one end of the pipe and something comes out the other end. In our case, data goes in one end, your code is what happens inside of the pipe, and the result of your code is what comes out the other end. In R there's two different pipes, the base pipe `|>` and the `magrittr` pipe `%>%`. You probably don't need to worry about the difference for now, but for those interested see [this post on the tidyverse website](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/){target="_blank"}.
 
 The same operation as above in R could be done as:
 
@@ -97,7 +97,7 @@ auto |>
   )
 ```
 
-It's a little longer in length than the Stata example, however I find pipes and `tidyverse` in particular make the code more readable and easier to follow and navigate (the indentations also help). By running the whole 
+It's a little longer in length than the Stata example, however I find pipes and `tidyverse` in particular make the code more readable and easier to follow and navigate (the indentations also help). The `auto` dataset goes in to the start of the pipe, we perform some operations to it, and the output of the pipe is the summary we wanted.
 
 ### Assigning output
 
@@ -108,11 +108,13 @@ In R, the default is to display the output of your code in the console (similar 
 -   `auto <- auto |> mutate(new_var = 1)` writes over the object named `auto`, which is our dataset
 -   `auto_new <- auto |> mutate(new_var = 1)` creates a new object called `auto_new` and leaves the original `auto` object unchanged
 
+In the example where we calculated summary statistics by car brand, if you were to run the R code it would simply output the summary statistics in the console. If you wanted to do something with the summary statistics later, you would assign the output.
+
 One aspect of this feature is that it completely circumvents the need for Stata's `preserve` and `restore`. Just assign the output of your code to a new object where you would instead have used `preserve` and `restore`. This makes it handy for analyses of data at different stages of cleaning or analysis.
 
 ### Further resources
 
-The books I would recommend using to keep learning from are:
+The resources I would recommend for learning more R are:
 
 -   [R for Data Science](https://r4ds.hadley.nz/)
 -   [Advanced R](https://adv-r.hadley.nz/)
@@ -135,7 +137,7 @@ tibble(
   Function = "Making/modifying variables",
   Stata = "`gen weight_kg = weight/2.205`",
   R = "`mutate(weight_kg = weight/2.205)`",
-  Note = "`mutate` and overwrites variables without warning, unlike Stata"
+  Note = "`mutate` overwrites existing variables without warning, unlike Stata"
 ) |> 
   add_row(
   Function = "Make a string variable numeric",
@@ -181,7 +183,7 @@ tibble(
   Function = "Renaming variables",
   Stata = "`rename weight weight_lbs`",
   R = "`rename(weight_lbs weight)`",
-  Note = "The arguments are back to front in R. Stata is <current name> <new name>, `dplyr` is <new name> <current name>"
+  Note = "The arguments are back to front in R. Stata is \<current name> \<new name>, `dplyr` is \<new name> \<current name>"
 ) |>
   add_row(
     Function = "Dropping variables",
@@ -205,7 +207,7 @@ tibble(
     Function = "Reshaping longer",
     Stata = "`reshape long rep, i(make) j(newvar)`",
     R = "`pivot_longer(c(rep78,rep79), values_to = 'newvar')`",
-    Note = "To run these examples, you'd first need to create `rep79`, which I created as `rep78+1`"
+    Note = "To run this example, first create `rep79`, which I created as `rep78+1`"
   ) |>
   add_row(
     Function = "Summarising data",
