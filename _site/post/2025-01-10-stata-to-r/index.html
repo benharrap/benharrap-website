@@ -245,10 +245,10 @@ ga('send', {
 <p>I’ll briefly outline some important things to know when switching from Stata to R, because while R can do everything Stata can do, it goes about it differently.</p>
 <section id="packages" class="level3">
 <h3 class="anchored" data-anchor-id="packages">Packages</h3>
-<p>I mentioned packages already, they’re the reason that R is such a powerful tool. Packages can be thought of as a collection of functions, typically centered around a particular theme or method. Base R is refers to the functions included by default when you install R on your machine. The main thing to know with R packages if you can imagine a function someone’s probably already written a package for it.</p>
-<p>I personally find that base R code can be quite arcane to read, which is why I’m such a <code>tidyverse</code> fan. The <code>tidyverse</code> is a collection of packages that is incredibly popular and for good reason, the design of the packages share consistent philophy around how code should be written (see <a href="https://www.tidyverse.org/packages/" target="_blank">their website</a> if you want to learn more).</p>
+<p>Packages are the reason that R is such a powerful tool. Packages can be thought of as a collection of functions, typically centered around a particular theme or method. Base R is refers to the functions included by default when you install R on your machine. The main thing to know with R packages is that if you can imagine a function, someone’s probably already written a package for it.</p>
+<p>I personally find that base R code can be quite arcane to read, which is why I’m such a <code>tidyverse</code> fan. The <code>tidyverse</code> is a collection of packages that is incredibly popular and for good reason; the design of the packages share consistent philosophy around how code should be written (see <a href="https://www.tidyverse.org/packages/" target="_blank">their website</a> if you want to learn more).</p>
 <p>To install R packages just run <code>install.packages("&lt;package name&gt;")</code>. To use the package, run <code>library(&lt;package name&gt;)</code> to load in all the functions from that package into your current R session.</p>
-<p>You can also use specific functions from packages by loading them in specifically (using <code>include.only</code>) or by explicitly calling the function without loading the package (using <code>::</code>), demonstrated in the example below.</p>
+<p>You can also use specific functions from packages by loading the functions in specifically (using <code>include.only</code>), or by explicitly calling the function without loading the package (using <code>::</code>), demonstrated in the example below.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Load specific function</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Call function without loading</a></li></ul>
 <div class="tab-content">
@@ -268,14 +268,14 @@ auto &lt;- read_dta("/Applications/Stata/auto.dta")</code></pre>
 </section>
 <section id="pipes" class="level3">
 <h3 class="anchored" data-anchor-id="pipes">Pipes</h3>
-<p>Using the <code>auto</code> dataset as an example, say we wanted to create a dataset of only domestic cars and analyse their weight to length ratio by brand. In Stata, your each line of your code would be executed sequentially and independently with the results window returning something after each step:</p>
+<p>Using the <code>auto</code> dataset as an example, say we wanted to create a dataset of only domestic cars and analyse their weight to length ratio by brand. In Stata, each line of your code would be executed sequentially and independently with the results window returning something after each step:</p>
 <pre><code>sysuse auto
 drop if foreign == 1
 gen wgt_len_ratio = weight/length
 gen brand = substr(make, 1, ustrpos(make, " ")-1)
 sort brand
 by brand: summarize wgt_len_ratio</code></pre>
-<p>You can write R code in this fashion too but there’s something nice about using pipes. You can think of pipes as literal pipes, you put something in at one end of the pipe and something comes out the other end. In our case, data goes in one end, your code is what happens inside of the pipe, and the result of your code is what comes out the other end. In R there’s two different pipes, the base pipe <code>|&gt;</code> and the <code>magrittr</code> pipe <code>%&gt;%</code>. You probably don’t need to worry about the difference, but for those interested see <a href="https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/" target="_blank">this post on the tidyverse website</a>.</p>
+<p>You can write R code in this fashion too but there’s something nice about using pipes. You can think of pipes as literal pipes, you put something in at one end of the pipe and something comes out the other end. In our case, data goes in one end, your code is what happens inside of the pipe, and the result of your code is what comes out the other end. In R there’s two different pipes, the base pipe <code>|&gt;</code> and the <code>magrittr</code> pipe <code>%&gt;%</code>. You probably don’t need to worry about the difference for now, but for those interested see <a href="https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/" target="_blank">this post on the tidyverse website</a>.</p>
 <p>The same operation as above in R could be done as:</p>
 <pre><code>auto &lt;- haven::read_dta("/Applications/Stata/auto.dta")
 
@@ -293,7 +293,7 @@ auto |&gt;
     min = min(wgt_len_ratio),
     max = max(wgt_len_ratio)
   )</code></pre>
-<p>It’s a little longer in length than the Stata example, however I find pipes and <code>tidyverse</code> in particular make the code more readable and easier to follow and navigate (the indentations also help). By running the whole</p>
+<p>It’s a little longer in length than the Stata example, however I find pipes and <code>tidyverse</code> in particular make the code more readable and easier to follow and navigate (the indentations also help). The <code>auto</code> dataset goes in to the start of the pipe, we perform some operations to it, and the output of the pipe is the summary we wanted.</p>
 </section>
 <section id="assigning-output" class="level3">
 <h3 class="anchored" data-anchor-id="assigning-output">Assigning output</h3>
@@ -303,11 +303,12 @@ auto |&gt;
 <li><code>auto &lt;- auto |&gt; mutate(new_var = 1)</code> writes over the object named <code>auto</code>, which is our dataset</li>
 <li><code>auto_new &lt;- auto |&gt; mutate(new_var = 1)</code> creates a new object called <code>auto_new</code> and leaves the original <code>auto</code> object unchanged</li>
 </ul>
+<p>In the example where we calculated summary statistics by car brand, if you were to run the R code it would simply output the summary statistics in the console. If you wanted to do something with the summary statistics later, you would assign the output.</p>
 <p>One aspect of this feature is that it completely circumvents the need for Stata’s <code>preserve</code> and <code>restore</code>. Just assign the output of your code to a new object where you would instead have used <code>preserve</code> and <code>restore</code>. This makes it handy for analyses of data at different stages of cleaning or analysis.</p>
 </section>
 <section id="further-resources" class="level3">
 <h3 class="anchored" data-anchor-id="further-resources">Further resources</h3>
-<p>The books I would recommend using to keep learning from are:</p>
+<p>The resources I would recommend for learning more R are:</p>
 <ul>
 <li><a href="https://r4ds.hadley.nz/">R for Data Science</a></li>
 <li><a href="https://adv-r.hadley.nz/">Advanced R</a></li>
@@ -325,23 +326,23 @@ auto |&gt;
 <p>A lot of data cleaning work involves modifying or creating variables in some way. In the <code>tidyverse</code>, variables are typically created or modified using the <code>mutate()</code> function.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="ikwtqxprws" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ikwtqxprws table {
+<div id="fqpnlewxkn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fqpnlewxkn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ikwtqxprws thead, #ikwtqxprws tbody, #ikwtqxprws tfoot, #ikwtqxprws tr, #ikwtqxprws td, #ikwtqxprws th {
+#fqpnlewxkn thead, #fqpnlewxkn tbody, #fqpnlewxkn tfoot, #fqpnlewxkn tr, #fqpnlewxkn td, #fqpnlewxkn th {
   border-style: none;
 }
 
-#ikwtqxprws p {
+#fqpnlewxkn p {
   margin: 0;
   padding: 0;
 }
 
-#ikwtqxprws .gt_table {
+#fqpnlewxkn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -367,12 +368,12 @@ auto |&gt;
   border-left-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_caption {
+#fqpnlewxkn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ikwtqxprws .gt_title {
+#fqpnlewxkn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -384,7 +385,7 @@ auto |&gt;
   border-bottom-width: 0;
 }
 
-#ikwtqxprws .gt_subtitle {
+#fqpnlewxkn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -396,7 +397,7 @@ auto |&gt;
   border-top-width: 0;
 }
 
-#ikwtqxprws .gt_heading {
+#fqpnlewxkn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -408,13 +409,13 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_bottom_border {
+#fqpnlewxkn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_col_headings {
+#fqpnlewxkn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -429,7 +430,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_col_heading {
+#fqpnlewxkn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -449,7 +450,7 @@ auto |&gt;
   overflow-x: hidden;
 }
 
-#ikwtqxprws .gt_column_spanner_outer {
+#fqpnlewxkn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -461,15 +462,15 @@ auto |&gt;
   padding-right: 4px;
 }
 
-#ikwtqxprws .gt_column_spanner_outer:first-child {
+#fqpnlewxkn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ikwtqxprws .gt_column_spanner_outer:last-child {
+#fqpnlewxkn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ikwtqxprws .gt_column_spanner {
+#fqpnlewxkn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -481,11 +482,11 @@ auto |&gt;
   width: 100%;
 }
 
-#ikwtqxprws .gt_spanner_row {
+#fqpnlewxkn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ikwtqxprws .gt_group_heading {
+#fqpnlewxkn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -511,7 +512,7 @@ auto |&gt;
   text-align: left;
 }
 
-#ikwtqxprws .gt_empty_group_heading {
+#fqpnlewxkn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -526,15 +527,15 @@ auto |&gt;
   vertical-align: middle;
 }
 
-#ikwtqxprws .gt_from_md > :first-child {
+#fqpnlewxkn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ikwtqxprws .gt_from_md > :last-child {
+#fqpnlewxkn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ikwtqxprws .gt_row {
+#fqpnlewxkn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -553,7 +554,7 @@ auto |&gt;
   overflow-x: hidden;
 }
 
-#ikwtqxprws .gt_stub {
+#fqpnlewxkn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -566,7 +567,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#ikwtqxprws .gt_stub_row_group {
+#fqpnlewxkn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -580,15 +581,15 @@ auto |&gt;
   vertical-align: top;
 }
 
-#ikwtqxprws .gt_row_group_first td {
+#fqpnlewxkn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ikwtqxprws .gt_row_group_first th {
+#fqpnlewxkn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ikwtqxprws .gt_summary_row {
+#fqpnlewxkn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -598,16 +599,16 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#ikwtqxprws .gt_first_summary_row {
+#fqpnlewxkn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_first_summary_row.thick {
+#fqpnlewxkn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ikwtqxprws .gt_last_summary_row {
+#fqpnlewxkn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -617,7 +618,7 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_grand_summary_row {
+#fqpnlewxkn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -627,7 +628,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#ikwtqxprws .gt_first_grand_summary_row {
+#fqpnlewxkn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -637,7 +638,7 @@ auto |&gt;
   border-top-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_last_grand_summary_row_top {
+#fqpnlewxkn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -647,11 +648,11 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_striped {
+#fqpnlewxkn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ikwtqxprws .gt_table_body {
+#fqpnlewxkn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -660,7 +661,7 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_footnotes {
+#fqpnlewxkn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -674,7 +675,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_footnote {
+#fqpnlewxkn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -683,7 +684,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#ikwtqxprws .gt_sourcenotes {
+#fqpnlewxkn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -697,7 +698,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#ikwtqxprws .gt_sourcenote {
+#fqpnlewxkn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -705,72 +706,72 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#ikwtqxprws .gt_left {
+#fqpnlewxkn .gt_left {
   text-align: left;
 }
 
-#ikwtqxprws .gt_center {
+#fqpnlewxkn .gt_center {
   text-align: center;
 }
 
-#ikwtqxprws .gt_right {
+#fqpnlewxkn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ikwtqxprws .gt_font_normal {
+#fqpnlewxkn .gt_font_normal {
   font-weight: normal;
 }
 
-#ikwtqxprws .gt_font_bold {
+#fqpnlewxkn .gt_font_bold {
   font-weight: bold;
 }
 
-#ikwtqxprws .gt_font_italic {
+#fqpnlewxkn .gt_font_italic {
   font-style: italic;
 }
 
-#ikwtqxprws .gt_super {
+#fqpnlewxkn .gt_super {
   font-size: 65%;
 }
 
-#ikwtqxprws .gt_footnote_marks {
+#fqpnlewxkn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ikwtqxprws .gt_asterisk {
+#fqpnlewxkn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ikwtqxprws .gt_indent_1 {
+#fqpnlewxkn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ikwtqxprws .gt_indent_2 {
+#fqpnlewxkn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ikwtqxprws .gt_indent_3 {
+#fqpnlewxkn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ikwtqxprws .gt_indent_4 {
+#fqpnlewxkn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ikwtqxprws .gt_indent_5 {
+#fqpnlewxkn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ikwtqxprws .katex-display {
+#fqpnlewxkn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ikwtqxprws div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#fqpnlewxkn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -795,7 +796,7 @@ auto |&gt;
 <td class="gt_row gt_left" headers="Function">Making/modifying variables</td>
 <td class="gt_row gt_left" headers="Stata"><code>gen weight_kg = weight/2.205</code></td>
 <td class="gt_row gt_left" headers="R"><code>mutate(weight_kg = weight/2.205)</code></td>
-<td class="gt_row gt_left" headers="Note"><code>mutate</code> and overwrites variables without warning, unlike Stata</td>
+<td class="gt_row gt_left" headers="Note"><code>mutate</code> overwrites existing variables without warning, unlike Stata</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Function">Make a string variable numeric</td>
@@ -833,23 +834,23 @@ auto |&gt;
 <p>These functions are more about performing other operations to datasets than changing or modifying variables.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="yjhmjpwjif" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yjhmjpwjif table {
+<div id="sdxheccbmg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sdxheccbmg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yjhmjpwjif thead, #yjhmjpwjif tbody, #yjhmjpwjif tfoot, #yjhmjpwjif tr, #yjhmjpwjif td, #yjhmjpwjif th {
+#sdxheccbmg thead, #sdxheccbmg tbody, #sdxheccbmg tfoot, #sdxheccbmg tr, #sdxheccbmg td, #sdxheccbmg th {
   border-style: none;
 }
 
-#yjhmjpwjif p {
+#sdxheccbmg p {
   margin: 0;
   padding: 0;
 }
 
-#yjhmjpwjif .gt_table {
+#sdxheccbmg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -875,12 +876,12 @@ auto |&gt;
   border-left-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_caption {
+#sdxheccbmg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yjhmjpwjif .gt_title {
+#sdxheccbmg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -892,7 +893,7 @@ auto |&gt;
   border-bottom-width: 0;
 }
 
-#yjhmjpwjif .gt_subtitle {
+#sdxheccbmg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -904,7 +905,7 @@ auto |&gt;
   border-top-width: 0;
 }
 
-#yjhmjpwjif .gt_heading {
+#sdxheccbmg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -916,13 +917,13 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_bottom_border {
+#sdxheccbmg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_col_headings {
+#sdxheccbmg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -937,7 +938,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_col_heading {
+#sdxheccbmg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -957,7 +958,7 @@ auto |&gt;
   overflow-x: hidden;
 }
 
-#yjhmjpwjif .gt_column_spanner_outer {
+#sdxheccbmg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -969,15 +970,15 @@ auto |&gt;
   padding-right: 4px;
 }
 
-#yjhmjpwjif .gt_column_spanner_outer:first-child {
+#sdxheccbmg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yjhmjpwjif .gt_column_spanner_outer:last-child {
+#sdxheccbmg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yjhmjpwjif .gt_column_spanner {
+#sdxheccbmg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -989,11 +990,11 @@ auto |&gt;
   width: 100%;
 }
 
-#yjhmjpwjif .gt_spanner_row {
+#sdxheccbmg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yjhmjpwjif .gt_group_heading {
+#sdxheccbmg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1019,7 +1020,7 @@ auto |&gt;
   text-align: left;
 }
 
-#yjhmjpwjif .gt_empty_group_heading {
+#sdxheccbmg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1034,15 +1035,15 @@ auto |&gt;
   vertical-align: middle;
 }
 
-#yjhmjpwjif .gt_from_md > :first-child {
+#sdxheccbmg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yjhmjpwjif .gt_from_md > :last-child {
+#sdxheccbmg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yjhmjpwjif .gt_row {
+#sdxheccbmg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1061,7 +1062,7 @@ auto |&gt;
   overflow-x: hidden;
 }
 
-#yjhmjpwjif .gt_stub {
+#sdxheccbmg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1074,7 +1075,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#yjhmjpwjif .gt_stub_row_group {
+#sdxheccbmg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1088,15 +1089,15 @@ auto |&gt;
   vertical-align: top;
 }
 
-#yjhmjpwjif .gt_row_group_first td {
+#sdxheccbmg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yjhmjpwjif .gt_row_group_first th {
+#sdxheccbmg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yjhmjpwjif .gt_summary_row {
+#sdxheccbmg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1106,16 +1107,16 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#yjhmjpwjif .gt_first_summary_row {
+#sdxheccbmg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_first_summary_row.thick {
+#sdxheccbmg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yjhmjpwjif .gt_last_summary_row {
+#sdxheccbmg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1125,7 +1126,7 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_grand_summary_row {
+#sdxheccbmg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1135,7 +1136,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#yjhmjpwjif .gt_first_grand_summary_row {
+#sdxheccbmg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1145,7 +1146,7 @@ auto |&gt;
   border-top-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_last_grand_summary_row_top {
+#sdxheccbmg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1155,11 +1156,11 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_striped {
+#sdxheccbmg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yjhmjpwjif .gt_table_body {
+#sdxheccbmg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1168,7 +1169,7 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_footnotes {
+#sdxheccbmg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1182,7 +1183,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_footnote {
+#sdxheccbmg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1191,7 +1192,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#yjhmjpwjif .gt_sourcenotes {
+#sdxheccbmg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1205,7 +1206,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#yjhmjpwjif .gt_sourcenote {
+#sdxheccbmg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1213,72 +1214,72 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#yjhmjpwjif .gt_left {
+#sdxheccbmg .gt_left {
   text-align: left;
 }
 
-#yjhmjpwjif .gt_center {
+#sdxheccbmg .gt_center {
   text-align: center;
 }
 
-#yjhmjpwjif .gt_right {
+#sdxheccbmg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yjhmjpwjif .gt_font_normal {
+#sdxheccbmg .gt_font_normal {
   font-weight: normal;
 }
 
-#yjhmjpwjif .gt_font_bold {
+#sdxheccbmg .gt_font_bold {
   font-weight: bold;
 }
 
-#yjhmjpwjif .gt_font_italic {
+#sdxheccbmg .gt_font_italic {
   font-style: italic;
 }
 
-#yjhmjpwjif .gt_super {
+#sdxheccbmg .gt_super {
   font-size: 65%;
 }
 
-#yjhmjpwjif .gt_footnote_marks {
+#sdxheccbmg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yjhmjpwjif .gt_asterisk {
+#sdxheccbmg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yjhmjpwjif .gt_indent_1 {
+#sdxheccbmg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yjhmjpwjif .gt_indent_2 {
+#sdxheccbmg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yjhmjpwjif .gt_indent_3 {
+#sdxheccbmg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yjhmjpwjif .gt_indent_4 {
+#sdxheccbmg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yjhmjpwjif .gt_indent_5 {
+#sdxheccbmg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yjhmjpwjif .katex-display {
+#sdxheccbmg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yjhmjpwjif div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#sdxheccbmg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1303,7 +1304,7 @@ auto |&gt;
 <td class="gt_row gt_left" headers="Function">Renaming variables</td>
 <td class="gt_row gt_left" headers="Stata"><code>rename weight weight_lbs</code></td>
 <td class="gt_row gt_left" headers="R"><code>rename(weight_lbs weight)</code></td>
-<td class="gt_row gt_left" headers="Note">The arguments are back to front in R. Stata is <current name=""> <new name="">, <code>dplyr</code> is <new name=""> <current name=""></current></new></new></current></td>
+<td class="gt_row gt_left" headers="Note">The arguments are back to front in R. Stata is &lt;current name&gt; &lt;new name&gt;, <code>dplyr</code> is &lt;new name&gt; &lt;current name&gt;</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Function">Dropping variables</td>
@@ -1327,7 +1328,7 @@ auto |&gt;
 <td class="gt_row gt_left" headers="Function">Reshaping longer</td>
 <td class="gt_row gt_left" headers="Stata"><code>reshape long rep, i(make) j(newvar)</code></td>
 <td class="gt_row gt_left" headers="R"><code>pivot_longer(c(rep78,rep79), values_to = ‘newvar’)</code></td>
-<td class="gt_row gt_left" headers="Note">To run these examples, you’d first need to create <code>rep79</code>, which I created as <code>rep78+1</code></td>
+<td class="gt_row gt_left" headers="Note">To run this example, first create <code>rep79</code>, which I created as <code>rep78+1</code></td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="Function">Summarising data</td>
@@ -1361,23 +1362,23 @@ auto |&gt;
 <p>Finally, I only include some basic regression models here. In epidemiology we often need to deal with observations that aren’t independent, such as in longitudinal studies. Methods such as generalised estimating equations (GEEs) and mixed effects models are supported in R. For GEEs, see the <code>gee</code> package (<a href="https://cran.r-project.org/web/packages/gee/gee.pdf" target="_blank">link</a>). For mixed effects models, the <code>lme4</code> (<a href="https://cran.r-project.org/web/packages/lme4/index.html" target="_blank">link</a>) is popular.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="viqqzejrdq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#viqqzejrdq table {
+<div id="xwhshgnrny" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xwhshgnrny table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#viqqzejrdq thead, #viqqzejrdq tbody, #viqqzejrdq tfoot, #viqqzejrdq tr, #viqqzejrdq td, #viqqzejrdq th {
+#xwhshgnrny thead, #xwhshgnrny tbody, #xwhshgnrny tfoot, #xwhshgnrny tr, #xwhshgnrny td, #xwhshgnrny th {
   border-style: none;
 }
 
-#viqqzejrdq p {
+#xwhshgnrny p {
   margin: 0;
   padding: 0;
 }
 
-#viqqzejrdq .gt_table {
+#xwhshgnrny .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1403,12 +1404,12 @@ auto |&gt;
   border-left-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_caption {
+#xwhshgnrny .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#viqqzejrdq .gt_title {
+#xwhshgnrny .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1420,7 +1421,7 @@ auto |&gt;
   border-bottom-width: 0;
 }
 
-#viqqzejrdq .gt_subtitle {
+#xwhshgnrny .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1432,7 +1433,7 @@ auto |&gt;
   border-top-width: 0;
 }
 
-#viqqzejrdq .gt_heading {
+#xwhshgnrny .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1444,13 +1445,13 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_bottom_border {
+#xwhshgnrny .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_col_headings {
+#xwhshgnrny .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1465,7 +1466,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_col_heading {
+#xwhshgnrny .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1485,7 +1486,7 @@ auto |&gt;
   overflow-x: hidden;
 }
 
-#viqqzejrdq .gt_column_spanner_outer {
+#xwhshgnrny .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1497,15 +1498,15 @@ auto |&gt;
   padding-right: 4px;
 }
 
-#viqqzejrdq .gt_column_spanner_outer:first-child {
+#xwhshgnrny .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#viqqzejrdq .gt_column_spanner_outer:last-child {
+#xwhshgnrny .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#viqqzejrdq .gt_column_spanner {
+#xwhshgnrny .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1517,11 +1518,11 @@ auto |&gt;
   width: 100%;
 }
 
-#viqqzejrdq .gt_spanner_row {
+#xwhshgnrny .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#viqqzejrdq .gt_group_heading {
+#xwhshgnrny .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1547,7 +1548,7 @@ auto |&gt;
   text-align: left;
 }
 
-#viqqzejrdq .gt_empty_group_heading {
+#xwhshgnrny .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1562,15 +1563,15 @@ auto |&gt;
   vertical-align: middle;
 }
 
-#viqqzejrdq .gt_from_md > :first-child {
+#xwhshgnrny .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#viqqzejrdq .gt_from_md > :last-child {
+#xwhshgnrny .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#viqqzejrdq .gt_row {
+#xwhshgnrny .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1589,7 +1590,7 @@ auto |&gt;
   overflow-x: hidden;
 }
 
-#viqqzejrdq .gt_stub {
+#xwhshgnrny .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1602,7 +1603,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#viqqzejrdq .gt_stub_row_group {
+#xwhshgnrny .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1616,15 +1617,15 @@ auto |&gt;
   vertical-align: top;
 }
 
-#viqqzejrdq .gt_row_group_first td {
+#xwhshgnrny .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#viqqzejrdq .gt_row_group_first th {
+#xwhshgnrny .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#viqqzejrdq .gt_summary_row {
+#xwhshgnrny .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1634,16 +1635,16 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#viqqzejrdq .gt_first_summary_row {
+#xwhshgnrny .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_first_summary_row.thick {
+#xwhshgnrny .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#viqqzejrdq .gt_last_summary_row {
+#xwhshgnrny .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1653,7 +1654,7 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_grand_summary_row {
+#xwhshgnrny .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1663,7 +1664,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#viqqzejrdq .gt_first_grand_summary_row {
+#xwhshgnrny .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1673,7 +1674,7 @@ auto |&gt;
   border-top-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_last_grand_summary_row_top {
+#xwhshgnrny .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1683,11 +1684,11 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_striped {
+#xwhshgnrny .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#viqqzejrdq .gt_table_body {
+#xwhshgnrny .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1696,7 +1697,7 @@ auto |&gt;
   border-bottom-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_footnotes {
+#xwhshgnrny .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1710,7 +1711,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_footnote {
+#xwhshgnrny .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1719,7 +1720,7 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#viqqzejrdq .gt_sourcenotes {
+#xwhshgnrny .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1733,7 +1734,7 @@ auto |&gt;
   border-right-color: #D3D3D3;
 }
 
-#viqqzejrdq .gt_sourcenote {
+#xwhshgnrny .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1741,72 +1742,72 @@ auto |&gt;
   padding-right: 5px;
 }
 
-#viqqzejrdq .gt_left {
+#xwhshgnrny .gt_left {
   text-align: left;
 }
 
-#viqqzejrdq .gt_center {
+#xwhshgnrny .gt_center {
   text-align: center;
 }
 
-#viqqzejrdq .gt_right {
+#xwhshgnrny .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#viqqzejrdq .gt_font_normal {
+#xwhshgnrny .gt_font_normal {
   font-weight: normal;
 }
 
-#viqqzejrdq .gt_font_bold {
+#xwhshgnrny .gt_font_bold {
   font-weight: bold;
 }
 
-#viqqzejrdq .gt_font_italic {
+#xwhshgnrny .gt_font_italic {
   font-style: italic;
 }
 
-#viqqzejrdq .gt_super {
+#xwhshgnrny .gt_super {
   font-size: 65%;
 }
 
-#viqqzejrdq .gt_footnote_marks {
+#xwhshgnrny .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#viqqzejrdq .gt_asterisk {
+#xwhshgnrny .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#viqqzejrdq .gt_indent_1 {
+#xwhshgnrny .gt_indent_1 {
   text-indent: 5px;
 }
 
-#viqqzejrdq .gt_indent_2 {
+#xwhshgnrny .gt_indent_2 {
   text-indent: 10px;
 }
 
-#viqqzejrdq .gt_indent_3 {
+#xwhshgnrny .gt_indent_3 {
   text-indent: 15px;
 }
 
-#viqqzejrdq .gt_indent_4 {
+#xwhshgnrny .gt_indent_4 {
   text-indent: 20px;
 }
 
-#viqqzejrdq .gt_indent_5 {
+#xwhshgnrny .gt_indent_5 {
   text-indent: 25px;
 }
 
-#viqqzejrdq .katex-display {
+#xwhshgnrny .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#viqqzejrdq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xwhshgnrny div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

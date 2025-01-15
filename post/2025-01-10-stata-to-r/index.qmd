@@ -183,7 +183,7 @@ tibble(
   Function = "Renaming variables",
   Stata = "`rename weight weight_lbs`",
   R = "`rename(weight_lbs weight)`",
-  Note = "The arguments are back to front in R. Stata is \<current name> \<new name>, `dplyr` is \<new name> \<current name>"
+  Note = "The arguments are back to front in R. Stata is \\<current name> \\<new name>, `dplyr` is \\<new name> \\<current name>"
 ) |>
   add_row(
     Function = "Dropping variables",
