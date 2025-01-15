@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ben Harrap">
+<meta name="dcterms.date" content="2025-01-10">
+
+<title>Stata to R code translations – Ben Harrap</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../img/randy.png" rel="icon" type="image/png">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a49b6220cb553e10736a99cfad3fdb80.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-96a7fbfa78fef49f6b6144206709ecb2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script type="text/javascript">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-447320706', 'auto');
+
+ga('send', {
+  hitType: 'pageview',
+  'anonymizeIp': true,
+});
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet">
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="benharrap" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ffddd6" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+
+<meta property="og:title" content="Stata to R code translations – Ben Harrap">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Ben Harrap">
+<meta property="og:locale" content="en_AU">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Ben Harrap</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#workflow-differences" id="toc-workflow-differences" class="nav-link active" data-scroll-target="#workflow-differences">Workflow differences</a>
+  <ul class="collapse">
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
+  <li><a href="#multiple-datasets" id="toc-multiple-datasets" class="nav-link" data-scroll-target="#multiple-datasets">Multiple datasets</a></li>
+  <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes">Pipes</a></li>
+  <li><a href="#assigning-output" id="toc-assigning-output" class="nav-link" data-scroll-target="#assigning-output">Assigning output</a></li>
+  <li><a href="#further-resources" id="toc-further-resources" class="nav-link" data-scroll-target="#further-resources">Further resources</a></li>
+  </ul></li>
+  <li><a href="#converting-stata-to-r-code" id="toc-converting-stata-to-r-code" class="nav-link" data-scroll-target="#converting-stata-to-r-code">Converting Stata to R code</a>
+  <ul class="collapse">
+  <li><a href="#modifying-variables" id="toc-modifying-variables" class="nav-link" data-scroll-target="#modifying-variables">Modifying variables</a></li>
+  <li><a href="#other-basics" id="toc-other-basics" class="nav-link" data-scroll-target="#other-basics">Other basics</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression">Regression</a></li>
+  </ul></li>
+  <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation">Data visualisation</a>
+  <ul class="collapse">
+  <li><a href="#histograms" id="toc-histograms" class="nav-link" data-scroll-target="#histograms">Histograms</a></li>
+  <li><a href="#density-plots" id="toc-density-plots" class="nav-link" data-scroll-target="#density-plots">Density plots</a></li>
+  <li><a href="#bar-charts" id="toc-bar-charts" class="nav-link" data-scroll-target="#bar-charts">Bar charts</a></li>
+  <li><a href="#line-charts" id="toc-line-charts" class="nav-link" data-scroll-target="#line-charts">Line charts</a></li>
+  <li><a href="#scatter-plots" id="toc-scatter-plots" class="nav-link" data-scroll-target="#scatter-plots">Scatter plots</a></li>
+  <li><a href="#box-plots" id="toc-box-plots" class="nav-link" data-scroll-target="#box-plots">Box plots</a></li>
+  <li><a href="#violin-plots" id="toc-violin-plots" class="nav-link" data-scroll-target="#violin-plots">Violin plots</a></li>
+  </ul></li>
+  <li><a href="#customising-data-visualisations" id="toc-customising-data-visualisations" class="nav-link" data-scroll-target="#customising-data-visualisations">Customising data visualisations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Stata to R code translations</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">code</div>
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">Stata</div>
+    <div class="quarto-category">research</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ben Harrap </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Making the transition from Stata to R can be challenging as the two languages are different in some fundamental ways. My initial training in biostatistics was using Stata, however I made a concerted effort to learn R by doing my entire PhD using the language. There are some things that I still struggle with in R that I found a lot easier in Stata, but that’s ok - we’re all still learning!</p>
+<p>This post acts as a reference to provide Stata and R code side-by-side to help people switching between the two languages. There’s a few things to note before diving in:</p>
+<ul>
+<li>All examples are based on the <code>auto</code> dataset from Stata.
+<ul>
+<li>In Stata this is accessed using <code>sysuse auto</code>.</li>
+<li>In R this is accessed by reading the Stata dataset using <code>auto &lt;- haven::read_dta("&lt;path-to-stata-goes-here&gt;/auto.dta")</code>.</li>
+</ul></li>
+<li>I’ve tested these examples using Stata version 15.</li>
+<li>R packages are stated where relevant, however <code>tidyverse</code> is generally used over base R.</li>
+<li>The ChatGPT <a href="https://chatgpt.com/g/g-dDlKTFvbT-stata-to-r-code-translator" target="_blank">Stata to R Code Translator</a> provided some assistance.</li>
+</ul>
+<section id="workflow-differences" class="level2">
+<h2 class="anchored" data-anchor-id="workflow-differences">Workflow differences</h2>
+<p>I’ll briefly outline some important things to know when switching from Stata to R, because while R can do everything Stata can do, it goes about it differently.</p>
+<section id="packages" class="level3">
+<h3 class="anchored" data-anchor-id="packages">Packages</h3>
+<p>I mentioned packages already, they’re the reason that R is such a powerful tool. Packages can be thought of as a collection of functions, typically centered around a particular theme or method. Base R is refers to the functions included by default when you install R on your machine. The main thing to know with R packages if you can imagine a function someone’s probably already written a package for it.</p>
+<p>I personally find that base R code can be quite arcane to read, which is why I’m such a <code>tidyverse</code> fan. The <code>tidyverse</code> is a collection of packages that is incredibly popular and for good reason, the design of the packages share consistent philophy around how code should be written (see <a href="https://www.tidyverse.org/packages/" target="_blank">their website</a> if you want to learn more).</p>
+<p>To install R packages just run <code>install.packages("&lt;package name&gt;")</code>. To use the package, run <code>library(&lt;package name&gt;)</code> to load in all the functions from that package into your current R session.</p>
+<p>You can also use specific functions from packages by loading them in specifically (using <code>include.only</code>) or by explicitly calling the function without loading the package (using <code>::</code>), demonstrated in the example below.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Load specific function</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Call function without loading</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<pre><code>library(haven, include.only = "read_dta")
+auto &lt;- read_dta("/Applications/Stata/auto.dta")</code></pre>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<pre><code>auto &lt;- haven::read_dta("/Applications/Stata/auto.dta")</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="multiple-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-datasets">Multiple datasets</h3>
+<p>Stata can <em>sort of</em> do this but nothing like how R does. Instead of using <code>frame</code> to create and manage multiple in-memory datasets and <code>frame change</code> to switch between datasets, you can just load multiple datasets into R, assign them names, and simply call these names when going about your work, no explicit switching required. I won’t go into detail here as you’ll very quickly figure this out as you start to use R, but I think it’s one of the greatest advantages of R over Stata.</p>
+</section>
+<section id="pipes" class="level3">
+<h3 class="anchored" data-anchor-id="pipes">Pipes</h3>
+<p>Using the <code>auto</code> dataset as an example, say we wanted to create a dataset of only domestic cars and analyse their weight to length ratio by brand. In Stata, your each line of your code would be executed sequentially and independently with the results window returning something after each step:</p>
+<pre><code>sysuse auto
+drop if foreign == 1
+gen wgt_len_ratio = weight/length
+gen brand = substr(make, 1, ustrpos(make, " ")-1)
+sort brand
+by brand: summarize wgt_len_ratio</code></pre>
+<p>You can write R code in this fashion too but there’s something nice about using pipes. You can think of pipes as literal pipes, you put something in at one end of the pipe and something comes out the other end. In our case, data goes in one end, your code is what happens inside of the pipe, and the result of your code is what comes out the other end. In R there’s two different pipes, the base pipe <code>|&gt;</code> and the <code>magrittr</code> pipe <code>%&gt;%</code>. You probably don’t need to worry about the difference, but for those interested see <a href="https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/" target="_blank">this post on the tidyverse website</a>.</p>
+<p>The same operation as above in R could be done as:</p>
+<pre><code>auto &lt;- haven::read_dta("/Applications/Stata/auto.dta")
+
+auto |&gt; 
+  filter(foreign == 0) |&gt; 
+  mutate(
+    wgt_len_ratio = weight/length,
+    brand = str_extract(make, "\\w+")
+    ) |&gt; 
+  group_by(brand) |&gt; 
+  summarise(
+    n = n(),
+    mean = mean(wgt_len_ratio),
+    sd = sd(wgt_len_ratio),
+    min = min(wgt_len_ratio),
+    max = max(wgt_len_ratio)
+  )</code></pre>
+<p>It’s a little longer in length than the Stata example, however I find pipes and <code>tidyverse</code> in particular make the code more readable and easier to follow and navigate (the indentations also help). By running the whole</p>
+</section>
+<section id="assigning-output" class="level3">
+<h3 class="anchored" data-anchor-id="assigning-output">Assigning output</h3>
+<p>One of the main things to adjust to in R is the need to assign your output. In Stata, if you were to create a new variable, you would just write <code>gen new_var = old_var*2</code> and it would automatically create <code>new_var</code> in the current dataset. Similarly, if you run a regression model, Stata stores a bunch of information in the background that you can access, such as via the <code>lincom</code> and <code>margins</code> functions.</p>
+<p>In R, the default is to display the output of your code in the console (similar to Stata’s results window). So if you were to run <code>auto |&gt; mutate(new_var = 1)</code> it would just print the result in the console. Instead, you need to assign the output using the assignment operator <code>&lt;-</code> to an object, either an existing or a new one. For example:</p>
+<ul>
+<li><code>auto &lt;- auto |&gt; mutate(new_var = 1)</code> writes over the object named <code>auto</code>, which is our dataset</li>
+<li><code>auto_new &lt;- auto |&gt; mutate(new_var = 1)</code> creates a new object called <code>auto_new</code> and leaves the original <code>auto</code> object unchanged</li>
+</ul>
+<p>One aspect of this feature is that it completely circumvents the need for Stata’s <code>preserve</code> and <code>restore</code>. Just assign the output of your code to a new object where you would instead have used <code>preserve</code> and <code>restore</code>. This makes it handy for analyses of data at different stages of cleaning or analysis.</p>
+</section>
+<section id="further-resources" class="level3">
+<h3 class="anchored" data-anchor-id="further-resources">Further resources</h3>
+<p>The books I would recommend using to keep learning from are:</p>
+<ul>
+<li><a href="https://r4ds.hadley.nz/">R for Data Science</a></li>
+<li><a href="https://adv-r.hadley.nz/">Advanced R</a></li>
+<li><a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a></li>
+<li><a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a></li>
+</ul>
+<p>Note that Fundamentals of Data Visualization doesn’t include the R code by default. Instead, Claus provides a link on the welcome page to the book’s GitHub repo, which you can search through to find the code to replicate the graphs in the book.</p>
+</section>
+</section>
+<section id="converting-stata-to-r-code" class="level2">
+<h2 class="anchored" data-anchor-id="converting-stata-to-r-code">Converting Stata to R code</h2>
+<section id="modifying-variables" class="level3">
+<h3 class="anchored" data-anchor-id="modifying-variables">Modifying variables</h3>
+<p>A lot of data cleaning work involves modifying or creating variables in some way. In the <code>tidyverse</code>, variables are typically created or modified using the <code>mutate()</code> function.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="ykbsoyucwb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ykbsoyucwb table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ykbsoyucwb thead, #ykbsoyucwb tbody, #ykbsoyucwb tfoot, #ykbsoyucwb tr, #ykbsoyucwb td, #ykbsoyucwb th {
+  border-style: none;
+}
+
+#ykbsoyucwb p {
+  margin: 0;
+  padding: 0;
+}
+
+#ykbsoyucwb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ykbsoyucwb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ykbsoyucwb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ykbsoyucwb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ykbsoyucwb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ykbsoyucwb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ykbsoyucwb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ykbsoyucwb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ykbsoyucwb .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ykbsoyucwb .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ykbsoyucwb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ykbsoyucwb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ykbsoyucwb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ykbsoyucwb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ykbsoyucwb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ykbsoyucwb .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ykbsoyucwb .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ykbsoyucwb .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ykbsoyucwb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ykbsoyucwb .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ykbsoyucwb .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ykbsoyucwb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ykbsoyucwb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ykbsoyucwb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ykbsoyucwb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ykbsoyucwb .gt_left {
+  text-align: left;
+}
+
+#ykbsoyucwb .gt_center {
+  text-align: center;
+}
+
+#ykbsoyucwb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ykbsoyucwb .gt_font_normal {
+  font-weight: normal;
+}
+
+#ykbsoyucwb .gt_font_bold {
+  font-weight: bold;
+}
+
+#ykbsoyucwb .gt_font_italic {
+  font-style: italic;
+}
+
+#ykbsoyucwb .gt_super {
+  font-size: 65%;
+}
+
+#ykbsoyucwb .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ykbsoyucwb .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ykbsoyucwb .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ykbsoyucwb .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ykbsoyucwb .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ykbsoyucwb .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ykbsoyucwb .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#ykbsoyucwb .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#ykbsoyucwb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="Function" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Function</th>
+<th id="Stata" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Stata</th>
+<th id="R" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">R</th>
+<th id="Note" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Note</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">Making/modifying variables</td>
+<td class="gt_row gt_left" headers="Stata"><code>gen weight_kg = weight/2.205</code></td>
+<td class="gt_row gt_left" headers="R"><code>mutate(weight_kg = weight/2.205)</code></td>
+<td class="gt_row gt_left" headers="Note">Making and modifying variables is done using <code>mutate</code> and overwrites variables without warning, unlike Stata</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">Make a string variable numeric</td>
+<td class="gt_row gt_left" headers="Stata"><code>destring price</code></td>
+<td class="gt_row gt_left" headers="R"><code>mutate(price = as.numeric(price)</code></td>
+<td class="gt_row gt_left" headers="Note">Price is already a numeric variable, you get the idea though. <code>as.numeric</code> is a base R function</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">Make a numeric variable into a string</td>
+<td class="gt_row gt_left" headers="Stata"><code>tostring price</code></td>
+<td class="gt_row gt_left" headers="R"><code>mutate(price = as.character(price)</code></td>
+<td class="gt_row gt_left" headers="Note"><code>as.character</code> is a base R function</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">Make a variable missing</td>
+<td class="gt_row gt_left" headers="Stata"><code>gen new_var = .</code></td>
+<td class="gt_row gt_left" headers="R"><code>mutate(new_var = NA)</code></td>
+<td class="gt_row gt_left" headers="Note">Remember that Stata treats missing values as large positive numbers? Yeah R doesn’t do that</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">Create a variable using conditions</td>
+<td class="gt_row gt_left" headers="Stata"><code>gen price_10k = 0</code> then <code>replace price_10k = 1 if price &gt;=10000</code></td>
+<td class="gt_row gt_left" headers="R"><code>mutate(price_10k = case_when(price &gt;= 10000 ~ 1, .default = 0))</code></td>
+<td class="gt_row gt_left" headers="Note"><code>case_when()</code> can be used for many of the functions in <code>egen</code> too</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="other-basics" class="level3">
+<h3 class="anchored" data-anchor-id="other-basics">Other basics</h3>
+<p>These functions are more about performing other operations to datasets than changing or modifying variables.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="mppmilxrqg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mppmilxrqg table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mppmilxrqg thead, #mppmilxrqg tbody, #mppmilxrqg tfoot, #mppmilxrqg tr, #mppmilxrqg td, #mppmilxrqg th {
+  border-style: none;
+}
+
+#mppmilxrqg p {
+  margin: 0;
+  padding: 0;
+}
+
+#mppmilxrqg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mppmilxrqg .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mppmilxrqg .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mppmilxrqg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mppmilxrqg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mppmilxrqg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mppmilxrqg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mppmilxrqg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mppmilxrqg .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mppmilxrqg .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mppmilxrqg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mppmilxrqg .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mppmilxrqg .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mppmilxrqg .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mppmilxrqg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mppmilxrqg .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mppmilxrqg .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mppmilxrqg .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mppmilxrqg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mppmilxrqg .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mppmilxrqg .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mppmilxrqg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mppmilxrqg .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mppmilxrqg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mppmilxrqg .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mppmilxrqg .gt_left {
+  text-align: left;
+}
+
+#mppmilxrqg .gt_center {
+  text-align: center;
+}
+
+#mppmilxrqg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mppmilxrqg .gt_font_normal {
+  font-weight: normal;
+}
+
+#mppmilxrqg .gt_font_bold {
+  font-weight: bold;
+}
+
+#mppmilxrqg .gt_font_italic {
+  font-style: italic;
+}
+
+#mppmilxrqg .gt_super {
+  font-size: 65%;
+}
+
+#mppmilxrqg .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mppmilxrqg .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mppmilxrqg .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mppmilxrqg .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mppmilxrqg .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mppmilxrqg .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mppmilxrqg .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#mppmilxrqg .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#mppmilxrqg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="Function" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Function</th>
+<th id="Stata" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Stata</th>
+<th id="R" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">R</th>
+<th id="Note" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Note</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">Renaming variables</td>
+<td class="gt_row gt_left" headers="Stata"><code>rename weight weight_lbs</code></td>
+<td class="gt_row gt_left" headers="R"><code>rename(weight_lbs weight)</code></td>
+<td class="gt_row gt_left" headers="Note">The arguments are back to front in R. Stata is <current name=""> <new name="">, <code>dplyr</code> is <new name=""> <current name=""></current></new></new></current></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">Dropping variables</td>
+<td class="gt_row gt_left" headers="Stata"><code>drop mpg</code></td>
+<td class="gt_row gt_left" headers="R"><code>select(-mpg)</code></td>
+<td class="gt_row gt_left" headers="Note">The minus is what drops the variable. Without the minus it would instead keep only <code>mpg</code></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">Dropping observations</td>
+<td class="gt_row gt_left" headers="Stata"><code>drop if foreign == 1</code></td>
+<td class="gt_row gt_left" headers="R"><code>filter(foreign != 1)</code></td>
+<td class="gt_row gt_left" headers="Note">Filter keeps observations that meet criteria, rather than drops them, hence the inverse condition</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">Reshaping wider</td>
+<td class="gt_row gt_left" headers="Stata"><code>reshape wide mpg, i(make) j(turn)</code></td>
+<td class="gt_row gt_left" headers="R"><code>pivot_wider(names_from = ‘turn’, values_from = ‘mpg’)</code></td>
+<td class="gt_row gt_left" headers="Note">&nbsp;</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">Reshaping longer</td>
+<td class="gt_row gt_left" headers="Stata"><code>reshape long rep, i(make) j(newvar)</code></td>
+<td class="gt_row gt_left" headers="R"><code>pivot_longer(c(rep78,rep79), values_to = ‘newvar’)</code></td>
+<td class="gt_row gt_left" headers="Note">To run these examples, you’d first need to create <code>rep79</code>, which I created as <code>rep78+1</code></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">Summarising data</td>
+<td class="gt_row gt_left" headers="Stata"><code>summarize mpg</code></td>
+<td class="gt_row gt_left" headers="R"><code>summarise(obs = n(mpg), mean = mean(mpg), stddev = sd(mpg), min = min(mpg), max = max(mpg)</code></td>
+<td class="gt_row gt_left" headers="Note"><code>dplyr</code> treats summarise and summarize as synonyms, so use whichever you prefer.</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Function">Grouping operations</td>
+<td class="gt_row gt_left" headers="Stata"><code>by foreign:</code></td>
+<td class="gt_row gt_left" headers="R"><code>group_by(foreign)</code></td>
+<td class="gt_row gt_left" headers="Note">You would use <code>group_by()</code> in the line before the operation that you want to apply the grouping to. Once you no longer need the grouping to be in place, use <code>ungroup()</code>, otherwise all subsequent operations will be grouped</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Function">Seed setting</td>
+<td class="gt_row gt_left" headers="Stata"><code>set seed 1234</code></td>
+<td class="gt_row gt_left" headers="R"><code>set.seed(1234)</code></td>
+<td class="gt_row gt_left" headers="Note">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="regression" class="level3">
+<h3 class="anchored" data-anchor-id="regression">Regression</h3>
+<p>The correspondences here represent the models that you need to run to generate (usually) the same results, not the code that will produce the same output. If you simply run the R code it will output something minimal, instead you will want to assign the model to an object. For the linear regression example, this would be <code>model &lt;- lm(price ~ mpg, data = auto)</code> followed by using the summary function on that object <code>summary(model)</code>.</p>
+<p>I say ‘usually’ the same results because for some methods there seems to be some minor difference under the hood that means estimates differ slightly. For example, in the negative binomial example the standard errors for <code>mpg</code> are different at the 4th decimal. Always check your outputs :)</p>
+<p>Finally, I only include some basic regression models here. In epidemiology we often need to deal with observations that aren’t independent, such as in longitudinal studies. Methods such as generalised estimating equations (GEEs) and mixed effects models are supported in R. For GEEs, see the <code>gee</code> package (<a href="https://cran.r-project.org/web/packages/gee/gee.pdf" target="_blank">link</a>). For mixed effects models, the <code>lme4</code> (<a href="https://cran.r-project.org/web/packages/lme4/index.html" target="_blank">link</a>) is popular.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="herczokacy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#herczokacy table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#herczokacy thead, #herczokacy tbody, #herczokacy tfoot, #herczokacy tr, #herczokacy td, #herczokacy th {
+  border-style: none;
+}
+
+#herczokacy p {
+  margin: 0;
+  padding: 0;
+}
+
+#herczokacy .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#herczokacy .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#herczokacy .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#herczokacy .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#herczokacy .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#herczokacy .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#herczokacy .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#herczokacy .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#herczokacy .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#herczokacy .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#herczokacy .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#herczokacy .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#herczokacy .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#herczokacy .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#herczokacy .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#herczokacy .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#herczokacy .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#herczokacy .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#herczokacy .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#herczokacy .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#herczokacy .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#herczokacy .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#herczokacy .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#herczokacy .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#herczokacy .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#herczokacy .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#herczokacy .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#herczokacy .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#herczokacy .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#herczokacy .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#herczokacy .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#herczokacy .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#herczokacy .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#herczokacy .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#herczokacy .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#herczokacy .gt_left {
+  text-align: left;
+}
+
+#herczokacy .gt_center {
+  text-align: center;
+}
+
+#herczokacy .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#herczokacy .gt_font_normal {
+  font-weight: normal;
+}
+
+#herczokacy .gt_font_bold {
+  font-weight: bold;
+}
+
+#herczokacy .gt_font_italic {
+  font-style: italic;
+}
+
+#herczokacy .gt_super {
+  font-size: 65%;
+}
+
+#herczokacy .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#herczokacy .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#herczokacy .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#herczokacy .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#herczokacy .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#herczokacy .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#herczokacy .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#herczokacy .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#herczokacy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="Model" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Model</th>
+<th id="Stata" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Stata</th>
+<th id="R" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">R</th>
+<th id="Note" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Note</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="Model">Simple linear regression</td>
+<td class="gt_row gt_left" headers="Stata"><code>reg price mpg</code></td>
+<td class="gt_row gt_left" headers="R"><code>lm(price ~ mpg, data = auto)</code></td>
+<td class="gt_row gt_left" headers="Note">&nbsp;</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Model">Logistic regression</td>
+<td class="gt_row gt_left" headers="Stata"><code>logit foreign mpg</code></td>
+<td class="gt_row gt_left" headers="R"><code>glm(foreign ~ mpg, data = auto, family = "binomial")</code></td>
+<td class="gt_row gt_left" headers="Note">&nbsp;</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="Model">Poisson regression</td>
+<td class="gt_row gt_left" headers="Stata"><code>poisson rep78 mpg</code></td>
+<td class="gt_row gt_left" headers="R"><code>glm(rep78 ~ mpg, data = auto, family = "poisson")</code></td>
+<td class="gt_row gt_left" headers="Note">&nbsp;</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="Model">Negative binomial regression</td>
+<td class="gt_row gt_left" headers="Stata"><code>nbreg displacement mpg</code></td>
+<td class="gt_row gt_left" headers="R"><code>MASS::glm.nb(displacement ~ mpg, data = auto)</code></td>
+<td class="gt_row gt_left" headers="Note">Requires the <code>MASS</code> package</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-visualisation" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualisation">Data visualisation</h2>
+<p>Another great feature of R is <code>ggplot2</code>, the <code>tidyverse</code> package used to create plots. There are so many ways to customise plots using <code>ggplot2</code> that I won’t cover them here - check out the documentation if you want to learn more.</p>
+<p>Note that some of these plots don’t make any sense, it’s just to demonstrate the code.</p>
+<section id="histograms" class="level3">
+<h3 class="anchored" data-anchor-id="histograms">Histograms</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="density-plots" class="level3">
+<h3 class="anchored" data-anchor-id="density-plots">Density plots</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bar-charts" class="level3">
+<h3 class="anchored" data-anchor-id="bar-charts">Bar charts</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> headroom, <span class="at">y =</span> rep78)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="line-charts" class="level3">
+<h3 class="anchored" data-anchor-id="line-charts">Line charts</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> length)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="scatter-plots" class="level3">
+<h3 class="anchored" data-anchor-id="scatter-plots">Scatter plots</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> length)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="box-plots" class="level3">
+<h3 class="anchored" data-anchor-id="box-plots">Box plots</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> foreign, <span class="at">y =</span> price, <span class="at">group =</span> foreign)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="violin-plots" class="level3">
+<h3 class="anchored" data-anchor-id="violin-plots">Violin plots</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> foreign, <span class="at">y =</span> price, <span class="at">group =</span> foreign)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="customising-data-visualisations" class="level2">
+<h2 class="anchored" data-anchor-id="customising-data-visualisations">Customising data visualisations</h2>
+<p>The different plots are outlined above but you will probably want to customise them further so they look nice. I already did some theming with <code>theme_bw()</code> but we can do more than that. Note my preference for <code>theme_bw()</code> over <code>theme_minimal()</code> (another popular theme) stems from the fact that <code>theme_bw()</code> has a white background, while <code>theme_minimal()</code> has a transparent background, which causes problems in some circumstances.</p>
+<p>To make changes to elements of a plot you add things to it with the <code>+</code> symbol. In the examples above I specify the <code>ggplot2</code> aesthetics, what kind of plot (the <code>geom_*</code> part), and finish with the theme. These components are connected with the <code>+</code> symbol.</p>
+<p>Since <code>ggplot2</code> is so heavily customisable, I won’t go into too much detail here except to provide code that demonstrates some of the common things you’d want to do to a plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>auto <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> length, <span class="at">colour =</span> <span class="fu">factor</span>(foreign))) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="co"># This changes the size of the dots</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Weight (lbs)"</span>, <span class="co"># The axis title</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(), <span class="co"># Adds a comma to the axis, using the scales package</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1500</span>,<span class="dv">5000</span>), <span class="co"># The limits of the axis</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1500</span>,<span class="dv">5000</span>,<span class="dv">500</span>), <span class="co"># Change main grid lines, which is where labels appear</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>            <span class="co"># seq() specifies we want them to go from 1000 to 6000 in increments of 500</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">minor_breaks =</span> <span class="cn">NULL</span>, <span class="co"># Turn off the smaller grid lines</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Length (inches)"</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="dv">240</span>),</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">140</span>,<span class="dv">240</span>,<span class="dv">10</span>),</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">minor_breaks =</span> <span class="cn">NULL</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Car origin"</span>, <span class="co"># Changes the legend name</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"blue"</span>), <span class="co"># Set the colour of the points</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Domestic"</span>,<span class="st">"Foreign"</span>) <span class="co"># Change the legend label names</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"serif"</span>, <span class="co"># Change the font of the plot</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">16</span>, <span class="co"># Change the text size</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span> <span class="co"># Change where the legend is</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
