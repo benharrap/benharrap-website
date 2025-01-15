@@ -8,7 +8,7 @@ categories:
   - R
   - Stata
   - research
-image: false
+freeze: true
 ---
 
 ```{r echo = F, warning = F, message = F}
