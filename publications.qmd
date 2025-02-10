@@ -1,11 +1,21 @@
 ---
 title: "Publications"
 format: html
-bibliography: works.bib
-csl: apa.csl
-nocite: |
-  @*
 ---
 
-:::{#refs}
-:::
+```{r}
+#| echo: false
+#| message: FALSE
+#| warning: FALSE
+#| results: asis
+
+pubs <- read.csv("publications.csv")
+
+for(i in 1:nrow(pubs)) {
+  cat('##', pubs$title[i],'\n')
+  cat(pubs$author[i], '<br/>')
+  cat('*',pubs$journal[i],'*<br/>', sep = "")
+  cat(paste0('[Link to article](',pubs$url[i],'){target="_blank"}', sep = ""))
+  cat('<details><summary>Click for abstract</summary>',pubs$abstract[i],'</details>')
+}
+```
