@@ -16,6 +16,6 @@ for(i in 1:nrow(pubs)) {
   cat(pubs$author[i], '<br/>')
   cat('*',pubs$journal[i],'*<br/>', sep = "")
   cat(paste0('[Link to article](',pubs$url[i],'){target="_blank"}', sep = ""))
-  cat('<details><summary>Click for abstract</summary>',pubs$abstract[i],'</details>')
+  cat('<details><summary>Click for abstract</summary><small>',pubs$abstract[i],'</small></details>')
 }
 ```

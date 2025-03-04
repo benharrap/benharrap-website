@@ -5,4 +5,4 @@ date: 2020-12-03
 categories: joke
 ---
 
-Because all their cakes were stollen.
+Because all their cakes were stollen

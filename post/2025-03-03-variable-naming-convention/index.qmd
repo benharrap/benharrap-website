@@ -1,0 +1,262 @@
+---
+title: "What makes a good variable naming convention"
+author: "Ben Harrap"
+date: 2025-03-03
+toc: true
+categories: 
+  - survey design
+  - R
+  - code
+  - research
+---
+
+In particular, what makes a good variable naming convention for a longitudinal or panel survey? I wanted to answer this question so I could propose a good naming convention for a project at work. I have lots of opinions about this, largely based on working with variable names I don't like, but I thought I should see what others thought so I posed the question on BlueSky...
+
+<blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:kk6ztlsaka6mdlpursuwd4yt/app.bsky.feed.post/3liygwokwv22m" data-bluesky-cid="bafyreidq37zt7n4pitxbododkvqgdzyuwyizbo4nbor7hefj2it2ahxwyy"><p lang="en">I get to propose a variable naming convention.
+
+Give me your &quot;I&#x27;ll die on this hill&quot; opinions about variable names #databs #rstats</p>&mdash; Ben Harrap (<a href="https://bsky.app/profile/did:plc:kk6ztlsaka6mdlpursuwd4yt?ref_src=embed">@bharrap.bsky.social</a>) <a href="https://bsky.app/profile/did:plc:kk6ztlsaka6mdlpursuwd4yt/post/3liygwokwv22m?ref_src=embed">February 25, 2025 at 7:27 PM</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
+
+... and I got just as many comments on what **not** to do as what to do! So let's go through the do's and don'ts and I'll use the following question to demonstrate.
+
+> How would you rate your general health?
+>
+> Poor  
+> Fair  
+> Good  
+> Excellent
+
+In terms of features, this question:
+
+-   Permits only one response choice
+-   Creates ordinal data
+-   Is asked every wave
+-   Appears in the 'general health' sub-section of the questionnaire
+-   Which is in the 'health' section
+-   Asks about participants' general health
+
+## What makes a bad naming convention?
+
+Let's start out with what makes for a bad naming convention. If we figure out what we don't like, we can start to figure out what we do.
+
+### Not using a convention
+
+Making variable names up as you go along is clearly a bad idea. It creates much more work as you'll have to either remember every specific variable name or look at the data dictionary every time. Planning variable names ahead of time is also important, if you make up a few names then try and fit new names into the pattern you've just made up, you'll quickly run into issues where the names don't work. So at the very least we need a naming convention.
+
+For our general health question, maybe we called it `generalhealth`. Not terrible, but this isn't going to be adequate in the context of an entire survey, as hopefully you'll come to realise.
+
+### Prioritising brevity
+
+Making variable names as short as possible will save a few keystrokes at the cost of constantly referring back to the data dictionary to make sure you're using the right one.
+
+We could call the general health question `genh` or `gh` or `ghr` (general health rating). Yes, they're short, but see how I had to explain what `ghr` stood for? It's not immediately clear.
+
+Also, text-completion exists in many IDEs, so don't prioritise brevity!
+
+### Prioritising interpretability
+
+Conversely, prioritising interpretability can lead to excessively long variable names, which is at the other extreme!
+
+`wave_1_health_general_health_general_health_rating_ordinal` encodes lots of information - the wave, the section, the sub-section, some of the question wording, and the type of data. This kind of length might work for your own solo projects but not for a dataset that's going to be used by lots of people.
+
+### Names that are easy to mix up
+
+This is more common with conventions that prioritise brevity, as they tend to use abbreviations and avoid delimiters, which makes variables difficult for our brains to process quickly and accurately. Imagine the convention `{wave}{respondent}{topic}{2-letter ID}` resulted in the variables `bcgenmo` and `bcgemno`. They're from entirely different topics, `gen` and `gem`, but it is very easy to mix them up visually and through typos.
+
+### Using more than one case
+
+camelCase, snake_case, kebab-case, SCREAMING-KEBAB-CASE, they're all candidates but switching between cases is a no-no for variable names. It might be useful in other situations where you use one case for functions, another for variable names. But we're just talking about variable names here, so don't use more than one case.
+
+### Using more than one language
+
+This was a good point from my BlueSky post (thanks Russell!). In my context in Australia, I'd use English, and only English, to name the variables in my dataset.
+
+People are going to have an easier time if we call the general health question `general_health` instead of `allgemeine_gesundheit`. If you were collecting data in Germany, `allgemeine_gesundheit` might make more sense.
+
+### Using letters for wave number
+
+Ok this is probably a controversial one because I see it done time and time again. Yes, it's a concise and convenient way of representing a number. However, it only works up to 26 waves (our survey's going to run forever, right!?). It's also a pain trying to remember which letter is which number and it forces you to write extra code to translate letters into numbers (e.g. `match("k",letters[1:26])`). 
+
+Imagine we've got 20 waves of survey data, what wave is the general health question `hhlthgenord` in? I'm sat here counting out letters on my fingers because I don't know off the top of my head.
+
+Also, it can lead to odd variable names - some examples from the wild include:
+
+-   `asdtype` - Wave 1 survey type, not type of autism spectrum disorder
+-   `ewluge` - A question about geriatric care in wave 5, not a disdain for sleds
+
+These are fairly innocuous examples but I've seen some inappropriately named variables too.
+
+### Using elements of the questionnaire design
+
+You might be tempted to incorporate the question number into the variable name. Don't. 
+
+Imagine the general health question is number 50 in wave 1, so we call it `a50genh`. In preparation for wave 2 we examine individual question response rates - looks like rates of missing data increase with increasing question number. We could address that in wave 2 by randomising the order of sections or putting the general health question earlier in the questionnaire. Good ideas, but either of these choices break the naming convention.
+
+The same goes for using the section. The general health question might've been the only health question in the first wave, so it went in the 'about you' section and was called `aaboutgenh`. For wave 2 though we got funding from the Department of Health and they want to add a section on health. Now the general health question has moved to the 'health' section. Calling it `bhealthgenh` is encoding the section in wave 2 but is inconsistent with the wave 1 name. Calling it `baboutgenh` encodes the incorrect section in the name. Not good!
+
+## What makes a good naming convention?
+
+We have an idea of what makes a bad convention, so what makes a good one?
+
+### Clearly defined components
+
+Naming conventions are built on components, with their combination resulting in variable names. Components you might use include:
+
+-   Survey wave
+-   Data type
+-   Respondent category
+-   Question theme
+-   Question keyword
+
+Once you've identified the important components, next decide on how they will be combined - and stick to this formula! 
+
+Applying the convention `{wave}_{theme}_{keyword}` to the general health question in wave 1 could lead to the variable name `w01_health_general`.
+
+### Considered ordering of components
+
+The ordering of components should have a logic or hierarchy to it. I'd recommend following a hierarchy of information scope. 
+
+For example, the hierarchy in `{wave}_{theme}_{keyword}` goes from broad to narrow - `{wave}` relates to the whole survey and is the broadest in scope, `{theme}` relates to the theme or concept the question is getting at, but isn't necessarily restricted to that question alone, and `{keyword}` has the most narrow scope, drawing on the specific wording of a question.
+
+Also, think about how you might be working with the variables - R's `dplyr` provides functions like `ends_with()` and `starts_with()` for a reason. From the [palmer penguins](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} dataset, consider the variables `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`. If we wanted to work with measurements relating to bills, these variables are readily identifiable (`starts_with("bill_)"`). Similarly, if we wanted to change millimetres to centimetres, we can identify these variables using `ends_with("_mm")`.
+
+This also makes it easy to see sets of related variables in the data dictionary and produces sensible options in auto-complete lists. Contrast these two approaches:
+
+:::: {.columns}
+
+::: {.column}
+
+```
+bill_length_mm
+bill_depth_mm
+bill_width_mm
+bill_colour
+bill_density
+```
+
+:::
+
+::: {.column}
+
+```
+length_bill_mm
+depth_bill_mm
+width_bill_mm
+colour_bill
+density_bill
+```
+
+:::
+
+::::
+
+Having `bill` as the first component makes it easy to spot variables relating to bills. Having measurement as the first component is more visually cluttered and in a dictionary of hundreds of variables would be harder to spot. You should consider the focus of the data though, maybe measurements are the focus in which case it would be more useful to have measurement as the first component.
+
+### Choose components that are resilient to changes in survey design
+
+We know that questionnaire section is a poor component because it breaks as soon as questions are moved between sections. Instead, try and choose components that are unlikely to change over time. For example, the general health question asks about health so we could say its theme or focus is `health`. In our previous example then, `{wave}_{theme}_{keyword}` is not going to break when the question moved from 'about you' to 'health', but `{wave}_{section}_{keyword}` will.
+
+A side effect of choosing components that are resilient to changes in survey design is that if a circumstance arises that looks to break a variable name, it could be that you need a new question instead.
+
+### Balancing brevity and interpretability
+
+The goal is to create variable names that are succinct.
+
+> succinct, *adjective*. marked by compact precise expression without wasted words
+
+This is as much of an art as a science, don't be surprised if it's difficult! 
+
+Take the previous example `wave_1_health_general_health_general_health_rating_ordinal`. The section and sub-sections are redundant, repeating the words `health` and `general`. We could instead switch these components for the theme, which is still health, and get to `wave_1_health_general_rating_ordinal`. `wave_1` could then be shortened to `w01`, and we could provide a schema for data type abbreviations:
+
+-   `str` = strings
+-   `cat` = categorical
+-   `ord` = ordinal
+-   `num` = numeric
+
+So we switch from `{wave_#}_{section}_{subsection}_{keywords}_{type}` to `{wave}_{theme}_{keyword}_{type}` and end up with `w01_health_general_ord`.
+
+On abbreviations, I would suggest using them sparingly, rather than not at all. Sometimes there's an important bit of information you want to encode in a variable or set of variables, but you can't do it without using an abbreviation.
+
+### Consider software requirements
+
+Related to brevity, it's important to think about your end-users and the software they use. Stata, SPSS, and SAS only support variable names up to 32 characters in length, meaning that is the hard maximum for your variable names. Variable names shouldn't start with numbers either, hence why my examples for `{wave}` have been `w01` not `01`.
+
+In coming up with my proposed convention, I kept in mind that people use datasets in long and wide format. I was debating whether to include `wave` as a component, `w01_health_general`, or to store it as a separate variable. Moving wave to be a variable instead of a component didn't mean I now had an extra four characters (`w01_`) to work with though - if Stata users reshape the dataset into wide format using `wave`, they'll run into problems with variable names that are 29 characters or more.
+
+While this might seem like over-engineering, it was a legitimate requirement of the end-users.
+
+### Consider survey requirements
+
+Aspects of the survey can also inform the components you choose, and also how you define those components.
+
+I've used `w01` as an example of how wave could be encoded in the variable name. The reason for `w01` and not `w1` is that this allows for more than 10 waves to be encoded in a way that can be sorted:
+
+```{r}
+sort(c("w1","w2","w3","w10","w11","w12"))
+sort(c("w01","w02","w03","w10","w11","w12"))
+```
+
+The Longitudinal Study of Indigenous Children gathers responses from children, their parents, their teacher or carer, and their school principal. Respondent is included as a component in their variable names:
+
+-   `a` = parent 1
+-   `b` = parent 2
+-   `c` = study child
+-   `d` = teacher/carer
+-   `e` = principal
+
+The use of single letters here is prioritising brevity over interpretability, but you can see how this element of the survey informed the naming convention.
+
+### Use a delimiter, consistently
+
+Using a delimiter to separate the components of your variable names makes them much easier for humans to read, just make sure you pick one and stick with it. Which delimiter do you prefer:
+
+```
+bill_length_mm
+
+bill.length.mm
+
+bill-length-mm
+```
+
+I prefer underscores, I think they're the easiest to read. Buy you also need to consider your end-user's software. Programs like Stata don't support dashes or dots in variable names, so you're kinda forced into using underscores anyway. Fine by me!
+
+### Have a human create and review the names
+
+The convention you choose might act as a guide or it might act as a rule. If it's a guide, there's going to be some discretion involved in choosing what to use for certain elements, like `{keyword}`. For the general health rating, both `w01_health_general` and `w01_health_rating` are suitable options, but you have to choose one.
+
+Regardless of whether the convention is applied as a guide or rule, make sure you have a human review the resulting list of variable names, it's important that you don't end up with names that are offensive.
+
+## Other considerations
+
+Here's a few other things that aren't necessarily do's or don'ts:
+
+-   Can a component be a variable in itself
+    -   Recall I contemplated turning `{wave}` into a variable, rather than using it in the variable name
+-   Are there other creative ways of managing components?
+    -   For example, could questionnaires completed by children versus their parents be separate datasets instead of including respondent as a component?
+-   Do you use a different convention for administrative variables?
+    -   Participant ID doesn't change over waves, so perhaps `pid` sufficient over `admin_pid`
+-   Talk to people who will be typing the variable names, using the data
+    -   Getting feedback from analysts, data managers, database admins will help shape your convention
+    -   Design it for real users, not hypothetical ones
+
+## Further reading
+
+Emily Riederer wrote a great blog post on this topic, which helped inform my thinking - [https://www.emilyriederer.com/post/column-name-contracts/](https://www.emilyriederer.com/post/column-name-contracts/){target="_blank"}
+
+Wikipedia has articles on:
+
+-   [Naming conventions](https://en.wikipedia.org/wiki/Naming_convention_(programming)){target="_blank"}
+-   [Delimiters](https://en.wikipedia.org/wiki/Delimiter){target="_blank"}
+
+The `tidyverse` style guide has opinions about names and more [https://style.tidyverse.org/](https://style.tidyverse.org/){target="_blank"}
+
+## Want to cite this?
+
+```
+@online{harrap2025variable,
+  author = {Benjamin Harrap},
+  title = {What makes a good variable naming convention},
+  year = {2025},
+  url = {https://benharrap.com/post/2025-03-03-variable-naming-convention},
+}
+```

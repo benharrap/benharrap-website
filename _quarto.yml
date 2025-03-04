@@ -34,4 +34,5 @@ format:
         gtag('config', 'G-XYMGR0N804');
       </script>
     theme: custom.scss
+    linestretch: 2
     monobackgroundcolor: '#ffddd6'
