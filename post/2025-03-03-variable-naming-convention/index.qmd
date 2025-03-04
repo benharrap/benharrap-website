@@ -117,7 +117,7 @@ The ordering of components should have a logic or hierarchy to it. I'd recommend
 
 For example, the hierarchy in `{wave}_{theme}_{keyword}` goes from broad to narrow - `{wave}` relates to the whole survey and is the broadest in scope, `{theme}` relates to the theme or concept the question is getting at, but isn't necessarily restricted to that question alone, and `{keyword}` has the most narrow scope, drawing on the specific wording of a question.
 
-Also, think about how you might be working with the variables - R's `dplyr` provides functions like `ends_with()` and `starts_with()` for a reason. From the [palmer penguins](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} dataset, consider the variables `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`. If we wanted to work with measurements relating to bills, these variables are readily identifiable (`starts_with("bill_)"`). Similarly, if we wanted to change millimetres to centimetres, we can identify these variables using `ends_with("_mm")`.
+Also, think about how you might be working with the variables - R's `dplyr` provides functions like `ends_with()` and `starts_with()` for a reason. From the [palmer penguins](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} dataset, consider the variables `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`. If we wanted to work with measurements relating to bills, these variables are readily identifiable (`starts_with("bill_")`). Similarly, if we wanted to change millimetres to centimetres, we can identify these variables using `ends_with("_mm")`.
 
 This also makes it easy to see sets of related variables in the data dictionary and produces sensible options in auto-complete lists. Contrast these two approaches:
 
@@ -149,13 +149,13 @@ density_bill
 
 ::::
 
-Having `bill` as the first component makes it easy to spot variables relating to bills. Having measurement as the first component is more visually cluttered and in a dictionary of hundreds of variables would be harder to spot. You should consider the focus of the data though, maybe measurements are the focus in which case it would be more useful to have measurement as the first component.
+Having `bill` as the first component (`{bodypart}`?) makes it easy to spot variables relating to bills. Having `{measurement}` as the first component is more visually cluttered and in a dictionary of hundreds of variables would be harder to spot. You should consider the focus of the data though, maybe measurements are the focus in which case it would be more useful to have measurement as the first component.
 
 ### Choose components that are resilient to changes in survey design
 
 We know that questionnaire section is a poor component because it breaks as soon as questions are moved between sections. Instead, try and choose components that are unlikely to change over time. For example, the general health question asks about health so we could say its theme or focus is `health`. In our previous example then, `{wave}_{theme}_{keyword}` is not going to break when the question moved from 'about you' to 'health', but `{wave}_{section}_{keyword}` will.
 
-A side effect of choosing components that are resilient to changes in survey design is that if a circumstance arises that looks to break a variable name, it could be that you need a new question instead.
+A side effect of choosing components that are resilient to changes in survey design is that if a circumstance arises that looks to break a variable name, it could be indicating that you need a new question instead.
 
 ### Balancing brevity and interpretability
 
@@ -180,7 +180,7 @@ On abbreviations, I would suggest using them sparingly, rather than not at all. 
 
 Related to brevity, it's important to think about your end-users and the software they use. Stata, SPSS, and SAS only support variable names up to 32 characters in length, meaning that is the hard maximum for your variable names. Variable names shouldn't start with numbers either, hence why my examples for `{wave}` have been `w01` not `01`.
 
-In coming up with my proposed convention, I kept in mind that people use datasets in long and wide format. I was debating whether to include `wave` as a component, `w01_health_general`, or to store it as a separate variable. Moving wave to be a variable instead of a component didn't mean I now had an extra four characters (`w01_`) to work with though - if Stata users reshape the dataset into wide format using `wave`, they'll run into problems with variable names that are 29 characters or more.
+In coming up with my proposed convention, I kept in mind that people use datasets in long and wide format. I was debating whether to include `wave` as a component, `w01_health_general`, or to store it as a separate variable. Moving `wave` to be a variable instead of a component didn't mean I now had an extra four characters (`w01_`) to work with though - if Stata users reshape the dataset into wide format using `wave`, they'll run into problems with variable names that are 29 characters or more.
 
 While this might seem like over-engineering, it was a legitimate requirement of the end-users.
 
@@ -217,7 +217,7 @@ bill.length.mm
 bill-length-mm
 ```
 
-I prefer underscores, I think they're the easiest to read. Buy you also need to consider your end-user's software. Programs like Stata don't support dashes or dots in variable names, so you're kinda forced into using underscores anyway. Fine by me!
+I prefer underscores, I think they're the easiest to read. But you also need to consider your end-user's software. Programs like Stata don't support dashes or dots in variable names, so you're kinda forced into using underscores anyway. Fine by me!
 
 ### Have a human create and review the names
 
@@ -234,7 +234,7 @@ Here's a few other things that aren't necessarily do's or don'ts:
 -   Are there other creative ways of managing components?
     -   For example, could questionnaires completed by children versus their parents be separate datasets instead of including respondent as a component?
 -   Do you use a different convention for administrative variables?
-    -   Participant ID doesn't change over waves, so perhaps `pid` sufficient over `admin_pid`
+    -   Participant ID doesn't change over waves, so perhaps `pid` is sufficient over `admin_pid`
 -   Talk to people who will be typing the variable names, using the data
     -   Getting feedback from analysts, data managers, database admins will help shape your convention
     -   Design it for real users, not hypothetical ones

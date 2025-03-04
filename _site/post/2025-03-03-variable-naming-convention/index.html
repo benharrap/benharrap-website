@@ -158,6 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#not-using-a-convention" id="toc-not-using-a-convention" class="nav-link" data-scroll-target="#not-using-a-convention">Not using a convention</a></li>
   <li><a href="#prioritising-brevity" id="toc-prioritising-brevity" class="nav-link" data-scroll-target="#prioritising-brevity">Prioritising brevity</a></li>
   <li><a href="#prioritising-interpretability" id="toc-prioritising-interpretability" class="nav-link" data-scroll-target="#prioritising-interpretability">Prioritising interpretability</a></li>
+  <li><a href="#names-that-are-easy-to-mix-up" id="toc-names-that-are-easy-to-mix-up" class="nav-link" data-scroll-target="#names-that-are-easy-to-mix-up">Names that are easy to mix up</a></li>
   <li><a href="#using-more-than-one-case" id="toc-using-more-than-one-case" class="nav-link" data-scroll-target="#using-more-than-one-case">Using more than one case</a></li>
   <li><a href="#using-more-than-one-language" id="toc-using-more-than-one-language" class="nav-link" data-scroll-target="#using-more-than-one-language">Using more than one language</a></li>
   <li><a href="#using-letters-for-wave-number" id="toc-using-letters-for-wave-number" class="nav-link" data-scroll-target="#using-letters-for-wave-number">Using letters for wave number</a></li>
@@ -265,6 +266,10 @@ Excellent</p>
 <p>Conversely, prioritising interpretability can lead to excessively long variable names, which is at the other extreme!</p>
 <p><code>wave_1_health_general_health_general_health_rating_ordinal</code> encodes lots of information - the wave, the section, the sub-section, some of the question wording, and the type of data. This kind of length might work for your own solo projects but not for a dataset that’s going to be used by lots of people.</p>
 </section>
+<section id="names-that-are-easy-to-mix-up" class="level3">
+<h3 class="anchored" data-anchor-id="names-that-are-easy-to-mix-up">Names that are easy to mix up</h3>
+<p>This is more common with conventions that prioritise brevity, as they tend to use abbreviations and avoid delimiters, which makes variables difficult for our brains to process quickly and accurately. Imagine the convention <code>{wave}{respondent}{topic}{2-letter ID}</code> resulted in the variables <code>bcgenmo</code> and <code>bcgemno</code>. They’re from entirely different topics, <code>gen</code> and <code>gem</code>, but it is very easy to mix them up visually and through typos.</p>
+</section>
 <section id="using-more-than-one-case" class="level3">
 <h3 class="anchored" data-anchor-id="using-more-than-one-case">Using more than one case</h3>
 <p>camelCase, snake_case, kebab-case, SCREAMING-KEBAB-CASE, they’re all candidates but switching between cases is a no-no for variable names. It might be useful in other situations where you use one case for functions, another for variable names. But we’re just talking about variable names here, so don’t use more than one case.</p>
@@ -312,7 +317,7 @@ Excellent</p>
 <h3 class="anchored" data-anchor-id="considered-ordering-of-components">Considered ordering of components</h3>
 <p>The ordering of components should have a logic or hierarchy to it. I’d recommend following a hierarchy of information scope.</p>
 <p>For example, the hierarchy in <code>{wave}_{theme}_{keyword}</code> goes from broad to narrow - <code>{wave}</code> relates to the whole survey and is the broadest in scope, <code>{theme}</code> relates to the theme or concept the question is getting at, but isn’t necessarily restricted to that question alone, and <code>{keyword}</code> has the most narrow scope, drawing on the specific wording of a question.</p>
-<p>Also, think about how you might be working with the variables - R’s <code>dplyr</code> provides functions like <code>ends_with()</code> and <code>starts_with()</code> for a reason. From the <a href="https://allisonhorst.github.io/palmerpenguins/" target="_blank">palmer penguins</a> dataset, consider the variables <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. If we wanted to work with measurements relating to bills, these variables are readily identifiable (<code>starts_with("bill_)"</code>). Similarly, if we wanted to change millimetres to centimetres, we can identify these variables using <code>ends_with("_mm")</code>.</p>
+<p>Also, think about how you might be working with the variables - R’s <code>dplyr</code> provides functions like <code>ends_with()</code> and <code>starts_with()</code> for a reason. From the <a href="https://allisonhorst.github.io/palmerpenguins/" target="_blank">palmer penguins</a> dataset, consider the variables <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. If we wanted to work with measurements relating to bills, these variables are readily identifiable (<code>starts_with("bill_")</code>). Similarly, if we wanted to change millimetres to centimetres, we can identify these variables using <code>ends_with("_mm")</code>.</p>
 <p>This also makes it easy to see sets of related variables in the data dictionary and produces sensible options in auto-complete lists. Contrast these two approaches:</p>
 <div class="columns">
 <div class="column">
@@ -329,12 +334,12 @@ colour_bill
 density_bill</code></pre>
 </div>
 </div>
-<p>Having <code>bill</code> as the first component makes it easy to spot variables relating to bills. Having measurement as the first component is more visually cluttered and in a dictionary of hundreds of variables would be harder to spot. You should consider the focus of the data though, maybe measurements are the focus in which case it would be more useful to have measurement as the first component.</p>
+<p>Having <code>bill</code> as the first component (<code>{bodypart}</code>?) makes it easy to spot variables relating to bills. Having <code>{measurement}</code> as the first component is more visually cluttered and in a dictionary of hundreds of variables would be harder to spot. You should consider the focus of the data though, maybe measurements are the focus in which case it would be more useful to have measurement as the first component.</p>
 </section>
 <section id="choose-components-that-are-resilient-to-changes-in-survey-design" class="level3">
 <h3 class="anchored" data-anchor-id="choose-components-that-are-resilient-to-changes-in-survey-design">Choose components that are resilient to changes in survey design</h3>
 <p>We know that questionnaire section is a poor component because it breaks as soon as questions are moved between sections. Instead, try and choose components that are unlikely to change over time. For example, the general health question asks about health so we could say its theme or focus is <code>health</code>. In our previous example then, <code>{wave}_{theme}_{keyword}</code> is not going to break when the question moved from ‘about you’ to ‘health’, but <code>{wave}_{section}_{keyword}</code> will.</p>
-<p>A side effect of choosing components that are resilient to changes in survey design is that if a circumstance arises that looks to break a variable name, it could be that you need a new question instead.</p>
+<p>A side effect of choosing components that are resilient to changes in survey design is that if a circumstance arises that looks to break a variable name, it could be indicating that you need a new question instead.</p>
 </section>
 <section id="balancing-brevity-and-interpretability" class="level3">
 <h3 class="anchored" data-anchor-id="balancing-brevity-and-interpretability">Balancing brevity and interpretability</h3>
@@ -343,7 +348,7 @@ density_bill</code></pre>
 <p>succinct, <em>adjective</em>. marked by compact precise expression without wasted words</p>
 </blockquote>
 <p>This is as much of an art as a science, don’t be surprised if it’s difficult!</p>
-<p>Take the previous example <code>wave_1_health_general_health_general_health_rating_ordinal</code>. The section and sub-sections are redundant, repeating the words <code>health</code> and <code>general</code>. We could instead switch these components for the theme, which is still health, and get to <code>wave_1_health_general_rating_ordinal</code>. <code>wave_1</code> could then be shortened to <code>w01</code>, and I’m not sure I like the following, but we could provide a schema for data type abbreviations:</p>
+<p>Take the previous example <code>wave_1_health_general_health_general_health_rating_ordinal</code>. The section and sub-sections are redundant, repeating the words <code>health</code> and <code>general</code>. We could instead switch these components for the theme, which is still health, and get to <code>wave_1_health_general_rating_ordinal</code>. <code>wave_1</code> could then be shortened to <code>w01</code>, and we could provide a schema for data type abbreviations:</p>
 <ul>
 <li><code>str</code> = strings</li>
 <li><code>cat</code> = categorical</li>
@@ -351,11 +356,12 @@ density_bill</code></pre>
 <li><code>num</code> = numeric</li>
 </ul>
 <p>So we switch from <code>{wave_#}_{section}_{subsection}_{keywords}_{type}</code> to <code>{wave}_{theme}_{keyword}_{type}</code> and end up with <code>w01_health_general_ord</code>.</p>
+<p>On abbreviations, I would suggest using them sparingly, rather than not at all. Sometimes there’s an important bit of information you want to encode in a variable or set of variables, but you can’t do it without using an abbreviation.</p>
 </section>
 <section id="consider-software-requirements" class="level3">
 <h3 class="anchored" data-anchor-id="consider-software-requirements">Consider software requirements</h3>
 <p>Related to brevity, it’s important to think about your end-users and the software they use. Stata, SPSS, and SAS only support variable names up to 32 characters in length, meaning that is the hard maximum for your variable names. Variable names shouldn’t start with numbers either, hence why my examples for <code>{wave}</code> have been <code>w01</code> not <code>01</code>.</p>
-<p>In coming up with my proposed convention, I kept in mind that people use datasets in long and wide format. I was debating whether to include <code>wave</code> as a component, <code>w01_health_general</code>, or to store it as a separate variable. Moving wave to be a variable instead of a component didn’t mean I now had an extra four characters (<code>w01_</code>) to work with though - if Stata users reshape the dataset into wide format using <code>wave</code>, they’ll run into problems with variable names that are 29 characters or more.</p>
+<p>In coming up with my proposed convention, I kept in mind that people use datasets in long and wide format. I was debating whether to include <code>wave</code> as a component, <code>w01_health_general</code>, or to store it as a separate variable. Moving <code>wave</code> to be a variable instead of a component didn’t mean I now had an extra four characters (<code>w01_</code>) to work with though - if Stata users reshape the dataset into wide format using <code>wave</code>, they’ll run into problems with variable names that are 29 characters or more.</p>
 <p>While this might seem like over-engineering, it was a legitimate requirement of the end-users.</p>
 </section>
 <section id="consider-survey-requirements" class="level3">
@@ -390,7 +396,7 @@ density_bill</code></pre>
 bill.length.mm
 
 bill-length-mm</code></pre>
-<p>I prefer underscores, I think they’re the easiest to read. Buy you also need to consider your end-user’s software. Programs like Stata don’t support dashes or dots in variable names, so you’re kinda forced into using underscores anyway. Fine by me!</p>
+<p>I prefer underscores, I think they’re the easiest to read. But you also need to consider your end-user’s software. Programs like Stata don’t support dashes or dots in variable names, so you’re kinda forced into using underscores anyway. Fine by me!</p>
 </section>
 <section id="have-a-human-create-and-review-the-names" class="level3">
 <h3 class="anchored" data-anchor-id="have-a-human-create-and-review-the-names">Have a human create and review the names</h3>
@@ -412,7 +418,7 @@ bill-length-mm</code></pre>
 </ul></li>
 <li>Do you use a different convention for administrative variables?
 <ul>
-<li>Participant ID doesn’t change over waves, so perhaps <code>pid</code> sufficient over <code>admin_pid</code></li>
+<li>Participant ID doesn’t change over waves, so perhaps <code>pid</code> is sufficient over <code>admin_pid</code></li>
 </ul></li>
 <li>Talk to people who will be typing the variable names, using the data
 <ul>
@@ -433,7 +439,7 @@ bill-length-mm</code></pre>
 </section>
 <section id="want-to-cite-this" class="level2">
 <h2 class="anchored" data-anchor-id="want-to-cite-this">Want to cite this?</h2>
-<pre><code>@online{harrap2025,
+<pre><code>@online{harrap2025variable,
   author = {Benjamin Harrap},
   title = {What makes a good variable naming convention},
   year = {2025},
