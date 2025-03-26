@@ -101,8 +101,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <meta property="og:title" content="What makes a good variable naming convention – Ben Harrap">
 <meta property="og:description" content="">
+<meta property="og:image" content="img/randy.png">
 <meta property="og:site_name" content="Ben Harrap">
-<meta property="og:locale" content="en_AU">
+<meta property="og:image:alt" content="A white and fawn greyhound with its tongue poking out, wearing a black cowboy hat and red neckerchief">
 </head>
 
 <body class="nav-fixed">
@@ -168,6 +169,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#clearly-defined-components" id="toc-clearly-defined-components" class="nav-link" data-scroll-target="#clearly-defined-components">Clearly defined components</a></li>
   <li><a href="#considered-ordering-of-components" id="toc-considered-ordering-of-components" class="nav-link" data-scroll-target="#considered-ordering-of-components">Considered ordering of components</a></li>
+  <li><a href="#consistent-length-of-components" id="toc-consistent-length-of-components" class="nav-link" data-scroll-target="#consistent-length-of-components">Consistent length of components</a></li>
   <li><a href="#choose-components-that-are-resilient-to-changes-in-survey-design" id="toc-choose-components-that-are-resilient-to-changes-in-survey-design" class="nav-link" data-scroll-target="#choose-components-that-are-resilient-to-changes-in-survey-design">Choose components that are resilient to changes in survey design</a></li>
   <li><a href="#balancing-brevity-and-interpretability" id="toc-balancing-brevity-and-interpretability" class="nav-link" data-scroll-target="#balancing-brevity-and-interpretability">Balancing brevity and interpretability</a></li>
   <li><a href="#consider-software-requirements" id="toc-consider-software-requirements" class="nav-link" data-scroll-target="#consider-software-requirements">Consider software requirements</a></li>
@@ -318,7 +320,7 @@ Excellent</p>
 <p>The ordering of components should have a logic or hierarchy to it. I’d recommend following a hierarchy of information scope.</p>
 <p>For example, the hierarchy in <code>{wave}_{theme}_{keyword}</code> goes from broad to narrow - <code>{wave}</code> relates to the whole survey and is the broadest in scope, <code>{theme}</code> relates to the theme or concept the question is getting at, but isn’t necessarily restricted to that question alone, and <code>{keyword}</code> has the most narrow scope, drawing on the specific wording of a question.</p>
 <p>Also, think about how you might be working with the variables - R’s <code>dplyr</code> provides functions like <code>ends_with()</code> and <code>starts_with()</code> for a reason. From the <a href="https://allisonhorst.github.io/palmerpenguins/" target="_blank">palmer penguins</a> dataset, consider the variables <code>bill_length_mm</code>, <code>bill_depth_mm</code>, and <code>flipper_length_mm</code>. If we wanted to work with measurements relating to bills, these variables are readily identifiable (<code>starts_with("bill_")</code>). Similarly, if we wanted to change millimetres to centimetres, we can identify these variables using <code>ends_with("_mm")</code>.</p>
-<p>This also makes it easy to see sets of related variables in the data dictionary and produces sensible options in auto-complete lists. Contrast these two approaches:</p>
+<p>This also makes it easy to see sets of related variables in the data dictionary and produces sensible options in auto-complete lists. Contrast these two approaches (I made up a few extra variables):</p>
 <div class="columns">
 <div class="column">
 <pre><code>bill_length_mm
@@ -335,6 +337,90 @@ density_bill</code></pre>
 </div>
 </div>
 <p>Having <code>bill</code> as the first component (<code>{bodypart}</code>?) makes it easy to spot variables relating to bills. Having <code>{measurement}</code> as the first component is more visually cluttered and in a dictionary of hundreds of variables would be harder to spot. You should consider the focus of the data though, maybe measurements are the focus in which case it would be more useful to have measurement as the first component.</p>
+</section>
+<section id="consistent-length-of-components" class="level3">
+<h3 class="anchored" data-anchor-id="consistent-length-of-components">Consistent length of components</h3>
+<p>This consideration might not be relevant if you only have a small number of variables, but once you start hitting a large enough number that your data dictionary requires you to scroll up and down to see everything, it becomes useful to require each component to be the same length. Compare the following variable names following <code>{topic}_{element}_{measurement}</code>:</p>
+<div class="columns">
+<div class="column">
+<p>No restriction on component length:</p>
+<pre><code>penguin_species
+location_island
+penguin_bill_length
+penguin_bill_depth
+penguin_bill_width
+penguin_bill_colour
+penguin_bill_density
+penguin_bill_mass
+penguin_flipper_length
+penguin_flipper_depth
+penguin_flipper_width
+penguin_flipper_density
+penguin_flipper_colour
+penguin_flipper_mass
+penguin_sex
+study_year</code></pre>
+</div><div class="column">
+<p>4 characters, 3 characters, 4 characters:</p>
+<pre><code>peng_spe
+loca_isl
+peng_bil_leng
+peng_bil_dept
+peng_bil_widt
+peng_bil_colo
+peng_bil_dens
+peng_bil_mass
+peng_fli_leng
+peng_fli_dept
+peng_fli_widt
+peng_fli_dens
+peng_fli_colo
+peng_fli_mass
+peng_sex
+stud_yea</code></pre>
+</div>
+</div>
+<p>Ignoring whether the abbreviations are good or not (I just cut them off), I find having the variable names the same length means I’m having to do less visual processing when looking at them (I’m not distracted by the varying length) and can focus more easily on finding the variable I’m looking for.</p>
+<p>You might find yourself in a circumstance where a component is optional, such as in the above example - the bill and flipper both have measurements like <code>length</code> and <code>depth</code>, which are encoded in the second component, but this component is only included where there are multiple measurements of the same thing. Ideally all components are required, however if you are going to use an optional component restrict the convention to one optional component and stick it at the end of the variable name. This prevents the absence of the component from impacting on how the variables look in a list:</p>
+<div class="columns">
+<div class="column">
+<p>Optional <code>{measure}</code> 4 characters, <code>{topic}</code> 4 characters, <code>{element}</code> 3 characters:</p>
+<pre><code>peng_spe
+loca_isl
+leng_peng_bil
+dept_peng_bil
+widt_peng_bil
+colo_peng_bil
+dens_peng_bil
+mass_peng_bil
+leng_peng_fli
+dept_peng_fli
+widt_peng_fli
+dens_peng_fli
+colo_peng_fli
+mass_peng_fli
+peng_sex
+stud_yea</code></pre>
+</div><div class="column">
+<p><code>{topic}</code> 4 characters, <code>{element}</code> 3 characters, optional <code>{measure}</code> 4 characters:</p>
+<pre><code>peng_spe
+loca_isl
+peng_bil_leng
+peng_bil_dept
+peng_bil_widt
+peng_bil_colo
+peng_bil_dens
+peng_bil_mass
+peng_fli_leng
+peng_fli_dept
+peng_fli_widt
+peng_fli_dens
+peng_fli_colo
+peng_fli_mass
+peng_sex
+stud_yea</code></pre>
+</div>
+</div>
 </section>
 <section id="choose-components-that-are-resilient-to-changes-in-survey-design" class="level3">
 <h3 class="anchored" data-anchor-id="choose-components-that-are-resilient-to-changes-in-survey-design">Choose components that are resilient to changes in survey design</h3>
@@ -369,11 +455,11 @@ density_bill</code></pre>
 <p>Aspects of the survey can also inform the components you choose, and also how you define those components.</p>
 <p>I’ve used <code>w01</code> as an example of how wave could be encoded in the variable name. The reason for <code>w01</code> and not <code>w1</code> is that this allows for more than 10 waves to be encoded in a way that can be sorted:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"w1"</span>,<span class="st">"w2"</span>,<span class="st">"w3"</span>,<span class="st">"w10"</span>,<span class="st">"w11"</span>,<span class="st">"w12"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"w1"</span>,<span class="st">"w2"</span>,<span class="st">"w3"</span>,<span class="st">"w10"</span>,<span class="st">"w11"</span>,<span class="st">"w12"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "w1"  "w10" "w11" "w12" "w2"  "w3" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"w01"</span>,<span class="st">"w02"</span>,<span class="st">"w03"</span>,<span class="st">"w10"</span>,<span class="st">"w11"</span>,<span class="st">"w12"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"w01"</span>,<span class="st">"w02"</span>,<span class="st">"w03"</span>,<span class="st">"w10"</span>,<span class="st">"w11"</span>,<span class="st">"w12"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "w01" "w02" "w03" "w10" "w11" "w12"</code></pre>
 </div>

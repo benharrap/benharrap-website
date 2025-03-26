@@ -4,11 +4,10 @@ project:
 website:
   title: "Ben Harrap"
   favicon: "img/randy.png"
+  image: "img/randy.png"
+  image-alt: "A white and fawn greyhound with its tongue poking out, wearing a black cowboy hat and red neckerchief"
   search: false
-  open-graph:
-    locale: en_AU
-    site-name: "Ben Harrap"
-  # google-analytics: "UA-447320706"
+  open-graph: true
   navbar:
     right:
       - post.qmd

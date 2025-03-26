@@ -1,0 +1,8 @@
+---
+title: "How can you tell that statisticians love Vietnamese food?"
+author: "Ben Harrap"
+date: 2025-02-17
+categories: joke
+---
+
+They're always talking about P(H0)

@@ -119,7 +119,7 @@ For example, the hierarchy in `{wave}_{theme}_{keyword}` goes from broad to narr
 
 Also, think about how you might be working with the variables - R's `dplyr` provides functions like `ends_with()` and `starts_with()` for a reason. From the [palmer penguins](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} dataset, consider the variables `bill_length_mm`, `bill_depth_mm`, and `flipper_length_mm`. If we wanted to work with measurements relating to bills, these variables are readily identifiable (`starts_with("bill_")`). Similarly, if we wanted to change millimetres to centimetres, we can identify these variables using `ends_with("_mm")`.
 
-This also makes it easy to see sets of related variables in the data dictionary and produces sensible options in auto-complete lists. Contrast these two approaches:
+This also makes it easy to see sets of related variables in the data dictionary and produces sensible options in auto-complete lists. Contrast these two approaches (I made up a few extra variables):
 
 :::: {.columns}
 
@@ -150,6 +150,122 @@ density_bill
 ::::
 
 Having `bill` as the first component (`{bodypart}`?) makes it easy to spot variables relating to bills. Having `{measurement}` as the first component is more visually cluttered and in a dictionary of hundreds of variables would be harder to spot. You should consider the focus of the data though, maybe measurements are the focus in which case it would be more useful to have measurement as the first component.
+
+### Consistent length of components
+
+This consideration might not be relevant if you only have a small number of variables, but once you start hitting a large enough number that your data dictionary requires you to scroll up and down to see everything, it becomes useful to require each component to be the same length. Compare the following variable names following `{topic}_{element}_{measurement}`:
+
+:::: {.columns}
+
+::: {.column}
+
+No restriction on component length:
+
+```
+penguin_species
+location_island
+penguin_bill_length
+penguin_bill_depth
+penguin_bill_width
+penguin_bill_colour
+penguin_bill_density
+penguin_bill_mass
+penguin_flipper_length
+penguin_flipper_depth
+penguin_flipper_width
+penguin_flipper_density
+penguin_flipper_colour
+penguin_flipper_mass
+penguin_sex
+study_year
+```
+
+:::
+
+::: {.column}
+
+4 characters, 3 characters, 4 characters:
+
+```
+peng_spe
+loca_isl
+peng_bil_leng
+peng_bil_dept
+peng_bil_widt
+peng_bil_colo
+peng_bil_dens
+peng_bil_mass
+peng_fli_leng
+peng_fli_dept
+peng_fli_widt
+peng_fli_dens
+peng_fli_colo
+peng_fli_mass
+peng_sex
+stud_yea
+```
+
+:::
+
+::::
+
+Ignoring whether the abbreviations are good or not (I just cut them off), I find having the variable names the same length means I'm having to do less visual processing when looking at them (I'm not distracted by the varying length) and can focus more easily on finding the variable I'm looking for.
+
+You might find yourself in a circumstance where a component is optional, such as in the above example - the bill and flipper both have measurements like `length` and `depth`, which are encoded in the second component, but this component is only included where there are multiple measurements of the same thing. Ideally all components are required, however if you are going to use an optional component restrict the convention to one optional component and stick it at the end of the variable name. This prevents the absence of the component from impacting on how the variables look in a list:
+
+:::: {.columns}
+
+::: {.column}
+
+Optional `{measure}` 4 characters, `{topic}` 4 characters, `{element}` 3 characters:
+
+```
+peng_spe
+loca_isl
+leng_peng_bil
+dept_peng_bil
+widt_peng_bil
+colo_peng_bil
+dens_peng_bil
+mass_peng_bil
+leng_peng_fli
+dept_peng_fli
+widt_peng_fli
+dens_peng_fli
+colo_peng_fli
+mass_peng_fli
+peng_sex
+stud_yea
+```
+
+:::
+
+::: {.column}
+
+ `{topic}` 4 characters, `{element}` 3 characters, optional `{measure}` 4 characters:
+
+```
+peng_spe
+loca_isl
+peng_bil_leng
+peng_bil_dept
+peng_bil_widt
+peng_bil_colo
+peng_bil_dens
+peng_bil_mass
+peng_fli_leng
+peng_fli_dept
+peng_fli_widt
+peng_fli_dens
+peng_fli_colo
+peng_fli_mass
+peng_sex
+stud_yea
+```
+
+:::
+
+::::
 
 ### Choose components that are resilient to changes in survey design
 
