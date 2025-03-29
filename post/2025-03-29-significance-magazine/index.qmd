@@ -1,6 +1,11 @@
 ---
 format: html
 title: "A big ask: doing literally anything apparently"
+date: 2025-03-29
+toc: true
+categories: 
+  - self
+  - academia
 ---
 
 This blog post is about Significance magazine and the [transphobic dumpster fire](https://academic.oup.com/jrssig/article/20/1/6/7034186){target="_blank"} of an article they published in 2023. Over the last couple of years I've gone back and forth on whether I should make a blog post about this. Each time, up until now, I figured if I did just a little more advocacy behind the scenes or gave the leadership at Significance magazine and the ASA or RSS a little more time, maybe they would actually do something.
