@@ -1,6 +1,7 @@
 ---
 format: html
 title: "A big ask: doing literally anything apparently"
+author: Ben Harrap
 date: 2025-03-29
 toc: true
 categories: 
@@ -18,7 +19,7 @@ And that's not for lack of trying either. Before getting into whatever this blog
 
 At the start I guess, which was the first time I read the article. My initial reaction was one of disbelief. How did this article manage to get published in the first place? Putting aside the fact that it was clearly a political piece with a transphobic agenda (and this is my main issue), the article is so poorly written that it reads like some of my first-year undergraduate essays, and boy were some of those cringe.
 
-You might be tempted to pick through the article and compile a list of all the issues it has - but I'll save you the effort. I did that already and sent [this complaint](https://docs.google.com/document/d/1p0Lnbw6BvuqLeZMs-SQ7hweP_LyRnzTK8RzMv3Ff0Os/edit?usp=sharing) to the editor of Significance magazine. The length of the complaint was actually longer than the article itself, which maybe tells you something about how poor the article is. To summarise my issues with the article, it:
+You might be tempted to pick through the article and compile a list of all the issues it has - but I'll save you the effort. I did that already and sent [this complaint](https://docs.google.com/document/d/1p0Lnbw6BvuqLeZMs-SQ7hweP_LyRnzTK8RzMv3Ff0Os/edit?usp=sharing){target="_blank"} to the editor of Significance magazine. The length of the complaint was actually longer than the article itself, which maybe tells you something about how poor the article is. To summarise my issues with the article, it:
 
 -   Advocates for genuinely terrible data collection practices
 -   Falsely claims that governments are not collecting data on sex
