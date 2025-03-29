@@ -1,0 +1,61 @@
+---
+format: html
+title: "A big ask: doing literally anything apparently"
+---
+
+This blog post is about Significance magazine and the [transphobic dumpster fire](https://academic.oup.com/jrssig/article/20/1/6/7034186){target="_blank"} of an article they published in 2023. Over the last couple of years I've gone back and forth on whether I should make a blog post about this. Each time, up until now, I figured if I did just a little more advocacy behind the scenes or gave the leadership at Significance magazine and the ASA or RSS a little more time, maybe they would actually do something.
+
+Alas, this wasn't to be.
+
+And that's not for lack of trying either. Before getting into whatever this blog post is (a rant maybe?), I do want to acknowledge there have been multiple people across the American Statistical Association (ASA), Royal Statistical Society (RSS), and Statistical Society of Australia (SSA), with varying degrees of authority and seniority, who have also taken issue with the article and spent time advocating for some kind of action. I say this to highlight that the fact the article remains published, and is thus endorsed as an article of quality and merit by Significance magazine, does not necessarily reflect the perspectives of the membership bases of the aforementioned professional bodies or the editorial board of Significance magazine.
+
+## Where to begin?
+
+At the start I guess, which was the first time I read the article. My initial reaction was one of disbelief. How did this article manage to get published in the first place? Putting aside the fact that it was clearly a political piece with a transphobic agenda (and this is my main issue), the article is so poorly written that it reads like some of my first-year undergraduate essays, and boy were some of those cringe.
+
+You might be tempted to pick through the article and compile a list of all the issues it has - but I'll save you the effort. I did that already and sent [this complaint](https://docs.google.com/document/d/1p0Lnbw6BvuqLeZMs-SQ7hweP_LyRnzTK8RzMv3Ff0Os/edit?usp=sharing) to the editor of Significance magazine. The length of the complaint was actually longer than the article itself, which maybe tells you something about how poor the article is. To summarise my issues with the article, it:
+
+-   Advocates for genuinely terrible data collection practices
+-   Falsely claims that governments are not collecting data on sex
+-   Suggests there's a queer illuminati trying to 'erase sex categories'
+-   Provides citations which, in the majority of cases, directly contradict the claims they are cited against
+-   Is riddled with logical fallacies like straw-man arguments and appeals to tradition
+-   Disingenuously defines sex, gender, and gender identity in relation to binaries
+-   Uses dehumanising language, like describing intersex people as 'anomalous'
+
+I could go on, but if you want to know more you may as well read the complaint. After sending in the complaint I received... silence. I emailed again two weeks later to again receive silence. Finally after following up a third time, more than a month since the initial submission, I received a response from the editor basically saying "yes I got your email". Nothing else, so again I had to follow up to see what was being done and finally received this disappointing reply:
+
+> There won’t be any action taken. The article went through the same process as every Significance article (besides interviews, book reviews etc), including a review by members of our editorial board. I’m satisfied that, as a magazine, our coverage of this issue has been balanced.
+
+Lmao what? Coverage of 'this issue'? Are you also actively seeking out anti-vaccine opinions too for the sake of balance? 
+
+Anyway, this reply made me cringe with even more second-hand embarrassment - not only did the original author submit the article with all of its issues but someone on the editorial board *apparently* read it and went "oh wow this article is fantastic and has no problems at all we should publish it immediately".
+
+I kept advocating for something to be done about the article, but nothing eventuated despite what seemed to be considerable discussion on the magazine's editorial board, on each society's DEI committees, between the Presidents of the respective societies. Again, I am grateful that many people pursued this issue ony my, and **many** others, behalf, but I am ultimately still disappointed.
+
+## Why does this matter?
+
+Well for starters, publishing articles like this poses a serious risk to the eye health of trans and gender diverse statisticians from all the eye-rolling it induces. For real though, I'd been thinking of writing a piece for Significance magazine's competition for early career statisticians, but given this entire debacle I don't see the magazine as a safe or welcoming place for me or my work. Honestly, if it wasn't for the support I received from my colleagues at the SSA, I wouldn't even be sure that the SSA was a safe or welcoming place for me. But not every trans or gender diverse statistician has that relationship with one of the professional bodies, so what are they to make of Significance magazine and the professional societies that govern it?
+
+And this gets to a broader issue I have with organisations being very happy to say they are welcoming and inclusive. It's easy to say you are a welcoming and inclusive organisation, it's easy write it into your strategic plan, and it's easy to do work that makes you feel good, like celebrating the International Day of Women in Statistics and Data Science. But when it comes to doing something hard or uncomfortable, like retracting a transphobic article which goes directly against your principles of inclusivity, all of a sudden there's nothing to be done. It's just so *disappointing* and yet so unsurprising.
+
+My other issue is that Significance magazine is considered to be a reputable publication and this quality is conferred to the articles within it. At a surface level the article itself *looks* reputable too, having the trappings of an academic article. This appearance of legitimacy then leads to the cycle of academic bullshittery:
+
+1.    Article is published, giving it a degree of legitimacy
+2.    People cite the article in their own publications, taking the arguments at face value, giving it further legitimacy
+3.    People read this other work, take the citation of the original article at face value and cite it in their own work.
+4.    Rinse and repeat, until you have Dan Ariely
+
+Unfortunately and unsurprisingly, my concerns about this cycle have come true and publications in actual academic journals are citing this article. What kind of article would cite this you ask? Why one also full of transphobia, of course! Like [this delightful one](https://www.sciencedirect.com/science/article/pii/S1871519224003147#sec0020){target="_blank"}, that can't help but talk about transgender women and the sexual abuse of children in the same sentence whilst also citing every TERF's favourite ex-comedy writer, [Graham Linehan](https://en.wikipedia.org/wiki/Graham_Linehan).
+
+If we put aside the transphobic nature of the article for a moment (and I'd prefer we didn't), any statistician worth their salt should have picked up on the *terrible* advice the article gives in relation to data collection. If you've ever had to provide statistical consulting on a project you didn't initiate, you'll understand that unless researchers collect data that specifically measure the thing they're interested in, no amount of statistical wizardry can save their research.
+
+So why did a magazine run by statisticians publish an article that advocates for *not* considering the nuances of your research question at all, and instead pushes a political agenda to *only* collect data on sex *and* that (wrongly) defines sex in such a limited way? And no, I don't consider the throwaway line "Data on gender identity should also be collected in contexts where it may be relevant and useful" to be a get-out-of-jail-free card, when the ~2,000 words preceding it argue the complete opposite. Imagine if someone spent ten minutes saying horribly racist things to you and at the end went 'SIKE!'. Yeah I don't buy it either.
+
+## It's not all doom and gloom
+
+By and large, Significance magazine publishes good stuff, this is just one article that I have particular issue with. But my issue is significant and remains unaddressed. 
+
+There do also seem to have been some positive things arising out of this debacle. By publishing the article, Significance magazine has spurred on some internal developments across the different professional bodies, which will hopefully lead to improved editorial standards when it comes to articles about minorities and politicised populations.
+
+The other positive is that the article is like a canary in a coal mine - it's nice to know which academics to be wary of based on those who unironically cite it in their own work.
