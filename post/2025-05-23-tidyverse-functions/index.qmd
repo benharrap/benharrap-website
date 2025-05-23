@@ -87,7 +87,7 @@ k5 |>
   )
 ```
 
-### Using another dataset up update rows (`rows_update()`)
+### Using another dataset to update rows (`rows_update()`)
 
 This was a great recommendation by someone who helped me solve a problem efficiently. I had one dataset consisting of uncleaned responses to a paper questionnaire, which had been digitsed using OCR. I had a secondary dataset where the original paper questionnaire had been audited when the OCR seemed to have done a poor job. 
 
@@ -130,7 +130,7 @@ Note that inside of `rows_update()` I take `audit`, rename the column with the c
 
 There's a whole suite of row-specific functions (see [here](https://dplyr.tidyverse.org/reference/rows.html)), but I have found `rows_update()` being especially helpful.
 
-### Adding rows to a dataset `bind_rows()`
+### Adding rows to a dataset (`bind_rows()`)
 
 I feel like everyone probably knows about this, but I wanted to quickly mention that I recently discovered I was using it inefficiently! `bind_rows()` accepts multiple things to be bound, meaning you can write:
 

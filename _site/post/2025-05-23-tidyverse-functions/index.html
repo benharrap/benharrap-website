@@ -159,8 +159,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#combining-values-from-multiple-columns-row-wise-c_across" id="toc-combining-values-from-multiple-columns-row-wise-c_across" class="nav-link" data-scroll-target="#combining-values-from-multiple-columns-row-wise-c_across">Combining values from multiple columns row-wise (<code>c_across()</code>)</a></li>
   <li><a href="#set-values-to-missing-under-a-condition-na_if" id="toc-set-values-to-missing-under-a-condition-na_if" class="nav-link" data-scroll-target="#set-values-to-missing-under-a-condition-na_if">Set values to missing under a condition (<code>na_if()</code>)</a></li>
   <li><a href="#ifelse-but-tidyverse-style-if_else" id="toc-ifelse-but-tidyverse-style-if_else" class="nav-link" data-scroll-target="#ifelse-but-tidyverse-style-if_else"><code>ifelse</code> but <code>tidyverse</code> style (<code>if_else()</code>)</a></li>
-  <li><a href="#using-another-dataset-up-update-rows-rows_update" id="toc-using-another-dataset-up-update-rows-rows_update" class="nav-link" data-scroll-target="#using-another-dataset-up-update-rows-rows_update">Using another dataset up update rows (<code>rows_update()</code>)</a></li>
-  <li><a href="#adding-rows-to-a-dataset-bind_rows" id="toc-adding-rows-to-a-dataset-bind_rows" class="nav-link" data-scroll-target="#adding-rows-to-a-dataset-bind_rows">Adding rows to a dataset <code>bind_rows()</code></a></li>
+  <li><a href="#using-another-dataset-to-update-rows-rows_update" id="toc-using-another-dataset-to-update-rows-rows_update" class="nav-link" data-scroll-target="#using-another-dataset-to-update-rows-rows_update">Using another dataset to update rows (<code>rows_update()</code>)</a></li>
+  <li><a href="#adding-rows-to-a-dataset-bind_rows" id="toc-adding-rows-to-a-dataset-bind_rows" class="nav-link" data-scroll-target="#adding-rows-to-a-dataset-bind_rows">Adding rows to a dataset (<code>bind_rows()</code>)</a></li>
   </ul></li>
   <li><a href="#tibble" id="toc-tibble" class="nav-link" data-scroll-target="#tibble"><code>tibble</code></a>
   <ul class="collapse">
@@ -310,8 +310,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="using-another-dataset-up-update-rows-rows_update" class="level3">
-<h3 class="anchored" data-anchor-id="using-another-dataset-up-update-rows-rows_update">Using another dataset up update rows (<code>rows_update()</code>)</h3>
+<section id="using-another-dataset-to-update-rows-rows_update" class="level3">
+<h3 class="anchored" data-anchor-id="using-another-dataset-to-update-rows-rows_update">Using another dataset to update rows (<code>rows_update()</code>)</h3>
 <p>This was a great recommendation by someone who helped me solve a problem efficiently. I had one dataset consisting of uncleaned responses to a paper questionnaire, which had been digitsed using OCR. I had a secondary dataset where the original paper questionnaire had been audited when the OCR seemed to have done a poor job.</p>
 <p>Sticking with the K-5 data, imagine we have the audited data as follows:</p>
 <div class="cell">
@@ -355,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There’s a whole suite of row-specific functions (see <a href="https://dplyr.tidyverse.org/reference/rows.html">here</a>), but I have found <code>rows_update()</code> being especially helpful.</p>
 </section>
 <section id="adding-rows-to-a-dataset-bind_rows" class="level3">
-<h3 class="anchored" data-anchor-id="adding-rows-to-a-dataset-bind_rows">Adding rows to a dataset <code>bind_rows()</code></h3>
+<h3 class="anchored" data-anchor-id="adding-rows-to-a-dataset-bind_rows">Adding rows to a dataset (<code>bind_rows()</code>)</h3>
 <p>I feel like everyone probably knows about this, but I wanted to quickly mention that I recently discovered I was using it inefficiently! <code>bind_rows()</code> accepts multiple things to be bound, meaning you can write:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> <span class="fu">bind_rows</span>(df2, df3, df4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
