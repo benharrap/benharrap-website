@@ -170,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tidyr" id="toc-tidyr" class="nav-link" data-scroll-target="#tidyr"><code>tidyr</code></a>
   <ul class="collapse">
   <li><a href="#getting-values-out-of-list-columns-unnest" id="toc-getting-values-out-of-list-columns-unnest" class="nav-link" data-scroll-target="#getting-values-out-of-list-columns-unnest">Getting values out of list columns (<code>unnest()</code>)</a></li>
-  <li><a href="#propagating-non-missing-values-row-wise-fill" id="toc-propagating-non-missing-values-row-wise-fill" class="nav-link" data-scroll-target="#propagating-non-missing-values-row-wise-fill">Propagating non-missing values row-wise <code>fill()</code></a></li>
+  <li><a href="#propagating-non-missing-values-row-wise-fill" id="toc-propagating-non-missing-values-row-wise-fill" class="nav-link" data-scroll-target="#propagating-non-missing-values-row-wise-fill">Propagating non-missing values row-wise (<code>fill()</code>)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -478,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There’s also <code>unnest_longer()</code> and <code>unnest_wider()</code>, depending on the shape you.</p>
 </section>
 <section id="propagating-non-missing-values-row-wise-fill" class="level3">
-<h3 class="anchored" data-anchor-id="propagating-non-missing-values-row-wise-fill">Propagating non-missing values row-wise <code>fill()</code></h3>
+<h3 class="anchored" data-anchor-id="propagating-non-missing-values-row-wise-fill">Propagating non-missing values row-wise (<code>fill()</code>)</h3>
 <p>This has been such a useful function in so many situations for me, yet somehow I frequently forget about it!</p>
 <p>My most recent use-case was creating a data dictionary based on metadata output from REDCap. In the questionnaire, section headers are used to paginate the different sections, but in the metadata the header is attached to a single variable:</p>
 <div class="cell">
@@ -518,7 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 7 q5       Psychological distress</code></pre>
 </div>
 </div>
-<p>The <code>.direction</code> argument accepts “down”, “up”, “downup”, and “updown”, meaning you can fill in multiple directions. This is especially powerful when you combine it with <code>group_by()</code>, allowing you to fill without worrying about propagating into the wrong group!</p>
+<p>The <code>.direction</code> argument accepts “down”, “up”, “downup”, and “updown”, meaning you can fill in multiple directions. This is especially powerful when you combine it with <code>group_by()</code>, allowing you to fill without worrying about propagating into the wrong group.</p>
 
 
 </section>
