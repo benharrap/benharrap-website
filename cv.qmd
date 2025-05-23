@@ -98,7 +98,7 @@ Double major in psychology, minor in anthropology
 
 My time is spent mostly on the Mayi Kuwayu Study, The National Study of Aboriginal & Torres Strait Islander Wellbeing. The first thing I did was take the lead on finishing the study's operational manual. In doing this, I converted the existing Word draft into a HTML document using Quarto, making the manual more user-friendly, improving the interface, and making the maintenance of documentation easier.
 
-I'm also working on building a data management pipeline in R, using `targets` to manage the structure and evaluation of the pipeline, `pointblank` and `testthat` for unit testing and data validation, `renv` to manage package dependencies across user systems, and having the different stages of data cleaning and management feed into a user manual, data dictionary, and survey data quality report, all using R and Quarto to automate the majority of their generation.
+I'm also working on building a data cleaning and management pipeline in R, using `targets` to manage the structure and evaluation of the pipeline, `renv` to manage package dependencies across user systems, integrating external data sources via various APIs, and having the different stages of data cleaning and management feed into a user manual, data dictionary, and survey data quality report, all using R and Quarto to automate the majority of their generation.
 
 ### Quantitative Social Scientist, Research Fellow
 
