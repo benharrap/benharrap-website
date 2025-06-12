@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ben Harrap">
-<meta name="dcterms.date" content="2021-11-29">
+<meta name="dcterms.date" content="2025-06-12">
 
-<title>Why are cows bad at the tightrope? – Ben Harrap</title>
+<title>An R function for pronouns – Ben Harrap</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -66,7 +101,7 @@ ul.task-list li input[type="checkbox"] {
 </script>
 
 
-<meta property="og:title" content="Why are cows bad at the tightrope? – Ben Harrap">
+<meta property="og:title" content="An R function for pronouns – Ben Harrap">
 <meta property="og:description" content="">
 <meta property="og:image" content="img/randy.png">
 <meta property="og:site_name" content="Ben Harrap">
@@ -122,9 +157,11 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Why are cows bad at the tightrope?</h1>
+<h1 class="title">An R function for pronouns</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">joke</div>
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">programming</div>
+    <div class="quarto-category">quarto</div>
   </div>
   </div>
 
@@ -142,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 29, 2021</p>
+      <p class="date">June 12, 2025</p>
     </div>
   </div>
   
@@ -154,7 +191,41 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Because they lactose</p>
+<p>People can have multiple pronouns or pronouns that change over time, like myself. In an ideal world, I’d love it if people used a random pronoun each time, but people aren’t random number generators and when presented with “any pronouns” will usually default to exclusively “he”.</p>
+<p>This got me thinking though… What if I could randomly sample from a list of pronouns? So that’s what I’ve done — for Quarto users at least. It’s simple really, all you need to do is define each person’s pronouns:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ben <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">name =</span> <span class="st">"ben"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">subject =</span> <span class="fu">c</span>(<span class="st">"he"</span>,<span class="st">"she"</span>,<span class="st">"they"</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">object =</span> <span class="fu">c</span>(<span class="st">"him"</span>,<span class="st">"her"</span>,<span class="st">"their"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">dependent =</span> <span class="fu">c</span>(<span class="st">"his"</span>,<span class="st">"her"</span>,<span class="st">"their"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">independent =</span> <span class="fu">c</span>(<span class="st">"his"</span>,<span class="st">"hers"</span>,<span class="st">"theirs"</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">reflextive =</span> <span class="fu">c</span>(<span class="st">"himself"</span>,<span class="st">"herself"</span>,<span class="st">"themself"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I have to thank <a href="https://en.wikipedia.org/wiki/Pronoun#English_pronouns" target="_blank">Wikipedia</a> for providing the names of the different pronoun forms, it’s been a couple of decades since I had to think about this. Now we can just write a little function that samples from this list and returns the appropriate pronoun, in the format required.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pronoun <span class="ot">&lt;-</span> <span class="cf">function</span>(who, which, <span class="at">format =</span> <span class="st">"lower"</span>){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (format <span class="sc">==</span> <span class="st">"title"</span>) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">"(</span><span class="sc">\\</span><span class="st">w)(</span><span class="sc">\\</span><span class="st">w*)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">U</span><span class="sc">\\</span><span class="st">1</span><span class="sc">\\</span><span class="st">L</span><span class="sc">\\</span><span class="st">2"</span>, <span class="fu">sample</span>(who[[which]],<span class="dv">1</span>), <span class="at">perl=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(who[[which]],<span class="dv">1</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pronoun</span>(ben,<span class="st">"subject"</span>,<span class="st">"title"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "They"</code></pre>
+</div>
+</div>
+<p>To use this, you would just call the function in-text like you would any R function. I was very satisfied getting to this point (and figuring out how to do it in base R), but then I realised that English is a very annoying language. The particularly annoying part is that because any of he, she, and they could be picked, it’s hard to know what the right verb to choose is. To illustrate:</p>
+<pre><code>pronoun(ben,"subject","title") likes greyhounds</code></pre>
+<p>Is returned as:</p>
+<p>He likes greyhounds</p>
+<p>In my Quarto file I have no idea which pronoun is going to get picked (yay!) but depending on which one gets picked, I should’ve used ‘like’ or ‘likes’.</p>
+<p>Well that’s a future me problem, this was just a fun little proof of concept. If I come back around to this, maybe I’ll:</p>
+<ul>
+<li>Extend the function to cover verbs</li>
+<li>Integrate it with YAML somehow? It’d be cool to attach pronouns to author YAML and turn the function into a Quarto extension</li>
+</ul>
 
 
 
