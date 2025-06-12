@@ -40,7 +40,7 @@ pronoun(ben,"subject","title")
 To use this, you would just call the function in-text like you would any R function. I was very satisfied getting to this point (and figuring out how to do it in base R), but then I realised that English is a very annoying language. The particularly annoying part is that because any of he, she, and they could be picked, it's hard to know what the right verb to choose is. To illustrate:
 
 ```
-pronoun(ben,"subject","title") likes greyhounds
+`r pronoun(ben,"subject","title")` likes greyhounds
 ```
 
 Is returned as:

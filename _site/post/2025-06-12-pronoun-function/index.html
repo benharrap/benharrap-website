@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>People can have multiple pronouns or pronouns that change over time, like myself. In an ideal world, I’d love it if people used a random pronoun each time, but people aren’t random number generators and when presented with “any pronouns” will usually default to exclusively “he”.</p>
+<p>People can have pronouns that change over time or multiple pronouns, like myself. In an ideal world, I’d love it if people used a random pronoun each time, but people aren’t random number generators and when presented with “any pronouns” will usually default to exclusively “he”.</p>
 <p>This got me thinking though… What if I could randomly sample from a list of pronouns? So that’s what I’ve done — for Quarto users at least. It’s simple really, all you need to do is define each person’s pronouns:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ben <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">name =</span> <span class="st">"ben"</span>,</span>
@@ -217,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>To use this, you would just call the function in-text like you would any R function. I was very satisfied getting to this point (and figuring out how to do it in base R), but then I realised that English is a very annoying language. The particularly annoying part is that because any of he, she, and they could be picked, it’s hard to know what the right verb to choose is. To illustrate:</p>
-<pre><code>pronoun(ben,"subject","title") likes greyhounds</code></pre>
+<pre><code>She likes greyhounds</code></pre>
 <p>Is returned as:</p>
 <p>He likes greyhounds</p>
 <p>In my Quarto file I have no idea which pronoun is going to get picked (yay!) but depending on which one gets picked, I should’ve used ‘like’ or ‘likes’.</p>
