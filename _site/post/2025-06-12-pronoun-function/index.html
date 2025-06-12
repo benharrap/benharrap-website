@@ -213,13 +213,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pronoun</span>(ben,<span class="st">"subject"</span>,<span class="st">"title"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "They"</code></pre>
+<pre><code>[1] "He"</code></pre>
 </div>
 </div>
 <p>To use this, you would just call the function in-text like you would any R function. I was very satisfied getting to this point (and figuring out how to do it in base R), but then I realised that English is a very annoying language. The particularly annoying part is that because any of he, she, and they could be picked, it’s hard to know what the right verb to choose is. To illustrate:</p>
-<pre><code>She likes greyhounds</code></pre>
+<p><code>` r pronoun(ben,"subject","title")` likes greyhounds</code></p>
 <p>Is returned as:</p>
-<p>He likes greyhounds</p>
+<p>She likes greyhounds</p>
 <p>In my Quarto file I have no idea which pronoun is going to get picked (yay!) but depending on which one gets picked, I should’ve used ‘like’ or ‘likes’.</p>
 <p>Well that’s a future me problem, this was just a fun little proof of concept. If I come back around to this, maybe I’ll:</p>
 <ul>
