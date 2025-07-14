@@ -1,0 +1,189 @@
+---
+format: html
+title: "Not all missings are created equal"
+author: Ben Harrap
+date: 2025-07-14
+toc: false
+categories: 
+  - R
+  - programming
+---
+
+I posted this question on Bluesky the other day, because I wasn't sure whether a row-wise or column-wise solution would perform better for the problem I was trying to solve.
+
+<blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:kk6ztlsaka6mdlpursuwd4yt/app.bsky.feed.post/3ltieznd74c2k" data-bluesky-cid="bafyreig2ngchvmshsw2thsgm5qscnvbvoi6jipcjuki5ee62t3stpi56dy" data-bluesky-embed-color-mode="system"><p lang="en">Thoughts #rstats?
+
+I&#x27;m updating values in col_n based on values in col_n+1 for every column in a dataframe (say 500 cols), for tens of thousands of rows.
+
+Do you expect doing colwise operations to be faster? Or transposing the data and doing rowwise operations?</p>&mdash; Ben Harrap (<a href="https://bsky.app/profile/did:plc:kk6ztlsaka6mdlpursuwd4yt?ref_src=embed">@bharrap.bsky.social</a>) <a href="https://bsky.app/profile/did:plc:kk6ztlsaka6mdlpursuwd4yt/post/3ltieznd74c2k?ref_src=embed">July 9, 2025 at 8:47 AM</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
+
+The feedback was consistent in stating that column-wise operations would be faster. So what did I do? I wrote a row-wise solution!
+
+Ok hear me out though, there was a good reason and I'll go through the problem and my thinking here, because the problem isn't as simple as I'd laid out in my Bluesky post.
+
+## The problem
+
+People do questionnaires (this is not the problem). Some people skip a question or two, some people skip a whole set, and some people get bored and stop half-way. These all lead to missing data, but the pattern of missingness is different and is informative when thinking about designing the next survey wave's questionnaire.
+
+The problem is how to efficiently identify these types of missingness in the data and code them as such.
+
+Let's start with a data dictionary some example data to help illustrate.
+
+## The data
+
+```{r}
+#| message: false
+library(tidyverse)
+library(gt)
+set.seed(4)
+
+survey_data <- tibble(
+  id = c(1, 2, 3, 4, 5),
+  name_first = c("Tom", "Penny", "Trevor", "Ursula", "Jenny"),
+  name_last = c("Smith", "Jones", NA, "Smith", "Jones"),
+  age = c(62,52,37,44,NA),
+  x1 = runif(5, 0, 2),
+  x2 = runif(5, 0, 2),
+  x3 = runif(5, 0, 2),
+  x_text = c("Lorem", NA, NA, "Lorem", NA),
+  y1 = runif(5, 0, 2),
+  y2 = runif(5, 0, 2),
+  y3 = runif(5, 0, 2),
+  z1 = runif(5, 0, 2),
+  z2 = runif(5, 0, 2),
+  z3 = runif(5, 0, 2)
+) |>
+  mutate(
+    across(matches("\\d"), \(x) if_else(x > 1, NA, round(x))),
+    across(everything(), as.character)
+    )
+
+gt(survey_data)
+```
+
+In this example, we've got the data in a tabular format with responses as rows and variables as columns. There's an ID, the respondent's names and age, then three sets of questions:
+
+-   The `x1` to `x_text` questions are all part of the `x` group of questions
+-   The `y1` to `y3` and `z1` to `z3` questions are all part of the `y` and `z` group of questions, respectively
+
+Looking at this data, we can see that:
+
+-   Tom didn't answer any of the `z` questions
+-   Penny and Ursula have valid responses for at least one question from each group
+-   Trevor didn't give his last name and stopped responding after the `x` questions
+-   Jenny didn't respond to the `y` questions but answered at least one `z` question
+
+## A dictionary
+
+Like any good dataset, a data dictionary is available:
+
+```{r}
+dictionary <- tibble(
+  variable = names(survey_data),
+  type = c("numeric",rep("string",2),"numeric",rep("factor",3),"string",rep("factor",6)),
+  variable_group = c("id", "name", "name", "age", rep("x", 4), rep("y", 3), rep("z", 3))
+)
+
+gt(dictionary)
+```
+
+It's rudimentary but will serve its purpose to illustrate how we can use it in data cleaning and the reason for why I opted for a row-wise solution.
+
+## My solution
+
+The column-wise solution for identifying the drop-offs is fairly straightforward, but I wasn't sure how to incorporate missingness at the question group level where the participant had not dropped off (e.g. Jenny). Maybe I'm too tidyverse-pilled, but I found it much easier to solve this problem using `group_by()`.
+
+To start with, we need to transpose the data such that participant responses are in columns and the variables are in rows.
+
+```{r}
+survey_data_tranposed <- survey_data |>
+  select(any_of(dictionary$variable)) |> 
+  t() |> # <1>
+  as.data.frame() |> # <2>
+  rownames_to_column(var = "variable") # <3>
+
+gt(survey_data_tranposed)
+```
+
+1. `t()` transposes the data into a matrix
+2. Convert it back into a data frame
+3. Then take the row names (which were previously column names) and turn them into the `variable` column.
+
+Now that the data's in this format, we can join information from the dictionary
+
+```{r}
+survey_data_tranposed <- survey_data_tranposed |>
+  left_join(dictionary, by = "variable") |>
+  relocate(c(variable_group,type), .after = variable)
+
+gt(survey_data_tranposed)
+```
+
+Then I wrote the following function, which incorporates the information we just joined in how missingness categories are identified. The code annotations below the code chunk explain each step.
+
+```{r}
+code_missingness <- function(data, column) {
+  output <- data |>
+    mutate(drop_off = row_number() > max(which(!is.na(!!sym(column))))) |> # <1>
+    group_by(variable_group) |>
+    mutate(
+      drop_off = min(drop_off),  # <2>
+      n_vars = max(row_number()), # <3>
+      n_missing = sum(is.na(!!sym(column))),  # <3>
+      missingness = case_when( # <4>
+        drop_off == TRUE ~ "-777777", # <5>
+        n_vars > 1 & n_missing == n_vars ~ "-888888", # <6>
+        n_missing != n_vars & # <7>
+          is.na(!!sym(column)) & # <7>
+          type == "factor" ~ "0", # <7>
+        is.na(!!sym(column)) ~ "-999999", # <8>
+        .default = !!sym(column) # <9>
+      )
+    ) |> 
+    ungroup() |> 
+    select(missingness) |> 
+    rename(!!sym(column) := missingness) |> # <10>
+    as.vector()
+  
+  return(output)
+}
+```
+
+1. For each row in the column, `!is.na()` returns `TRUE` (1) is non-missing or `FALSE` (0) if missing. `which()` then returns a vector of indices where the non-missing values are. `max()` then identifies the last row where non-missing data exists. Up to and including this row, `drop_off` is `FALSE`, becoming `TRUE` for every row thereafter.
+2. We then need to update `drop_off` if there are any non-missing responses within the question group. I'll explain why later, but the group minimum of `drop_off` will set all rows to `FALSE` if any `FALSE` exists.
+3. Then the number of variables within a group `n_vars` and number of missing responses within a group `n_missing` are calculated
+4. With these elements now created, we can use `case_when()` to apply the missing coding
+5. Due to step 2, we can be confident that `drop_off == TRUE` correctly identifies where responses have dropped off
+6. The value `-888888` identifies missingness at the question group level. If the number of missing responses within the question group is equal to the number of questions within said group, that is missing at the question group-level. `n_vars > 1` is included since I consider groups to mean a collection of 2 or more questions.
+7. In this condition, any missing values `is.na(!!sym(column))` for a factor question `type == "factor"` where there are non-missing values within the question group `n_missing != n_vars` are coded to 0
+8. Any remaining missing values can be coded as plain old `-999999`
+9. Any rows that didn't meet any of these rules are left as-is
+10. Finally, rename the `missingness` column to whatever the current value of the column input is, since we're going to iterate over every column
+
+Now that this function is defined, we can apply it to the relevant columns of the data, which are currently named `V1` through `V5`:
+
+```{r}
+responses <- names(survey_data_tranposed |> select(matches("V\\d")))
+
+# Use purrr:map to iterate over the columns identified in `responses`
+survey_data_coded <- map(responses, \(x) code_missingness(survey_data_tranposed, x)) |>
+  bind_cols()
+
+survey_data_tranposed |>
+  bind_cols(survey_data_coded |>
+              rename_with( ~ paste0(., "_new"), matches("V\\d"))) |> 
+  select(variable, variable_group, type, starts_with(c("V1","V2","V3","V4","V5"))) |> 
+  gt()
+```
+
+It looks to have done the job I intended it to do:
+
+-   Trevor has `-999999` for last name and the `x` text variable, and `-777777` from questions `y` onward
+-   Jenny has group-level missingness `-888888` for the `y` questions, because she goes on to answer the `z` questions so has not dropped off
+-   Missing responses to factor questions in a group are coded to `0` when a non-missing response exists on any other question
+
+## Some explanations
+
+The reason why I update the value of `drop_off` after grouping (annotation 2) is because of the underlying structure of the data I'm working with, which isn't quite reflected in the example data. When outputting checkboxes, REDCap (a survey platform) auto-populates unchecked boxes with a `0` as opposed to missing. To work around this in the context of missingness, I first replace every `0` for these checkbox variables with `NA` so that I'm left with only values of `1` or `NA`. You might be thinking "someone could reasonably have answered the question by not ticking any boxes", except that we provide 'no' and 'unsure' checkboxes to reasonably cover all response options. So if these options are 0 in addition to the other options, I feel more confident in saying the whole question group was skipped.
+
+The original reason for asking the question was about performance, and this approach is probably slower than a column-wise solution. It takes around 10 minutes to iterate over ~6,500 responses to ~550 variables across ~100 question groups. In the future this isn't going to be an issue because the data cleaning is going to be run on a frequent basis as data comes in (so smaller batches), rather than the entire set of responses.
