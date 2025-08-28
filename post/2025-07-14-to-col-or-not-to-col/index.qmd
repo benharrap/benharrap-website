@@ -149,7 +149,7 @@ code_missingness <- function(data, column) {
 }
 ```
 
-1. For each row in the column, `!is.na()` returns `TRUE` (1) is non-missing or `FALSE` (0) if missing. `which()` then returns a vector of indices where the non-missing values are. `max()` then identifies the last row where non-missing data exists. Up to and including this row, `drop_off` is `FALSE`, becoming `TRUE` for every row thereafter.
+1. For each row in the column, `!is.na()` returns `TRUE` (1) if non-missing or `FALSE` (0) if missing. `which()` then returns a vector of indices where the non-missing values are. `max()` then identifies the last row where non-missing data exists. Up to and including this row, `drop_off` is `FALSE`, becoming `TRUE` for every row thereafter.
 2. We then need to update `drop_off` if there are any non-missing responses within the question group. I'll explain why later, but the group minimum of `drop_off` will set all rows to `FALSE` if any `FALSE` exists.
 3. Then the number of variables within a group `n_vars` and number of missing responses within a group `n_missing` are calculated
 4. With these elements now created, we can use `case_when()` to apply the missing coding

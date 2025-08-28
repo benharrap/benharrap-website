@@ -1,0 +1,8 @@
+---
+title: "Why don't statisticians like getting feedback?"
+author: "Ben Harrap"
+date: 2025-07-28
+categories: joke
+---
+
+Because they're always $E[\bar{X}]$

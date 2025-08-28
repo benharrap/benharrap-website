@@ -8,6 +8,7 @@ toc: true
 ::: {.columns .centered}
 ::: {.column width="30%"}
 {{< fa code >}}
+
 **R, SQL, Stata**
 
 R is my preferred language and I’m proficient with SQL and Stata
@@ -16,6 +17,7 @@ R is my preferred language and I’m proficient with SQL and Stata
 :::
 ::: {.column width="30%"}
 {{< fa comments >}}
+
 **Consulting**
 
 There are a lot of good questions out there being asked, I like helping figure out how to answer them
@@ -24,6 +26,7 @@ There are a lot of good questions out there being asked, I like helping figure o
 :::
 ::: {.column width="30%"}
 {{< fa recycle >}}
+
 **Reproducible research**
 
 From start to finish I like my make sure my reports are reproducible and as automated as possible
@@ -42,6 +45,7 @@ Who doesn’t like taking some dirty data and giving it a good scrub
 :::
 ::: {.column width="30%"}
 {{< fa chart-pie >}}
+
 **Data visualisation**
 
 Sure, pictures speak a thousand words, but they might take a thousand lines of code too
@@ -50,6 +54,7 @@ Sure, pictures speak a thousand words, but they might take a thousand lines of c
 :::
 ::: {.column width="30%"}
 {{< fa magnifying-glass >}}
+
 **Googling**
 
 The majority of my R knowledge is self-taught, so I’d say my Google-Fu is pretty good
@@ -61,29 +66,32 @@ The majority of my R knowledge is self-taught, so I’d say my Google-Fu is pret
 ::: {.columns .centered}
 ::: {.column width="30%"}
 {{< fa graduation-cap >}}
+
 **Doctor of Philosophy**
 
-Completed in 2024 at the University of Melbourne
+The University of Melbourne, 2025
 
-Thesis title "The Health of Aboriginal Children born in Western Australia in the Context of Out-of-Home Care"
+*The Health of Aboriginal Children born in Western Australia in the Context of Out-of-Home Care*
 :::
 ::: {.column width="5%"}
 :::
 ::: {.column width="30%"}
 {{< fa graduation-cap >}}
+
 **Master of Biostatistics**
 
-Completed in 2018 at the University of Melbourne
+The University of Melbourne, 2018
 
-Included survival analysis, modelling longitudinal and correlated data, and survey design and analysis
+Electives in survival analysis, modelling longitudinal and correlated data, and survey design and analysis
 :::
 ::: {.column width="5%"}
 :::
 ::: {.column width="30%"}
 {{< fa graduation-cap >}}
+
 **Bachelor of Arts (Honours)**
 
-Completed in 2015 at the University of Western Australia
+University of Western Australia, 2015
 
 Double major in psychology, minor in anthropology
 :::
@@ -96,16 +104,16 @@ Double major in psychology, minor in anthropology
 -   Yardhura Walani, Australian National University
     -   October 2024 – Present
 
-My time is spent mostly on the Mayi Kuwayu Study, The National Study of Aboriginal & Torres Strait Islander Wellbeing. The first thing I did was take the lead on finishing the study's operational manual. In doing this, I converted the existing Word draft into a HTML document using Quarto, making the manual more user-friendly, improving the interface, and making the maintenance of documentation easier.
+My work focuses predominantly on the Mayi Kuwayu Study, where I developed a data cleaning pipeline using R that harmonises the raw paper and online survey data, incorporates results of our data audits, performs a series of data validation steps, derives new variables and survey weights, integrates external data, and outputs cleaned datasets. Using this pipeline, I also report on question performance and missingness to inform our questionnaire redesign process.
 
-I'm also working on building a data cleaning and management pipeline in R, using `targets` to manage the structure and evaluation of the pipeline, `renv` to manage package dependencies across user systems, integrating external data sources via various APIs, and having the different stages of data cleaning and management feed into a user manual, data dictionary, and survey data quality report, all using R and Quarto to automate the majority of their generation.
+I also provide my expertise to multiple other studies and research groups, as well as supervise graduate students and conduct survey methodology research of my own. In my first few months I also took the lead on finishing the study’s operational manual. In doing this, I converted the existing Word draft into a HTML document using Quarto, making the manual more user-friendly, improving the interface, and making the maintenance of documentation easier.
 
 ### Quantitative Social Scientist, Research Fellow
 
 -   Centre for Indigenous Policy Research, Australian National University
     -   October 2023 – October 2024
 
-In my short time at CIPR I worked on two major reports. For the first, I examined social and emotional wellbeing for Aboriginal and Torres Strait Islander children and youth in the Longitudinal Study of Indigenous Children (LSIC). This was done by starting with an Aboriginal and Torres Strait Islander theory of social and emotional wellbeing and using exploratory factor analysis and structural equation modelling to map data items in LSIC to different domains of social and emotional wellbeing.
+In my short time at CIPR I worked on two major reports. For the first, I examined social and emotional wellbeing for Aboriginal and Torres Strait Islander children and youth in the Longitudinal Study of Indigenous Children (LSIC). Starting with an Aboriginal and Torres Strait Islander theory of social and emotional wellbeing, I used exploratory factor analysis and structural equation modelling to map data items in LSIC to different domains of social and emotional wellbeing.
 
 The second was a technical report commissioned by the Productivity Commission and Coalition of Peaks, where my co-authors and I proposed a more statistically rigorous method for measuring progress toward Closing the Gap targets. The report covered improvements in measuring progress, recommendations for increasing the quality, frequency, and relevance of data collected for these measures, and guidelines on how to communicate probabilistic statements from statistical models in easy to understand ways.
 
@@ -127,22 +135,22 @@ I used a variety of statistical methods, including descriptive statistics, vario
 
 In these two biostatistician roles I acted as the sole statistical expert in clinical research and academic settings. Across these roles I provided study design and statistical oversight for a randomised trials, including sample size calculations, developing statistical analysis plans and randomisation schemes, advising on technical challenges arising, and analysing trial data. I also developed educational materials and delivered seminars for clinicians on the topic of good research practices.
 
-### Research assistant
+<!-- ### Research assistant -->
 
--   Peter Doherty Institute for Infection and Immunity, University of Melbourne
-    -   September 2019 – January 2023
+<!-- -   Peter Doherty Institute for Infection and Immunity, University of Melbourne -->
+<!--     -   September 2019 – January 2023 -->
 
-As part of the International and Immigrant Health Group I provided data and statistical support to the research team. Major achievements included the development of a REDCap database and provision of on-site research training for local staff for an evaluation of a dietary and lifestyle intervention in a remote Aboriginal community in the Northern Territory, and a systematic review of type 2 diabetes in resettled refugee and asylum seeker populations.
+<!-- As part of the International and Immigrant Health Group I provided data and statistical support to the research team. Major achievements included the development of a REDCap database and provision of on-site research training for local staff for an evaluation of a dietary and lifestyle intervention in a remote Aboriginal community in the Northern Territory, and a systematic review of type 2 diabetes in resettled refugee and asylum seeker populations. -->
 
--   Centre for Health Policy, University of Melbourne
-    -   April 2018 – January 2022
+<!-- -   Centre for Health Policy, University of Melbourne -->
+<!--     -   April 2018 – January 2022 -->
 
-I supported Emeritus Professor Lesleyanne Hawthorne in the examination of skilled migration to Australia. My work revolved around sourcing data, understanding its complexities, and summarising it to capture quantitative trends in skilled migration to Australia. ABS data products, including the census, were used, as well as administrative data from the Department of Home Affairs, the Australian Health Practitioner Regulation Agency, and the Occupational English Test. We also collaborated with Canadian colleagues to produce a comparison between Australia and Canada's migration programmes.
+<!-- I supported Emeritus Professor Lesleyanne Hawthorne in the examination of skilled migration to Australia. My work revolved around sourcing data, understanding its complexities, and summarising it to capture quantitative trends in skilled migration to Australia. ABS data products, including the census, were used, as well as administrative data from the Department of Home Affairs, the Australian Health Practitioner Regulation Agency, and the Occupational English Test. We also collaborated with Canadian colleagues to produce a comparison between Australia and Canada's migration programmes. -->
 
--   Melbourne Institute, University of Melbourne
-    -   May 2019 – February 2020
+<!-- -   Melbourne Institute, University of Melbourne -->
+<!--     -   May 2019 – February 2020 -->
 
-In this short-term role I prepared the final wave of the Medicine in Australia: Balancing Employment and Life survey for release. This involved data cleaning, consistency checking, and updating the user manual to reflect changes to the survey, a process which was technical and required great attention to detail. I was also the data custodian, managing the secure transfer of data for research purposes. This role was challenging as I inherited a great deal of code with minimal documentation, however I spent the time to understand how it worked, added the necessary updates, and wrote my own documentation for future reference.
+<!-- In this short-term role I prepared the final wave of the Medicine in Australia: Balancing Employment and Life survey for release. This involved data cleaning, consistency checking, and updating the user manual to reflect changes to the survey, a process which was technical and required great attention to detail. I was also the data custodian, managing the secure transfer of data for research purposes. This role was challenging as I inherited a great deal of code with minimal documentation, however I spent the time to understand how it worked, added the necessary updates, and wrote my own documentation for future reference. -->
 
 <!-- ### Biostatistician -->
 
@@ -153,12 +161,12 @@ In this short-term role I prepared the final wave of the Medicine in Australia: 
 
 ## Volunteering
 
-### Wearer of many hats
+### Wearer of Many Hats
 
 -   Statistical Society of Australia
     -   December 2018 – Present
 
-Since joining the SSA back in 2018 I have taken on many different voluntary roles, including:
+Currently I'm the Vice President of the SSA. Since joining back in 2018, I have taken on many different voluntary roles, including:
 
 -   Secretary and then President of the Victorian and Tasmanian Branch
 -   Coordinator of the 2021 Early Career and Student Statisticians Conference
@@ -170,68 +178,96 @@ Across these roles I coordinated strategic planning, managed teams, maintained r
 
 ## Research supervision
 
-Fourth-year psychology honours research: Madeley, B. *Intentions and preferences of adults with diabetes toward seeking psychological support*.
+### Current
 
-Fourth-year psychology honours research: Chhatiawala, A. *Differences in coping self-efficacy between adults with type 1 and type 2 diabetes and the association with emotional-well-being*.
+Doctor of Philosophy — Sedgwick, M., *Understanding the Health and Wellbeing of Aboriginal and Torres Strait Islander Peoples with Disability*.
 
-Master of Medicine research project: Haussegger, Z. *Sleep and Mental Health in Aboriginal and Torres Strait Islander Young People: A retrospective data analysis*.
+Master of Applied Epidemiology — Moreton, K., *TBC*.
 
-Master of Medicine research project: Moffroid, H. *‘Next Generation Youth Well-being Study:’ The importance of cultural connectedness for Aboriginal adolescent health and wellbeing.*
+### Completed
+
+Psychology Honours — Madeley, B., *Intentions and preferences of adults with diabetes toward seeking psychological support*, 2022. 
+
+Psychology Honours — Chhatiawala, A., *Differences in coping self-efficacy between adults with type 1 and type 2 diabetes and the association with emotional-well-being*, 2022.
+
+Master of Medicine — Haussegger, Z., *Sleep and Mental Health in Aboriginal and Torres Strait Islander Young People: A retrospective data analysis*, 2021.
+
+Master of Medicine — Moffroid, H., *‘Next Generation Youth Well-being Study:’ The importance of cultural connectedness for Aboriginal adolescent health and wellbeing.*, 2021.
 
 ## Awards
 
-T-shirt design competition winner — Australian Statistical Conference — December 2023
+2025 Bruce Lord Award for Excellence in Research Methodology — Australian Association of Social Workers
 
-President's Award for Leadership in Statistics — Statistical Society of Australia — August 2022
+2023 T-shirt design competition winner — Australian Statistical Conference
 
-T-shirt design competition winner — Statistical Society of Australia — February 2021
+2022 President's Award for Leadership in Statistics — Statistical Society of Australia
+
+2021 T-shirt design competition winner — Statistical Society of Australia
 
 ## Memberships and Accreditations
 
-Public Health Association Australia — 2024 – Present
+Statistical Society of Australia
 
-International Society of Non-Binary Scientists — 2021 – Present
+Accredited Graduate Statistician, Statistical Society of Australia
 
-International Population Data Linkage Network — 2020 – Present
+International Population Data Linkage Network
 
-Accredited Graduate Statistician, Statistical Society of Australia — 2018 – 2026
-
-Statistical Society of Australia — 2017 – Present
+International Society of Non-Binary Scientists
 
 ## Professional Development
 
 ### Workshops
 
-Aug 2024 — Spatial Analysis in R — Australian Consortium for Social and Political Research Incorporated
+#### 2024
 
-Jun 2024 — Working Smarter with Targets presented by Miles McBain — Statistical Society of Australia
+Spatial Analysis in R — Australian Consortium for Social and Political Research Incorporated
 
-Nov 2021 — A Crash Course in SQL — Statistical Society of Australia
+Working Smarter with Targets presented by Miles McBain — Statistical Society of Australia
 
-Jul 2021 — AMSI Winter School for Statistical Data Science — Australian Mathematical Sciences Institute
+#### 2021
 
-Dec 2020 — Data wrangling with R — Statistical Society of Australia
+A Crash Course in SQL — Statistical Society of Australia
 
-Nov 2020 — Data visualisation with R — Statistical Society of Australia
+AMSI Winter School for Statistical Data Science — Australian Mathematical Sciences Institute
 
-Oct 2020 — Semiparametric regression in R — Statistical Society of Australia
+#### 2020
+
+Data wrangling with R — Statistical Society of Australia
+
+Data visualisation with R — Statistical Society of Australia
+
+Semiparametric regression in R — Statistical Society of Australia
 
 ### Conferences
 
-Dec 2023 — Attendee — Australian Statistical Conference and Australian Conference on Teaching Statistics
+#### 2025
 
-Oct 2023 — Attendee — Aboriginal and Torres Strait Islander Mathematics Alliance Conference
+Global Indigenous Data Sovereignty Conference — Attendee
 
-Sep 2022 — Presenter — International Population Data Linkage Network Conference
+#### 2023
 
-Dec 2021 — Attendee — 9th SNAICC Annual Conference
+Australian Statistical Conference and Australian Conference on Teaching Statistics — Attendee
 
-Jul 2021 — Presenter — The Early Career and Student Statisticians Conference
+Aboriginal and Torres Strait Islander Mathematics Alliance Conference — Attendee
 
-Nov 2020 — Attendee — International Population Data Linkage Network Conference
+#### 2022
 
-Oct 2018 — Presenter — International Metropolis Conference
+International Population Data Linkage Network Conference — Presenter
 
-Aug 2018 — Attendee — Joint International Society for Clinical Biostatistics and Australian Statistical Conference
+#### 2021
 
-Jul 2018 — Attendee — useR! Conference Brisbane
+9th SNAICC Annual Conference — Attendee
+
+The Early Career and Student Statisticians Conference — Presenter
+
+#### 2020
+
+International Population Data Linkage Network Conference — Attendee
+
+#### 2018
+
+International Metropolis Conference — Presenter
+
+Joint International Society for Clinical Biostatistics and Australian Statistical Conference — Attendee
+
+UseR! Conference Brisbane — Attendee

@@ -15,24 +15,44 @@ I've renamed my original `noodle` repository, where I kept the first theme I cre
 
 ## Knitted
 
-The knitted theme came from a jumper that I got for my kid. My partner and I were at a market for locally made goods and came across this stand where a nanna was selling little knitted jumpers that she made. It was the *coolest* jumper I'd ever seen and I wish she made them in adult sizes too. There's no point trying to describe it, just take a look:
+The knitted theme came from a jumper that I got for my kid. My partner and I were at a market for locally made goods and came across this stand where a nanna was selling little knitted jumpers that she made. It was the *coolest* jumper I'd ever seen and I wish she made them in adult sizes too. There's no point trying to describe it, just take a look. I love the bright colours in the jumper and the pale colours looked like they'd work as a background, so I turned it into an RStudio theme. I'm pretty happy with the results!
 
-![The incredible jumper](jumper.jpeg)
+::: {.columns}
 
-I love the bright colours in the jumper and the pale colours looked like they'd work as a background, so I turned it into an RStudio theme. I'm pretty happy with the results:
+:::: {.column}
+
+![The incredible jumper](jumper.jpeg){height="366px"}
+
+::::
+
+:::: {.column}
 
 ![The knitted theme applied to code](knitted-code.PNG)
+
+::::
+
+:::
 
 ![The knitted theme applied to RMarkdown](knitted-rmd.PNG)
 
 ## Corymbia
 
-I was out for a walk in Canberra's botanic gardens and walked past this beautiful plant, later identified by my dad as *corymbia ficifolia*. It's an Australian native with gorgeous blooms. While I'd already walked past it I thought it was such a lovely colour scheme that I went back to snap a picture. Here's what I took:
+I was out for a walk in Canberra's botanic gardens and walked past this beautiful plant, later identified by my dad as *corymbia ficifolia*. It's an Australian native with gorgeous blooms. While I'd already walked past it I thought it was such a lovely colour scheme that I went back to snap a picture.
 
-![Corymbia ficifolia](corymbia.jpeg)
+::: {.columns}
 
-And here's what the theme ended up like:
+:::: {.column}
+
+![Corymbia ficifolia](corymbia.jpeg){height="362px"}
+
+::::
+
+:::: {.column}
 
 ![The corymbia theme applied to code](corymbia-code.PNG)
+
+::::
+
+:::
 
 ![The corymbia theme applied to RMarkdown](corymbia-rmd.PNG)
