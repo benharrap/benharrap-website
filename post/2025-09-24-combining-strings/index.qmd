@@ -1,0 +1,156 @@
+---
+format: html
+title: "Joining strings with missing data together in R"
+author: Ben Harrap
+date: 2025-09-24
+toc: false
+categories: 
+  - R
+  - programming
+  - strings
+---
+
+Joining multiple string columns together in R isn't a particularly tricky thing to do. Until recently though, I found it unreasonably annoying trying to join strings where missing data is present. For example, let's say we've got the following address data:
+
+```{r}
+#| message: false
+library(tidyverse)
+addresses <- tibble(
+  unit = c("Shop 4","Unit 185", NA, NA),
+  street = c("2 Frencham Pl","20 Allara St","1 McCoy Cct","130 Garran Rd Acton ACT 2601"),
+  suburb = c("Downer","Canberra","Acton", NA),
+  postcode = c("2602","2601","2601", NA)
+)
+```
+
+The first two have a value for each element, while the third address doesn't have a `unit`, and the fourth for some reason has all the elements in `street`. What I want to do is combine all of these address elements into a single string and ignore missing values. Let's review the ways we can go about this.
+
+## `tidyr::unite()`
+
+I'll cut to the chase – `tidyr::unite()` is perfect for this:
+
+```{r}
+addresses |>
+  bind_cols(
+    unite(
+      data = addresses,
+      col = "address",
+      sep = " ",
+      na.rm = TRUE
+    )
+  )
+```
+
+I only recently learned about `unite()` (thanks Stephen!) and was surprised to find it in `tidyr` and not in `stringr`. Anyway, it's perfect!
+
+## `base::paste()`
+
+We could use `paste()`, except that it includes `NA` as the letters NA in the output, which is not what I want.
+
+```{r}
+addresses |> 
+  mutate(
+    address = paste(
+      unit, street, suburb, postcode,
+      sep = " "
+      )
+  )
+```
+
+We could do some cleaning to overcome this issue:
+
+```{r}
+addresses |>
+  replace_na(
+    replace = list(unit = "", suburb = "", postcode = "")
+  ) |>
+  mutate(
+    address = paste(
+      unit, street, suburb, postcode,
+      sep = " "
+    )
+  )
+```
+
+But the empty strings are now causing excessive separators to be included. We can fix this with `str_trim()` and `str_squish()`, but it's getting silly at this point. Just use `unite()`!
+
+```{r}
+addresses |>
+  replace_na(
+    replace = list(unit = "", suburb = "", postcode = "")
+  ) |>
+  mutate(
+    address = str_trim(
+      paste(
+        unit, street, suburb, postcode,
+        sep = " "
+      )
+    )
+  )
+```
+
+## `base::sprintf()`
+
+Another base option is to use `sprintf()`, which seems like we'd still need to do some extra work to handle the `NA`.
+
+```{r}
+addresses |> 
+  mutate(
+    address = sprintf(
+      "%s %s %s %s",
+      unit, street, suburb, postcode
+      )
+  )
+```
+
+## `stringr::str_c()`
+
+We could use `str_c()` but we'll have the same issues as we did with `paste`. Notice though that `str_c` returns `NA` if any of the input strings are `NA`.
+
+```{r}
+addresses |> 
+  mutate(
+    address = str_c(
+      unit, street, suburb, postcode,
+      sep = " "
+      )
+  )
+```
+
+## `stringr::str_flatten()`
+
+Interestingly, we can achieve the same result as `unite()` if we perform `str_flatten()` on a row-wise basis. I doubt this is a good idea though, as row-wise stuff tends to get very expensive, very quickly.
+
+```{r}
+addresses |> 
+  rowwise() |> 
+  mutate(
+    address = str_flatten(
+      c(unit, street, suburb, postcode),
+      collapse = " ",
+      na.rm = TRUE
+      )
+  )
+```
+
+## `glue::glue()`
+
+`glue` is another option and arguably works better than `paste` or `str_c` because of the `.na` option letting us handle the `NA` within the function itself.
+
+```{r}
+library(glue)
+addresses |> 
+  mutate(
+    address = glue(
+      "{unit}","{street}","{suburb}","{postcode}",
+      .na = "",
+      .sep = " "
+      )
+  )
+```
+
+Again though, we'd need to trim the leading whitespace created.
+
+## Summary
+
+There's not much to say except use `unite()`!
