@@ -41,7 +41,7 @@ addresses |>
   )
 ```
 
-I only recently learned about `unite()` (thanks Stephen!) and was surprised to find it in `tidyr` and not in `stringr`. Anyway, it's perfect!
+I only recently learned about `unite()` (thanks anonymous cat data scientist!) and was surprised to find it in `tidyr` and not in `stringr`. Anyway, it's perfect!
 
 ## `base::paste()`
 
