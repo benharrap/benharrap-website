@@ -28,7 +28,9 @@ It really didn't matter what level of statistical expertise the people I worked 
 
 ## Humans seem missing from this equation
 
-Terry's blog post was so striking to me because so often he faces problems or has questions where, to me, the answer is "get more humans involved". But Terry's answer is "get ChatGPT involved". Let me illustrate with some quotes.
+Terry's blog post was so striking to me because so often he faces problems or has questions where, to me, the answer is "get more humans involved". But Terry's answer is "get ChatGPT involved". 
+
+I include some quotes below that helped crystallise my thinking. I think my original text painted Terry in an unfair light, he [points out on Bluesky](https://bsky.app/profile/hormiga.bsky.social/post/3m2sijpfjoc2m) that he wants to be able to collaborate and include statisticians and data experts in his work but is hamstrung by both lack of funding and people. It would not surprise me if the circumstance he's in and the appeal of ChatGPT is a consequence of there not being any other option — and this is a systemic problem with academia.
 
 > So I fed it a dataset that's been giving me headaches. I just gave it my .csv files. I told it how I wanted to clean up the dataset and prepare it for analyses.
 
@@ -46,7 +48,7 @@ When you're at the limits of your statistical expertise, you're very much in "do
 
 I want to stress my point here isn't to dunk on Terry, I'm happy to take at face-value his assertion of being good at statistics (he's an ecologist after all). But this really feels like a Dunning-Kruger problem and reminds me of much of my consulting work — the medical doctors who knew how to interpret a regression coefficient were typically much harder to work with than those who knew nothing.
 
-But Terry talks about the coding being the problem — not the statistics. I find this point fascinating because it's like there's some hierarchy of expertise, where statistics is the important thing to know and coding is just a mundane implementation. To me, as a practising statistician, coding and data management are just as important as knowing the statistical methods
+But Terry talks about the coding being the problem — not the statistics. I find this point fascinating because it's like there's some hierarchy of expertise, where statistics is the important thing to know and coding is just a mundane implementation. To me, as a practising statistician, coding and data management are just as important as knowing the statistical methods.
 
 > And then it asked me if I wanted it packaged in a Jupyter notebook.
 
@@ -66,7 +68,7 @@ Academia suffers from an ever-rising bar of excellence and you can see it so cle
 
 > I was talking to a friend the other day and he told me that in one week, he was able to use AI-supported coding to do the job that a couple years ago would have taken a postdoc several months to get done. Wow.
 
-This is the exact worry that I have, and Terry sort of comments on this — except he's not worried, he's thrilled about not needing to work with "coding wizards". With the focus on individual success and the superstar researcher, maybe it's no surprise then that Terry is happy that he can now do everything himself and do it quickly (with ChatGPT's help of course).
+This is the exact worry that I have, and Terry sort of comments on this — except he's not worried, he's thrilled about not needing to work with "coding wizards". In his circumstance, I assume the thrill comes from being able to do work that otherwise would *never* get done. But I can see too how the focus on individual success and the superstar researcher, that many others will be glad to work and publish quickly, by themselves (and ChatGPT).
 
 Which brings me to my original worry — where's the consideration and care for the humans involved? And this isn't only about statisticians, it's about students and postdocs too. Teaching statistics *and* coding in less and less depth because LLMs seem like they can do these things for you is a terrible idea. It's contrary to the whole point of being a student, a postdoc, or a researcher at any stage of your career — because it's a choice to not learn any more, but the above quote shows how someone else can make that choice for you.
 
