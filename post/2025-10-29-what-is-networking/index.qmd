@@ -1,0 +1,77 @@
+---
+format: html
+title: "What the hell is networking?"
+author: Ben Harrap
+date: 2025-10-29
+toc: true
+categories: 
+  - academia
+  - work
+  - community
+---
+
+At some point in your student life or early in your career, you'll get advice telling you how important networking is. What they probably don't go on to explain is what the hell they actually mean by networking. This has been my experience at least, and for the longest time I had no idea whether I was doing 'networking' correctly, or even at all. See \@[What the hell, Ben?] if you don't relate.
+
+The lack of any explanation about what networking actually looked like always made me resistant to the *idea* of networking, but on reflection I think I've probably been doing it semi-successfully for the last few years. So I figured I'd write out what networking seems to have actually been for me, with some examples, in case this turns out to be useful for others — because "do networking" is actually good advice. 
+
+## So what is it?
+
+Fundamentally it just seems to be talking to a person often enough that they both remember your name and know something about you.
+
+Ideally they also feel positively about you too, so when the they happen upon a relevant opportunity they can put your name forward or send it through to you. But getting opportunities isn't the only reason to network — we're social animals and it's nice to just know people for who they are too.
+
+When it comes to talking to people though, what seems to be important is the contexts in which you are speaking because it shapes how they see you. For example, I attended a lot of events organised by the [SSA](https://statsoc.org.au/Events-listing) over the last ~8 years. The conversations I had with people occasionally were about something related to statistics, but for the most part it was not.
+
+> Have you got any pets? Oh nice, what kind of dog! Ah, I love staffys — if I wasn't a greyhound person I reckon I'd have a staffy.
+
+> You doing much over the Christmas break? Oh you're just having the shutdown period off because you only started work recently? What were you doing before? Oh you used to do physiotherapy? Cool! What made you want to do statistics?
+
+None of these conversations are about statistics, but by having them at a statistics event there's a presumption that statistics is a relevant part of my identity. I always hope that after I meet someone for the first time they assign me the labels:
+
+-   Statistics
+-   Not a dickhead
+-   Friendly, talk to again
+
+The conversations that *are* about statistics seem important though. Firstly, because I usually learn something. Secondly, and more importantly for networking, it's an opportunity for the other person to update my labels to:
+
+-   Statistics, seems sensible
+-   Not a dickhead
+-   Friendly, talk to again
+
+These first two labels seem to be pretty important. It might seem like a low bar, but knowing that someone isn't a dickhead (the bad kind) and that they seem to know what they're talking about is all it takes for me to be willing to mention their name to someone else.
+
+## So how to do it?
+
+Well, in order to talk to people you need to be somewhere where the people are open to talking to you. This could be with other students during your degree, at work, social events, conferences, etc. Then, all that's left to do is either initiate conversations with people or wait for someone to do the same with you.
+
+So 'networking' is just building social relationships? Maybe that the context is around work is what separates it from social relationships more generally — the goal is to get to know people who are doing the same kind of work as you.
+
+## How has it helped me?
+
+This is what led me to write this blog post, because recently I've been feeling grateful for the opportunities I've been afforded thanks to other people thinking of me. Some specific examples of how 'networking' has benefited me:
+
+-   My current role, which I **love**, is a consequence of a series of events that began with someone who knew a few things about me, sending me a job description. I got that job, which ultimately led to my current job. Thanks, Emi!
+-   I was invited to speak at [WOMBAT2025](https://wombat2025.numbat.space/program/workshops/W3K3VM.html), which wouldn't have happened if I hadn't been raving about my work and how much I love R to someone who knew the organisers. Thanks, Nick!
+-   My first biostatistics job came mid-degree from the recommendation of one of my lecturers. Thanks Julie! In this job I developed a great relationship with my supervisor, which led to another job. Thanks, Lesleyanne!
+
+I've always felt lucky when these kinds of things happen, and attributed them to 'right place, right time'. It's not always clear where the right place is and impossible to know when the right time is going to be, but if you keep showing up then eventually you'll be in the right place at the right time. So keep on showing up!
+
+## How have I helped others?
+
+The cool thing about networking is that you get to form your own set of labels for the people you meet. Our brains are great at identifying patterns, so when a circumstance arises that someone you've met seems relevant to bring up, you should do it!
+
+I never go into a conversation with the intention of inserting the name of someone I know, but it's really rewarding when the opportunity comes up to connect people. For example, I met a student at a conference who was just about to finish their master's degree, who hadn't been to any SSA events before and didn't really know anyone from the statistics community. In chatting, I found out they were working nearby another statistician I knew to be kind and supportive, so after the event I made sure to connect the two.
+
+## Rambly bits
+
+### What the hell, Ben?
+
+Yes, I've got the spicy brain. Maybe all of this is blindingly obvious to most people.
+
+### It can be awkward 
+
+Try to embrace it? With time and practice, the awkwardness becomes less frequent and more bearable.
+
+### Don't forget about your peers
+
+A lot of this post is about how networking can lead to opportunities. Those opportunities typically come from people with the ability to create them, and those people tend to be more senior in their careers. One day though, you'll be senior in your career as will everyone else at the same career stage as you.

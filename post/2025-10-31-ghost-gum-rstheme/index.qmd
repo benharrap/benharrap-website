@@ -1,0 +1,32 @@
+---
+title: "A new RStudio theme: Ghost Gum"
+author: "Ben Harrap"
+date: "2025-10-31"
+categories:
+  - code
+  - R
+  - design
+image: "code.png"
+---
+
+So I took a picture more than a year ago. I took it because I liked the colour palette of these logs and thought it would make a nice RStudio theme. Well, over a year later, I finally got the zoomies and did what I'd intended and made the theme! I've called it Ghost Gum, although I don't think the logs are actually Ghost Gums. It's a cool name and a cool tree though. Enjoy!
+
+You can find the theme along with my others on GitHub ([https://github.com/benharrap/rsthemes](https://github.com/benharrap/rsthemes)). If you want to have a go making your RStudio theme, check out the guide I made [here](https://benharrap.com/post/2024-04-12-custom-rstudio-themes/). I'd suggest using the Ghost Gum theme as the starting template though, I tried to streamline some of the options so you don't need to change the colour in so many locations.
+
+::: {.columns}
+
+:::: {.column}
+
+![Nice logs](gum.jpg){height="366px"}
+
+::::
+
+:::: {.column}
+
+![Ghost Gum applied to code](code.png)
+
+::::
+
+:::
+
+![A Quarto document view](quarto.png)
