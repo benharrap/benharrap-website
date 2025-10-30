@@ -23,7 +23,7 @@ You can find the theme along with my others on GitHub ([https://github.com/benha
 
 :::: {.column}
 
-![Ghost Gum applied to code](code.png)
+![Ghost Gum applied to code](code.png){height="366px"}
 
 ::::
 
