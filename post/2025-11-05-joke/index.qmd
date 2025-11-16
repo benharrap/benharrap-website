@@ -1,0 +1,8 @@
+---
+title: "What is the sheep's favourite graph?"
+author: "Ben Harrap"
+date: 2025-11-05
+categories: joke
+---
+
+A baa plot
