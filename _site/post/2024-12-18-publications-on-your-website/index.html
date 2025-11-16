@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -31,14 +31,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76a1943aa528a4846e4152a694de7f96.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-c374f5cd892242eac04dcb1393fc8688.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d6c0234beb521fbcf326a66e2c93b7a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-8d2355c06bb7e8225a0962401605bcee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -82,6 +83,8 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Ben Harrap</span>
     </a>
@@ -193,7 +196,7 @@ ul.task-list li input[type="checkbox"] {
 <p>While it does depend on what citation style you are using, it seems the majority of styles will format your article title in sentence case, which is a problem for proper nouns. For example, my paper “Mental and neurodevelopmental health needs of Aboriginal children with experience of out-of-home care: a Western Australian data-linkage study” would get formatted such that ‘Aboriginal’ and ‘Western Australia’ would be entirely lower-case, which isn’t correct.</p>
 <p>To fix this, we have to ‘protect’ the letters we want capitalised by putting them in curly brackets <code>{}</code>. See the example below where I have the original <code>.bib</code> entry from ORCiD and the protected entry which will preserve the capitalisation of the proper nouns.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Original entry</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Protected entry</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Original entry</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Protected entry</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>@article{Harrap_2024,<br>title={Mental and neurodevelopmental health needs of Aboriginal children with experience of&lt;0xa0&gt;out-of-home care: a Western Australian data-linkage study},<br>volume={48},<br>ISSN={1326-0200},<br>url={http://dx.doi.org/10.1016/j.anzjph.2024.100181}, DOI={10.1016/j.anzjph.2024.100181},<br>number={5},<br>journal={Australian and New Zealand Journal of Public Health},<br>publisher={Elsevier BV},<br>author={Harrap, Benjamin and Gibberd, Alison and O’Donnell, Melissa and Jones, Jocelyn and Chenhall, Richard and McNamara, Bridgette and Simons, Koen and Eades, Sandra},<br>year={2024},<br>month=oct,<br>pages={100181}<br>}</p>
@@ -220,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
 <p>It varies with the style you use, but the default sort order for APA 7th is to order citations by author and then ascending by date. Instead, I want the citations to be sorted by year of publication first, then by author. To change this, open the <code>.csl</code> file in RStudio and find the start of the <code>&lt;bibliography&gt;</code> tag. Searching for <code>&lt;bibliography</code> should take you there, but if not, it should be somewhere near the bottom.</p>
 <p>To change the sort order, switch around the arguments inside the <code>&lt;sort&gt;</code> tag and change “ascending” to “descending”. The example below demonstrates.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Original</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Descending year</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Original</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Descending year</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>&lt;bibliography hanging-indent=“true” et-al-min=“21” et-al-use-first=“19” et-al-use-last=“true” entry-spacing=“0” line-spacing=“2”&gt;<br> &lt;sort&gt;<br> &lt;key macro=“author-sort”/&gt;<br> &lt;key macro=“date-sort-group” sort=“ascending”/&gt;<br> &lt;key macro=“date-sort” sort=“ascending”/&gt;<br> &lt;key variable=“status”/&gt;<br> &lt;key macro=“title”/&gt;<br> &lt;/sort&gt;<br> ⋮</p>
@@ -235,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="change-the-citation-spacing">Change the citation spacing</h3>
 <p>The other thing we need to do is change the spacing between citations. The default is to have no line between them, which looks horrible and claustrophobic on a website. Instead we want to add a line spacing. In the same <code>&lt;bibliography&gt;</code> tag as before, change the <code>entry-spacing</code> argument from 0 to 2, as per below.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">No spacing</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Some spacing</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">No spacing</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Some spacing</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p>&lt;bibliography hanging-indent=“true” et-al-min=“21” et-al-use-first=“19” et-al-use-last=“true” entry-spacing=“0” line-spacing=“2”&gt;<br> &lt;sort&gt;<br> &lt;key macro=“date-sort-group” sort=“descending”/&gt;<br> &lt;key macro=“date-sort” sort=“descending”/&gt;<br> &lt;key macro=“author-sort”/&gt;<br> &lt;key variable=“status”/&gt;<br> &lt;key macro=“title”/&gt;<br> &lt;/sort&gt; ⋮</p>
@@ -327,13 +330,14 @@ nocite: |
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

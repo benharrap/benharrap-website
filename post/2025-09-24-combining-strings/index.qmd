@@ -142,9 +142,8 @@ library(glue)
 addresses |> 
   mutate(
     address = glue(
-      "{unit}","{street}","{suburb}","{postcode}",
-      .na = "",
-      .sep = " "
+      "{unit} {street} {suburb} {postcode}",
+      .na = ""
       )
   )
 ```
