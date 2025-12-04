@@ -1,0 +1,57 @@
+---
+format: html
+title: "Designing a t-shirt"
+author: Ben Harrap
+date: 2020-12-02
+toc: false
+categories: 
+  - design
+  - statistics
+  - SSA
+---
+
+## The t-shirt competition
+
+Back in September 2020 I saw the Statistical Society of Australia (SSA) advertise a t-shirt competition. The competition was only open to members, with the winner of the competition having their design become the official design for the SSA's t-shirts. Initially I dismissed participating since I *hated* drawing. When I was in school, I didn't particularly like any of the 'creative' subjects, especially not art. Drawing, painting, shading, getting proportions right, I wasn't good at any of it and I was always disappointed with what I made. I noped out of any creative subjects as soon as I had the opportunity, happily sticking to subjects which relied letters and numbers, not pencils and paint brushes. 
+
+So why did I end up submitting a design? It happened in a very roundabout way. My partner, Kelsie, is a graphic designer (a very good one, [check out her stuff](https://www.kelsiewhitedesigns.com/){target="_blank"}) and I happened to mention the competition to her. The immediate reaction was "Spec work!? Ugh no thanks". I hadn't heard of spec work before, what was it? Short for speculative work, it describes when designers do work with the hopes that their design is selected and they end up getting paid. The problem is that it devalues their work and the industry, and puts everyone in a precarious position - they're working, but there's no guarantee they'll be paid for any of it. The American Institute of Graphic Arts has a [statement](https://www.aiga.org/position-spec-work){target="_blank"} on spec work if you want to read more. Now that you mention it, it sounds exactly like kaggle. But I digress. I thought about spec work and while I didn't agree that an amateur submission was the best way to represent the SSA, it was out of my control, so I went about my business.
+
+## Coming up with a design
+
+All my good ideas seem to come to me out of the blue (thanks subconscious), so I was minding my own business when my brain went, "Hey, this would make a GREAT t-shirt design!". 'This' being a design which pays homage to Australia's great statisticians. The problem was I sucked at drawing, which was a real shame since it *was* a good idea. I couldn't shake the idea though, I thought that if it was done right that maybe it would be a t-shirt worthy of official branding. So with the support of my partner (and her various graphic design tools) I began planning out my design. I started out with printing a map of Australia and drawing a bunch of circles (representing the approximate size of each drawing) to see how many statisticians I'd need to include. 
+
+![](aus-map.png)
+
+At this stage, I thought I'd be hard pressed to find 37 statisticians to include. Sure, I'd heard of maybe 10 or so statisticians, some who the SSA have named lectures after, others who seem to publish papers with other big-name statisticians from overseas. How wrong I was! It turned out Australia has produced many statisticians who have contributed a lot to the field of statistics, in many different areas! I started out by looking at the list of statisticians on the SSA website - the [named lectures](https://statsoc.org.au/Named-lectures){target="_blank"} and the [Pitman Medal recipients](https://statsoc.org.au/Pitman-Medal-Recipients){target="_blank"}. Sadly though, there were very few female statisticians in either of these lists. I wanted to have some semblance of gender balance in the list and I couldn't believe there weren't more female statisticians out there, so I kept searching and found [this great list](https://en.wikipedia.org/wiki/List_of_women_in_statistics){target="_blank"} on Wikipedia. 
+
+With my list of 41 statisticians, rougly balanced in gender, the next job was to research in detail what they did. I really enjoyed this process, I learned so much about each of the candidates. At this point I'd like to give a big thanks to the [Australian National University](http://adb.anu.edu.au/){target="_blank"} and the [Australian Academy of Science](https://www.asap.unimelb.edu.au/bsparcs/aasmemoirs/aas_memlist.htm){target="_blank"} for creating some excellent biographies of several statisticians on the list - they were so comprehensive and well written, it really helped me come up with some good ideas for the illustrations.
+
+The list was complete and the candidates' achievements noted, so next I selected which candidates I was going to include as they wouldn't all fit in (despite Australia being so large). Admittedly, the selection process was a little biased as I was more likely to pick things that I actually felt capable of drawing (and also weren't just equations). With a tentative list of 'finalists' I started sketching out on paper.
+
+![](sketches.png)
+
+Doing the drawings was challenging at first, mainly because I was frustrated that they didn't look clean and I wasn't used to drawing. But with the encouragement of my partner and the reaffirmation that they were just rough sketches, I pressed on (check out the sheep, it looks very different in the final design, it's one of my favourites). As I carried on I found the process easier and more enjoyable - who knew drawing could be fun!? With most of the sketches complete I needed to translate them into the final images, this being done using an iPad Pro (thanks again Kelsie, I couldn't've done this without you!). This was the real highlight of the drawing experience - being able to just undo a mistake, getting nice clean lines with the brush, it definitely made me feel more confident in my ability to draw.
+
+## Putting it all together
+
+My partner helped put all the images together on the map of Australia (which I made sure included Tasmania). With me peering over her shoulder and coming out with zingers like "Can you move that 2 pixels to the left?" and "Can you make it pop?", we eventually came up with the final arrangement, which I'm stoked with. See for yourself!
+
+![](tshirt-front.png)
+
+Some personal highlights of mine are Helen Turner's sheep, which looks much happier than the initial sketch
+
+![](sheep.png)
+
+The Pitman Medal (although he looks a little grumpier than on the original medal)
+
+![](pitman.png)
+
+And Annette Dobson's "Introduction to Generalized Linear Models", who hasn't read this book!?
+
+![](dobson.png)
+
+I also ended up creating a back design for the t-shirt too since without a key it'd probably be quite hard to figure out who did what:
+
+![](tshirt-back.png)
+
+Anyway, that's all from me - I hope you like the design. It's one of my proudest achievements to date. Go and read about the people on the list - they're all amazing and really illustrate that as statisticians we do get to play in everyone's back yards.
