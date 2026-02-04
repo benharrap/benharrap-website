@@ -2,7 +2,7 @@
 format: html
 title: "Using R to extract results from Stata log files"
 author: Ben Harrap
-date: 2025-09-24
+date: 2026-02-04
 toc: true
 categories: 
   - R
