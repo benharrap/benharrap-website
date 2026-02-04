@@ -1,0 +1,260 @@
+---
+format: html
+title: "Using R to extract results from Stata log files"
+author: Ben Harrap
+date: 2025-09-24
+toc: true
+categories: 
+  - R
+  - Stata
+  - programming
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+Taking results from Stata and inserting them into a report is a colossal pain in the ass, to put it mildly. There are a few custom commands out there, like `baselinetable`, that help ease the pain somewhat, but copy-pasting results from console output or log files seems inevitable and introduces human error.
+
+It doesn't have to be this way though! Recently, my predominantly Stata-using team has started making an effort to use Quarto for some regular reports we need to deliver. Naturally I'm thrilled, because Quarto is such a useful tool and it'll save us a lot of time and error copy-pasting results from Stata. The only problem is we need Stata output in a format that we can read in for our Quarto report.
+
+My solution for this? Write R functions that extract results from Stata's log files! *mind_blown.gif*
+
+## What's a log file?
+
+Every Stata user should already be familiar with log files, but if you're not, they just log all of the commands you run during a Stata session, along with their outputs, in an `.smcl` file. This stands for "Stata Markup and Control Language" and is pronounced "smickle" according to Stata's help files. I don't care to get into the detail of how these work, all I need to know is I can read it in to R as a text file.
+
+To demonstrate, I ran the following commands in Stata
+
+```{r}
+#| eval: false
+log using log # <1>
+sysuse auto, clear # <2>
+tab headroom foreign # <3>
+tab rep78 # <4>
+su price # <5>
+su price weight length gear_ratio # <6>
+reg mpg displacement gear_ratio weight price # <7>
+margins, at(weight=(2000(500)4500)) # <8>
+log close # <9>
+```
+
+1. Start recording a log of the session, outputting to `log.smcl`
+2. Use the `auto` data, similar to `mtcars`
+3. Create a two-way table
+4. Tabulate a single variable
+5. Produce descriptives of a single variable
+6. Then for multiple variables
+7. Fit a regression model with `mpg` as the outcome
+8. Produce predictive margins at a severak values of `weight`
+9. Stop recording to the log file
+
+If you want to see what the file looks like, [it's here](log.smcl).
+
+## The guts of it
+
+Now we've got a log file to play with, we can read it into R and have a look.
+
+```{r}
+data <- read.delim("log.smcl")
+data[8:22,]
+```
+
+There's a bunch of markup here that Stata uses to format the file nicely when you view it using Stata. It's a bit ugly to look at as plain-text but there are some helpful things to notice here, which we can use to extract our results:
+
+- Command lines begin with `{com}.` (see lines 1 and 15)
+- The results lines end with a number (lines 5 through 12, and 14)
+
+The output looks a little complicated with how it's ordered, because it's tabulating two variables. Line 5 has results, but doesn't begin with `{txt}`. The first value in lines 5 to 12 are the values of `headroom`, while the remaining values correspond to 'Domestic', 'Foreign' and 'Total'.
+
+Let's check the output for the other commands though. Here's the `summarise` (or `su`) output:
+
+```{r}
+data[33:43,]
+```
+
+The results also end with a number here, but they don't have a trailing whitespace. We can fix that later using `stringr::str_trim()`. Otherwise it looks fairly straightforward. Lines 2, 6, tell us what the results correspond to. 
+
+Let's check the regression output:
+
+```{r}
+data[44:60,]
+```
+
+It's very busy but the same principle applies — result lines (11 to 15) end with a number.
+
+Finally, the `margins` output:
+
+```{r}
+data[61:85,]
+```
+
+The main thing to notice is that the values of `weight` at which the estimates are produced are in lines 8 to 13, while the estimates themselves are on separate lines (19 to 24).
+
+## Separate out the results
+
+I could've split the analysis up across multiple log files. For example, outputting tabulations into `tabulation.log`, the summaries into `summaries.log`, the regression model into `regression.log` and the margins into `margins.log`. There's not much need though, since we can use the command rows to subset the data. We'll need them like this for our Quarto report anyway, plus each command seems to need slightly different work.
+
+```{r}
+library(tidyverse)
+data <- data |> 
+  mutate(
+    # Create a variable to identify each command
+    command = if_else(
+      str_detect(X.smcl., "\\{com\\}\\."),
+      true = X.smcl.,
+      false = NA
+    )
+  ) |> 
+  # Fill downward to catch all the lines of output from that command
+  fill(command, .direction = "down")
+```
+
+Notice the double backslashes in `str_detect()` - we need to escape the special characters since we're using a regular expression here. 
+
+Now we've identified the lines from each command, we can separate out our results.
+
+```{r}
+tab_headroom_foreign <- filter(data, command == "{com}. tab headroom foreign")
+tab_rep78 <- filter(data, command == "{com}. tab rep78")
+summaries <- filter(data, command == "{com}. su price weight length gear_ratio")
+regression <- filter(data, command == "{com}. reg mpg displacement gear_ratio weight price")
+margins <- filter(data, command == "{com}. margins, at(weight=(2000(500)4500))")
+```
+
+## One-way tables
+
+Starting with the simplest output, let's extract the counts of each level of `rep78`:
+
+```{r}
+tab_rep78 <- tab_rep78 |> 
+  mutate(
+    results = case_when(
+        str_detect(X.smcl., "((-)?\\.)?\\d+(\\.\\d+)?$") # <1>
+        ~ str_extract_all(X.smcl.,"((-)?\\.)?\\d+(\\.\\d+)?"), # <2>
+        .default = NA
+      ),
+    X.smcl. = str_squish(str_remove_all(X.smcl.,"\\{.+\\}")) # <4>
+  ) |> 
+  hoist( # <3>
+    "results",
+    repair_record = 1,
+    frequency = 2,
+    percent = 3,
+    cumulative = 4
+  ) |> 
+  select(-command)
+
+tab_rep78
+```
+
+1. This regex is looking for strings that optionally start with a negative or decimal (`((-)?\\.)?`), followed by any number of digits (`\\d+`), optionally followed by a decimal and any number of digits (`(\\.\\d+)`), at the end of the string `$`
+2. `stringr::str_extract_all()` then extracts all instances of this pattern anywhere in the string (we omit the `$`), returning a list-column called `results`
+3. `tidyr::hoist()` then extracts the elements of `results` into their own column, to which we assign names
+4. I just formatted the output to look nicer on this blog post, this step is unnecessary here
+
+Notice that the 'Total' row (11) hasn't quite worked. We could tinker with the regex or `mutate()` the correct values in. Or we could just use `janitor::adorn_totals()` to make our lives easier:
+
+```{r}
+#| message: false
+library(janitor)
+tab_rep78 |> 
+  filter(!is.na(cumulative)) |> 
+  select(repair_record:percent) |> 
+  mutate(across(everything(), as.numeric)) |> 
+  adorn_totals("row")
+```
+
+## Regression output
+
+The combination of `str_extract_all()` and `hoist()` is what this all boils down to, but there's a bit of tweaking we need to do for the regression output. The regex in the previous example was extracting all instances of digits with optional decimals, however in the regression output there's spacing markup like `{hline 13}`, which we don't want to extract.
+
+We could fix this by modifying the regex, but I'm not a fan of making large, complicated expressions if I can avoid it, so instead we can just replace anything inside of a curly bracket with a space, using `str_replace_all()`.
+
+```{r}
+regression |>
+  mutate(
+    X.smcl. = str_replace_all(X.smcl., "\\{[\\w|\\d|\\s]+\\}", " "),
+    results = case_when(
+      str_detect(X.smcl., "((-)?\\.)?\\d+(\\.\\d+)?$") ~ str_extract_all(
+        X.smcl.,
+        "((-)?\\.)?\\d+(\\.\\d+)?"
+      ),
+      .default = NA
+    )
+  ) |>
+  hoist(
+    "results",
+    estimate = 1,
+    std_err = 2,
+    t = 3,
+    p_val = 4,
+    ci_lower = 5,
+    ci_upper = 6
+  ) |>
+  filter(!is.na(ci_upper)) |>
+  select(-command) |>
+  mutate(
+    X.smcl. = str_sub(
+      X.smcl.,
+      start = str_locate(X.smcl., "[:graph:]+")[, "start"],
+      end = str_locate(X.smcl., "[:graph:]+")[, "end"]
+    )
+  ) |>
+  rename(variable = X.smcl.)
+```
+
+The last thing to do here is create the variable column by extracting the variable names using `str_sub` and the start/end locations of the first place that numbers/letters/punctuation are detected.
+
+## Margins output
+
+For the margins we can recycle the same code to extract the results, although we need to do a bit more work to name the margins correctly.
+
+```{r}
+margins |>
+  mutate(
+    X.smcl. = str_replace_all(X.smcl., "\\{[\\w|\\d|\\s]+\\}", " "),
+    results = case_when(
+      str_detect(X.smcl., "\\d+(\\.\\d+)?$") ~ str_extract_all(X.smcl.,"((-)?\\.)?\\d+(\\.\\d+)?"),
+      .default = NA
+    )
+  ) |>
+  hoist(
+    "results",
+    margin = 1,
+    estimate = 2,
+    std_err = 3,
+    t = 4,
+    p_val = 5,
+    ci_lower = 6,
+    ci_upper = 7
+  ) |> 
+  filter(!is.na(ci_upper)) |> 
+  select(-command, -X.smcl.) |> 
+  mutate(
+    margin = case_when(
+      margin == "1" ~ "weight = 2000",
+      margin == "2" ~ "weight = 2500",
+      margin == "3" ~ "weight = 3000",
+      margin == "4" ~ "weight = 3500",
+      margin == "5" ~ "weight = 4000",
+      margin == "6" ~ "weight = 4500",
+    )
+  )
+```
+
+I could've written code to automatically extract the margin value and assign it, instead of manually coding the value of margin, but I want to finish this blog post so \*waves hands\*.
+
+## Extracting a two-way table
+
+```{r}
+tab_headroom_foreign |> select(-command)
+```
+
+
+I left this to last because it looks annoying to do. Unfortunately, my patience for dealing with Stata log files has run out as I write this blog post, so let's pretend this last one is homework for you to figure out ;)
+
+Hopefully though I've demonstrated that, with a little bit of work, you can get results out of Stata log files. Once you've done that, it's business as usual as you write up your Quarto report!

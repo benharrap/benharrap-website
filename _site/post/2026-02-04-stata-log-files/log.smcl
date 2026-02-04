@@ -1,0 +1,109 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/ben/Documents/Stata/log.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 4 Feb 2026, 09:25:54
+
+{com}. sysuse auto, clear
+{txt}(1978 automobile data)
+
+{com}. tab headroom foreign
+
+  {txt}Headroom {c |}      Car origin
+     (in.) {c |}  Domestic    Foreign {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+       1.5 {c |}{res}         3          1 {txt}{c |}{res}         4 
+{txt}       2.0 {c |}{res}        10          3 {txt}{c |}{res}        13 
+{txt}       2.5 {c |}{res}         4         10 {txt}{c |}{res}        14 
+{txt}       3.0 {c |}{res}         7          6 {txt}{c |}{res}        13 
+{txt}       3.5 {c |}{res}        13          2 {txt}{c |}{res}        15 
+{txt}       4.0 {c |}{res}        10          0 {txt}{c |}{res}        10 
+{txt}       4.5 {c |}{res}         4          0 {txt}{c |}{res}         4 
+{txt}       5.0 {c |}{res}         1          0 {txt}{c |}{res}         1 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}        52         22 {txt}{c |}{res}        74 
+
+{com}. tab rep78
+
+     {txt}Repair {c |}
+record 1978 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}          2        2.90        2.90
+{txt}          2 {c |}{res}          8       11.59       14.49
+{txt}          3 {c |}{res}         30       43.48       57.97
+{txt}          4 {c |}{res}         18       26.09       84.06
+{txt}          5 {c |}{res}         11       15.94      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         69      100.00
+
+{com}. su price
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}price {c |}{res}         74    6165.257    2949.496       3291      15906
+
+{com}. su price weight length gear_ratio
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}price {c |}{res}         74    6165.257    2949.496       3291      15906
+{txt}{space 6}weight {c |}{res}         74    3019.459    777.1936       1760       4840
+{txt}{space 6}length {c |}{res}         74    187.9324    22.26634        142        233
+{txt}{space 2}gear_ratio {c |}{res}         74    3.014865    .4562871       2.19       3.89
+
+{com}. reg mpg displacement gear_ratio weight price
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        74
+{txt}{hline 13}{c +}{hline 34}   F(4, 69)        = {res}    32.92
+{txt}       Model {c |} {res} 1603.26274         4  400.815685   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 840.196719        69   12.176764   {txt}R-squared       ={res}    0.6561
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.6362
+{txt}       Total {c |} {res} 2443.45946        73  33.4720474   {txt}Root MSE        =   {res} 3.4895
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         mpg{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+displacement {c |}{col 14}{res}{space 2} .0088833{col 26}{space 2} .0117481{col 37}{space 1}    0.76{col 46}{space 3}0.452{col 54}{space 4}-.0145535{col 67}{space 3}   .03232
+{txt}{space 2}gear_ratio {c |}{col 14}{res}{space 2} .9008024{col 26}{space 2} 1.645546{col 37}{space 1}    0.55{col 46}{space 3}0.586{col 54}{space 4}-2.381972{col 67}{space 3} 4.183577
+{txt}{space 6}weight {c |}{col 14}{res}{space 2}-.0063068{col 26}{space 2} .0012248{col 37}{space 1}   -5.15{col 46}{space 3}0.000{col 54}{space 4}-.0087502{col 67}{space 3}-.0038635
+{txt}{space 7}price {c |}{col 14}{res}{space 2}-.0001173{col 26}{space 2} .0001687{col 37}{space 1}   -0.70{col 46}{space 3}0.489{col 54}{space 4}-.0004538{col 67}{space 3} .0002193
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}   36.595{col 26}{space 2} 6.734683{col 37}{space 1}    5.43{col 46}{space 3}0.000{col 54}{space 4} 23.15968{col 67}{space 3} 50.03033
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. margins, at(weight=(2000(500)4500))
+{res}
+{txt}{col 1}Predictive margins{col 61}{lalign 13:Number of obs}{col 74} = {res}{ralign 2:74}
+{txt}{col 1}Model VCE: {res:OLS}
+
+{txt}{p2colset 1 13 13 2}{...}
+{p2col:Expression:}{res:Linear prediction, predict()}{p_end}
+{p2colreset}{...}
+{lalign 7:1._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:2000}}
+{lalign 7:2._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:2500}}
+{lalign 7:3._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:3000}}
+{lalign 7:4._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:3500}}
+{lalign 7:5._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:4000}}
+{lalign 7:6._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:4500}}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}_at {c |}
+{space 10}1  {c |}{col 14}{res}{space 2} 27.72685{col 26}{space 2} 1.312853{col 37}{space 1}   21.12{col 46}{space 3}0.000{col 54}{space 4} 25.10778{col 67}{space 3} 30.34593
+{txt}{space 10}2  {c |}{col 14}{res}{space 2} 24.57344{col 26}{space 2}   .75454{col 37}{space 1}   32.57{col 46}{space 3}0.000{col 54}{space 4} 23.06817{col 67}{space 3} 26.07871
+{txt}{space 10}3  {c |}{col 14}{res}{space 2} 21.42002{col 26}{space 2} .4063483{col 37}{space 1}   52.71{col 46}{space 3}0.000{col 54}{space 4} 20.60938{col 67}{space 3} 22.23067
+{txt}{space 10}4  {c |}{col 14}{res}{space 2} 18.26661{col 26}{space 2}  .714807{col 37}{space 1}   25.55{col 46}{space 3}0.000{col 54}{space 4} 16.84061{col 67}{space 3} 19.69261
+{txt}{space 10}5  {c |}{col 14}{res}{space 2} 15.11319{col 26}{space 2} 1.267604{col 37}{space 1}   11.92{col 46}{space 3}0.000{col 54}{space 4} 12.58439{col 67}{space 3}   17.642
+{txt}{space 10}6  {c |}{col 14}{res}{space 2} 11.95978{col 26}{space 2} 1.858154{col 37}{space 1}    6.44{col 46}{space 3}0.000{col 54}{space 4} 8.252865{col 67}{space 3} 15.66669
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/u1152038/Documents/Stata/log.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 4 Feb 2026, 09:30:16
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

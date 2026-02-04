@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ben Harrap">
+<meta name="dcterms.date" content="2025-09-24">
+
+<title>Using R to extract results from Stata log files – Ben Harrap</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../..//img/randy.png" rel="icon" type="image/png">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-c374f5cd892242eac04dcb1393fc8688.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8d2355c06bb7e8225a0962401605bcee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet">
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="benharrap" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ffddd6" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XYMGR0N804"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XYMGR0N804');
+</script>
+
+
+<meta property="og:title" content="Using R to extract results from Stata log files – Ben Harrap">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://benharrap.com/img/randy-og.png">
+<meta property="og:site_name" content="Ben Harrap">
+<meta property="og:image:alt" content="A white and fawn greyhound with its tongue poking out, wearing a black cowboy hat and red neckerchief">
+<meta property="og:image:height" content="459">
+<meta property="og:image:width" content="900">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Ben Harrap</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#whats-a-log-file" id="toc-whats-a-log-file" class="nav-link active" data-scroll-target="#whats-a-log-file">What’s a log file?</a></li>
+  <li><a href="#the-guts-of-it" id="toc-the-guts-of-it" class="nav-link" data-scroll-target="#the-guts-of-it">The guts of it</a></li>
+  <li><a href="#separate-out-the-results" id="toc-separate-out-the-results" class="nav-link" data-scroll-target="#separate-out-the-results">Separate out the results</a></li>
+  <li><a href="#one-way-tables" id="toc-one-way-tables" class="nav-link" data-scroll-target="#one-way-tables">One-way tables</a></li>
+  <li><a href="#regression-output" id="toc-regression-output" class="nav-link" data-scroll-target="#regression-output">Regression output</a></li>
+  <li><a href="#margins-output" id="toc-margins-output" class="nav-link" data-scroll-target="#margins-output">Margins output</a></li>
+  <li><a href="#extracting-a-two-way-table" id="toc-extracting-a-two-way-table" class="nav-link" data-scroll-target="#extracting-a-two-way-table">Extracting a two-way table</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Using R to extract results from Stata log files</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">Stata</div>
+    <div class="quarto-category">programming</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ben Harrap </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 24, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Taking results from Stata and inserting them into a report is a colossal pain in the ass, to put it mildly. There are a few custom commands out there, like <code>baselinetable</code>, that help ease the pain somewhat, but copy-pasting results from console output or log files seems inevitable and introduces human error.</p>
+<p>It doesn’t have to be this way though! Recently, my predominantly Stata-using team has started making an effort to use Quarto for some regular reports we need to deliver. Naturally I’m thrilled, because Quarto is such a useful tool and it’ll save us a lot of time and error copy-pasting results from Stata. The only problem is we need Stata output in a format that we can read in for our Quarto report.</p>
+<p>My solution for this? Write R functions that extract results from Stata’s log files! <em>mind_blown.gif</em></p>
+<section id="whats-a-log-file" class="level2">
+<h2 class="anchored" data-anchor-id="whats-a-log-file">What’s a log file?</h2>
+<p>Every Stata user should already be familiar with log files, but if you’re not, they just log all of the commands you run during a Stata session, along with their outputs, in an <code>.smcl</code> file. This stands for “Stata Markup and Control Language” and is pronounced “smickle” according to Stata’s help files. I don’t care to get into the detail of how these work, all I need to know is I can read it in to R as a text file.</p>
+<p>To demonstrate, I ran the following commands in Stata</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>log using log</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>sysuse auto, clear</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>tab headroom foreign</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-1-4" class="code-annotation-target"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>tab rep78</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>su price</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>su price weight length gear_ratio</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="7" onclick="event.preventDefault();">7</a><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>reg mpg displacement gear_ratio weight price</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="8" onclick="event.preventDefault();">8</a><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>margins, <span class="fu">at</span>(<span class="at">weight=</span>(<span class="dv">2000</span>(<span class="dv">500</span>)<span class="dv">4500</span>))</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="9" onclick="event.preventDefault();">9</a><span id="annotated-cell-1-9" class="code-annotation-target"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>log close</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">Start recording a log of the session, outputting to <code>log.smcl</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="2">Use the <code>auto</code> data, similar to <code>mtcars</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="3">Create a two-way table</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="4" data-code-annotation="4">Tabulate a single variable</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="5">Produce descriptives of a single variable</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="6">Then for multiple variables</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="7">Fit a regression model with <code>mpg</code> as the outcome</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="8" data-code-annotation="8">Produce predictive margins at a severak values of <code>weight</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="9" data-code-annotation="9">Stop recording to the log file</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>If you want to see what the file looks like, <a href="log.smcl">it’s here</a>.</p>
+</section>
+<section id="the-guts-of-it" class="level2">
+<h2 class="anchored" data-anchor-id="the-guts-of-it">The guts of it</h2>
+<p>Now we’ve got a log file to play with, we can read it into R and have a look.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"log.smcl"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data[<span class="dv">8</span><span class="sc">:</span><span class="dv">22</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "{com}. tab headroom foreign"                                               
+ [2] "  {txt}Headroom {c |}      Car origin"                                     
+ [3] "     (in.) {c |}  Domestic    Foreign {c |}     Total"                     
+ [4] "{hline 11}{c +}{hline 22}{c +}{hline 10}"                                  
+ [5] "       1.5 {c |}{res}         3          1 {txt}{c |}{res}         4 "     
+ [6] "{txt}       2.0 {c |}{res}        10          3 {txt}{c |}{res}        13 "
+ [7] "{txt}       2.5 {c |}{res}         4         10 {txt}{c |}{res}        14 "
+ [8] "{txt}       3.0 {c |}{res}         7          6 {txt}{c |}{res}        13 "
+ [9] "{txt}       3.5 {c |}{res}        13          2 {txt}{c |}{res}        15 "
+[10] "{txt}       4.0 {c |}{res}        10          0 {txt}{c |}{res}        10 "
+[11] "{txt}       4.5 {c |}{res}         4          0 {txt}{c |}{res}         4 "
+[12] "{txt}       5.0 {c |}{res}         1          0 {txt}{c |}{res}         1 "
+[13] "{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}"                             
+[14] "     Total {c |}{res}        52         22 {txt}{c |}{res}        74 "     
+[15] "{com}. tab rep78"                                                          </code></pre>
+</div>
+</div>
+<p>There’s a bunch of markup here that Stata uses to format the file nicely when you view it using Stata. It’s a bit ugly to look at as plain-text but there are some helpful things to notice here, which we can use to extract our results:</p>
+<ul>
+<li>Command lines begin with <code>{com}.</code> (see lines 1 and 15)</li>
+<li>The results lines end with a number (lines 5 through 12, and 14)</li>
+</ul>
+<p>The output looks a little complicated with how it’s ordered, because it’s tabulating two variables. Line 5 has results, but doesn’t begin with <code>{txt}</code>. The first value in lines 5 to 12 are the values of <code>headroom</code>, while the remaining values correspond to ‘Domestic’, ‘Foreign’ and ‘Total’.</p>
+<p>Let’s check the output for the other commands though. Here’s the <code>summarise</code> (or <code>su</code>) output:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data[<span class="dv">33</span><span class="sc">:</span><span class="dv">43</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "{com}. su price"                                                                             
+ [2] "{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max"            
+ [3] "{hline 13}{c +}{hline 57}"                                                                   
+ [4] "{space 7}price {c |}{res}         74    6165.257    2949.496       3291      15906"          
+ [5] "{com}. su price weight length gear_ratio"                                                    
+ [6] "{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max"            
+ [7] "{hline 13}{c +}{hline 57}"                                                                   
+ [8] "{space 7}price {c |}{res}         74    6165.257    2949.496       3291      15906"          
+ [9] "{txt}{space 6}weight {c |}{res}         74    3019.459    777.1936       1760       4840"    
+[10] "{txt}{space 6}length {c |}{res}         74    187.9324    22.26634        142        233"    
+[11] "{txt}{space 2}gear_ratio {c |}{res}         74    3.014865    .4562871       2.19       3.89"</code></pre>
+</div>
+</div>
+<p>The results also end with a number here, but they don’t have a trailing whitespace. We can fix that later using <code>stringr::str_trim()</code>. Otherwise it looks fairly straightforward. Lines 2, 6, tell us what the results correspond to.</p>
+<p>Let’s check the regression output:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data[<span class="dv">44</span><span class="sc">:</span><span class="dv">60</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "{com}. reg mpg displacement gear_ratio weight price"                                                                                                                                       
+ [2] "{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        74"                                                                                              
+ [3] "{txt}{hline 13}{c +}{hline 34}   F(4, 69)        = {res}    32.92"                                                                                                                         
+ [4] "{txt}       Model {c |} {res} 1603.26274         4  400.815685   {txt}Prob &gt; F        ={res}    0.0000"                                                                                    
+ [5] "{txt}    Residual {c |} {res} 840.196719        69   12.176764   {txt}R-squared       ={res}    0.6561"                                                                                    
+ [6] "{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.6362"                                                                                                                         
+ [7] "{txt}       Total {c |} {res} 2443.45946        73  33.4720474   {txt}Root MSE        =   {res} 3.4895"                                                                                    
+ [8] "{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}"                                                                                                           
+ [9] "{col 1}         mpg{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P&gt;|t|{col 54}     [95% con{col 67}f. interval]"                                                   
+[10] "{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}"                                                                                                                 
+[11] "displacement {c |}{col 14}{res}{space 2} .0088833{col 26}{space 2} .0117481{col 37}{space 1}    0.76{col 46}{space 3}0.452{col 54}{space 4}-.0145535{col 67}{space 3}   .03232"            
+[12] "{txt}{space 2}gear_ratio {c |}{col 14}{res}{space 2} .9008024{col 26}{space 2} 1.645546{col 37}{space 1}    0.55{col 46}{space 3}0.586{col 54}{space 4}-2.381972{col 67}{space 3} 4.183577"
+[13] "{txt}{space 6}weight {c |}{col 14}{res}{space 2}-.0063068{col 26}{space 2} .0012248{col 37}{space 1}   -5.15{col 46}{space 3}0.000{col 54}{space 4}-.0087502{col 67}{space 3}-.0038635"    
+[14] "{txt}{space 7}price {c |}{col 14}{res}{space 2}-.0001173{col 26}{space 2} .0001687{col 37}{space 1}   -0.70{col 46}{space 3}0.489{col 54}{space 4}-.0004538{col 67}{space 3} .0002193"     
+[15] "{txt}{space 7}_cons {c |}{col 14}{res}{space 2}   36.595{col 26}{space 2} 6.734683{col 37}{space 1}    5.43{col 46}{space 3}0.000{col 54}{space 4} 23.15968{col 67}{space 3} 50.03033"     
+[16] "{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}"                                                                                                           
+[17] "{res}"                                                                                                                                                                                     </code></pre>
+</div>
+</div>
+<p>It’s very busy but the same principle applies — result lines (11 to 15) end with a number.</p>
+<p>Finally, the <code>margins</code> output:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data[<span class="dv">61</span><span class="sc">:</span><span class="dv">85</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "{com}. margins, at(weight=(2000(500)4500))"                                                                                                                                         
+ [2] "{res}"                                                                                                                                                                              
+ [3] "{txt}{col 1}Predictive margins{col 61}{lalign 13:Number of obs}{col 74} = {res}{ralign 2:74}"                                                                                       
+ [4] "{txt}{col 1}Model VCE: {res:OLS}"                                                                                                                                                   
+ [5] "{txt}{p2colset 1 13 13 2}{...}"                                                                                                                                                     
+ [6] "{p2col:Expression:}{res:Linear prediction, predict()}{p_end}"                                                                                                                       
+ [7] "{p2colreset}{...}"                                                                                                                                                                  
+ [8] "{lalign 7:1._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:2000}}"                                                                                                               
+ [9] "{lalign 7:2._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:2500}}"                                                                                                               
+[10] "{lalign 7:3._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:3000}}"                                                                                                               
+[11] "{lalign 7:4._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:3500}}"                                                                                                               
+[12] "{lalign 7:5._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:4000}}"                                                                                                               
+[13] "{lalign 7:6._at: }{space 0}{lalign 6:weight} = {res:{ralign 4:4500}}"                                                                                                               
+[14] "{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}"                                                                                               
+[15] "{col 14}{c |}{col 26} Delta-method"                                                                                                                                                 
+[16] "{col 14}{c |}     Margin{col 26}   std. err.{col 38}      t{col 46}   P&gt;|t|{col 54}     [95% con{col 67}f. interval]"                                                               
+[17] "{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}"                                                                                                          
+[18] "{space 9}_at {c |}"                                                                                                                                                                 
+[19] "{space 10}1  {c |}{col 14}{res}{space 2} 27.72685{col 26}{space 2} 1.312853{col 37}{space 1}   21.12{col 46}{space 3}0.000{col 54}{space 4} 25.10778{col 67}{space 3} 30.34593"     
+[20] "{txt}{space 10}2  {c |}{col 14}{res}{space 2} 24.57344{col 26}{space 2}   .75454{col 37}{space 1}   32.57{col 46}{space 3}0.000{col 54}{space 4} 23.06817{col 67}{space 3} 26.07871"
+[21] "{txt}{space 10}3  {c |}{col 14}{res}{space 2} 21.42002{col 26}{space 2} .4063483{col 37}{space 1}   52.71{col 46}{space 3}0.000{col 54}{space 4} 20.60938{col 67}{space 3} 22.23067"
+[22] "{txt}{space 10}4  {c |}{col 14}{res}{space 2} 18.26661{col 26}{space 2}  .714807{col 37}{space 1}   25.55{col 46}{space 3}0.000{col 54}{space 4} 16.84061{col 67}{space 3} 19.69261"
+[23] "{txt}{space 10}5  {c |}{col 14}{res}{space 2} 15.11319{col 26}{space 2} 1.267604{col 37}{space 1}   11.92{col 46}{space 3}0.000{col 54}{space 4} 12.58439{col 67}{space 3}   17.642"
+[24] "{txt}{space 10}6  {c |}{col 14}{res}{space 2} 11.95978{col 26}{space 2} 1.858154{col 37}{space 1}    6.44{col 46}{space 3}0.000{col 54}{space 4} 8.252865{col 67}{space 3} 15.66669"
+[25] "{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}"                                                                                                    </code></pre>
+</div>
+</div>
+<p>The main thing to notice is that the values of <code>weight</code> at which the estimates are produced are in lines 8 to 13, while the estimates themselves are on separate lines (19 to 24).</p>
+</section>
+<section id="separate-out-the-results" class="level2">
+<h2 class="anchored" data-anchor-id="separate-out-the-results">Separate out the results</h2>
+<p>I could’ve split the analysis up across multiple log files. For example, outputting tabulations into <code>tabulation.log</code>, the summaries into <code>summaries.log</code>, the regression model into <code>regression.log</code> and the margins into <code>margins.log</code>. There’s not much need though, since we can use the command rows to subset the data. We’ll need them like this for our Quarto report anyway, plus each command seems to need slightly different work.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a variable to identify each command</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">command =</span> <span class="fu">if_else</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(X.smcl., <span class="st">"</span><span class="sc">\\</span><span class="st">{com</span><span class="sc">\\</span><span class="st">}</span><span class="sc">\\</span><span class="st">."</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">true =</span> X.smcl.,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">false =</span> <span class="cn">NA</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fill downward to catch all the lines of output from that command</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(command, <span class="at">.direction =</span> <span class="st">"down"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Notice the double backslashes in <code>str_detect()</code> - we need to escape the special characters since we’re using a regular expression here.</p>
+<p>Now we’ve identified the lines from each command, we can separate out our results.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tab_headroom_foreign <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, command <span class="sc">==</span> <span class="st">"{com}. tab headroom foreign"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tab_rep78 <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, command <span class="sc">==</span> <span class="st">"{com}. tab rep78"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>summaries <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, command <span class="sc">==</span> <span class="st">"{com}. su price weight length gear_ratio"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>regression <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, command <span class="sc">==</span> <span class="st">"{com}. reg mpg displacement gear_ratio weight price"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>margins <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, command <span class="sc">==</span> <span class="st">"{com}. margins, at(weight=(2000(500)4500))"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="one-way-tables" class="level2">
+<h2 class="anchored" data-anchor-id="one-way-tables">One-way tables</h2>
+<p>Starting with the simplest output, let’s extract the counts of each level of <code>rep78</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a>tab_rep78 <span class="ot">&lt;-</span> tab_rep78 <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">results =</span> <span class="fu">case_when</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(X.smcl., <span class="st">"((-)?</span><span class="sc">\\</span><span class="st">.)?</span><span class="sc">\\</span><span class="st">d+(</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)?$"</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>        <span class="sc">~</span> <span class="fu">str_extract_all</span>(X.smcl.,<span class="st">"((-)?</span><span class="sc">\\</span><span class="st">.)?</span><span class="sc">\\</span><span class="st">d+(</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)?"</span>),</span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-8-8" class="code-annotation-target"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">X.smcl. =</span> <span class="fu">str_squish</span>(<span class="fu">str_remove_all</span>(X.smcl.,<span class="st">"</span><span class="sc">\\</span><span class="st">{.+</span><span class="sc">\\</span><span class="st">}"</span>))</span>
+<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-8-10" class="code-annotation-target"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hoist</span>(</span>
+<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"results"</span>,</span>
+<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">repair_record =</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-8-13"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">frequency =</span> <span class="dv">2</span>,</span>
+<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent =</span> <span class="dv">3</span>,</span>
+<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">cumulative =</span> <span class="dv">4</span></span>
+<span id="annotated-cell-8-16"><a href="#annotated-cell-8-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-8-17"><a href="#annotated-cell-8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>command)</span>
+<span id="annotated-cell-8-18"><a href="#annotated-cell-8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-19"><a href="#annotated-cell-8-19" aria-hidden="true" tabindex="-1"></a>tab_rep78</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="4" data-code-annotation="1">This regex is looking for strings that optionally start with a negative or decimal (<code>((-)?\\.)?</code>), followed by any number of digits (<code>\\d+</code>), optionally followed by a decimal and any number of digits (<code>(\\.\\d+)</code>), at the end of the string <code>$</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="5" data-code-annotation="2"><code>stringr::str_extract_all()</code> then extracts all instances of this pattern anywhere in the string (we omit the <code>$</code>), returning a list-column called <code>results</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="10" data-code-annotation="3"><code>tidyr::hoist()</code> then extracts the elements of <code>results</code> into their own column, to which we assign names</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="8" data-code-annotation="4">I just formatted the output to look nicer on this blog post, this step is unnecessary here</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                          X.smcl. repair_record frequency percent cumulative
+1                     . tab rep78            78      &lt;NA&gt;    &lt;NA&gt;       &lt;NA&gt;
+2                                          &lt;NA&gt;      &lt;NA&gt;    &lt;NA&gt;       &lt;NA&gt;
+3  record 1978 Freq. Percent Cum.          &lt;NA&gt;      &lt;NA&gt;    &lt;NA&gt;       &lt;NA&gt;
+4                                          &lt;NA&gt;      &lt;NA&gt;    &lt;NA&gt;       &lt;NA&gt;
+5                   1 2 2.90 2.90             1         2    2.90       2.90
+6                   8 11.59 14.49             2         8   11.59      14.49
+7                  30 43.48 57.97             3        30   43.48      57.97
+8                  18 26.09 84.06             4        18   26.09      84.06
+9                 11 15.94 100.00             5        11   15.94     100.00
+10                                         &lt;NA&gt;      &lt;NA&gt;    &lt;NA&gt;       &lt;NA&gt;
+11                Total 69 100.00            69    100.00    &lt;NA&gt;       &lt;NA&gt;</code></pre>
+</div>
+</div>
+<p>Notice that the ‘Total’ row (11) hasn’t quite worked. We could tinker with the regex or <code>mutate()</code> the correct values in. Or we could just use <code>janitor::adorn_totals()</code> to make our lives easier:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tab_rep78 <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cumulative)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(repair_record<span class="sc">:</span>percent) <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), as.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">adorn_totals</span>(<span class="st">"row"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> repair_record frequency percent
+             1         2    2.90
+             2         8   11.59
+             3        30   43.48
+             4        18   26.09
+             5        11   15.94
+         Total        69  100.00</code></pre>
+</div>
+</div>
+</section>
+<section id="regression-output" class="level2">
+<h2 class="anchored" data-anchor-id="regression-output">Regression output</h2>
+<p>The combination of <code>str_extract_all()</code> and <code>hoist()</code> is what this all boils down to, but there’s a bit of tweaking we need to do for the regression output. The regex in the previous example was extracting all instances of digits with optional decimals, however in the regression output there’s spacing markup like <code>{hline 13}</code>, which we don’t want to extract.</p>
+<p>We could fix this by modifying the regex, but I’m not a fan of making large, complicated expressions if I can avoid it, so instead we can just replace anything inside of a curly bracket with a space, using <code>str_replace_all()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>regression <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">X.smcl. =</span> <span class="fu">str_replace_all</span>(X.smcl., <span class="st">"</span><span class="sc">\\</span><span class="st">{[</span><span class="sc">\\</span><span class="st">w|</span><span class="sc">\\</span><span class="st">d|</span><span class="sc">\\</span><span class="st">s]+</span><span class="sc">\\</span><span class="st">}"</span>, <span class="st">" "</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">results =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(X.smcl., <span class="st">"((-)?</span><span class="sc">\\</span><span class="st">.)?</span><span class="sc">\\</span><span class="st">d+(</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)?$"</span>) <span class="sc">~</span> <span class="fu">str_extract_all</span>(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        X.smcl.,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"((-)?</span><span class="sc">\\</span><span class="st">.)?</span><span class="sc">\\</span><span class="st">d+(</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)?"</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hoist</span>(</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"results"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> <span class="dv">1</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">std_err =</span> <span class="dv">2</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">3</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_val =</span> <span class="dv">4</span>,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_lower =</span> <span class="dv">5</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_upper =</span> <span class="dv">6</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ci_upper)) <span class="sc">|&gt;</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>command) <span class="sc">|&gt;</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">X.smcl. =</span> <span class="fu">str_sub</span>(</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>      X.smcl.,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">start =</span> <span class="fu">str_locate</span>(X.smcl., <span class="st">"[:graph:]+"</span>)[, <span class="st">"start"</span>],</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">end =</span> <span class="fu">str_locate</span>(X.smcl., <span class="st">"[:graph:]+"</span>)[, <span class="st">"end"</span>]</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">variable =</span> X.smcl.)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      variable  estimate  std_err    t p_val  ci_lower  ci_upper
+1 displacement  .0088833 .0117481 0.76 0.452 -.0145535    .03232
+2   gear_ratio  .9008024 1.645546 0.55 0.586  2.381972  4.183577
+3       weight -.0063068 .0012248 5.15 0.000 -.0087502 -.0038635
+4        price -.0001173 .0001687 0.70 0.489 -.0004538  .0002193
+5        _cons    36.595 6.734683 5.43 0.000  23.15968  50.03033</code></pre>
+</div>
+</div>
+<p>The last thing to do here is create the variable column by extracting the variable names using <code>str_sub</code> and the start/end locations of the first place that numbers/letters/punctuation are detected.</p>
+</section>
+<section id="margins-output" class="level2">
+<h2 class="anchored" data-anchor-id="margins-output">Margins output</h2>
+<p>For the margins we can recycle the same code to extract the results, although we need to do a bit more work to name the margins correctly.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>margins <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">X.smcl. =</span> <span class="fu">str_replace_all</span>(X.smcl., <span class="st">"</span><span class="sc">\\</span><span class="st">{[</span><span class="sc">\\</span><span class="st">w|</span><span class="sc">\\</span><span class="st">d|</span><span class="sc">\\</span><span class="st">s]+</span><span class="sc">\\</span><span class="st">}"</span>, <span class="st">" "</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">results =</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(X.smcl., <span class="st">"</span><span class="sc">\\</span><span class="st">d+(</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)?$"</span>) <span class="sc">~</span> <span class="fu">str_extract_all</span>(X.smcl.,<span class="st">"((-)?</span><span class="sc">\\</span><span class="st">.)?</span><span class="sc">\\</span><span class="st">d+(</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">d+)?"</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hoist</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"results"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="dv">1</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> <span class="dv">2</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">std_err =</span> <span class="dv">3</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">t =</span> <span class="dv">4</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_val =</span> <span class="dv">5</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_lower =</span> <span class="dv">6</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_upper =</span> <span class="dv">7</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ci_upper)) <span class="sc">|&gt;</span> </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>command, <span class="sc">-</span>X.smcl.) <span class="sc">|&gt;</span> </span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>      margin <span class="sc">==</span> <span class="st">"1"</span> <span class="sc">~</span> <span class="st">"weight = 2000"</span>,</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>      margin <span class="sc">==</span> <span class="st">"2"</span> <span class="sc">~</span> <span class="st">"weight = 2500"</span>,</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>      margin <span class="sc">==</span> <span class="st">"3"</span> <span class="sc">~</span> <span class="st">"weight = 3000"</span>,</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>      margin <span class="sc">==</span> <span class="st">"4"</span> <span class="sc">~</span> <span class="st">"weight = 3500"</span>,</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>      margin <span class="sc">==</span> <span class="st">"5"</span> <span class="sc">~</span> <span class="st">"weight = 4000"</span>,</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>      margin <span class="sc">==</span> <span class="st">"6"</span> <span class="sc">~</span> <span class="st">"weight = 4500"</span>,</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         margin estimate  std_err     t p_val ci_lower ci_upper
+1 weight = 2000 27.72685 1.312853 21.12 0.000 25.10778 30.34593
+2 weight = 2500 24.57344   .75454 32.57 0.000 23.06817 26.07871
+3 weight = 3000 21.42002 .4063483 52.71 0.000 20.60938 22.23067
+4 weight = 3500 18.26661  .714807 25.55 0.000 16.84061 19.69261
+5 weight = 4000 15.11319 1.267604 11.92 0.000 12.58439   17.642
+6 weight = 4500 11.95978 1.858154  6.44 0.000 8.252865 15.66669</code></pre>
+</div>
+</div>
+<p>I could’ve written code to automatically extract the margin value and assign it, instead of manually coding the value of margin, but I want to finish this blog post so *waves hands*.</p>
+</section>
+<section id="extracting-a-two-way-table" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-a-two-way-table">Extracting a two-way table</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tab_headroom_foreign <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>command)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                      X.smcl.
+1                                                 {com}. tab headroom foreign
+2                                         {txt}Headroom {c |}      Car origin
+3                            (in.) {c |}  Domestic    Foreign {c |}     Total
+4                                    {hline 11}{c +}{hline 22}{c +}{hline 10}
+5              1.5 {c |}{res}         3          1 {txt}{c |}{res}         4 
+6  {txt}       2.0 {c |}{res}        10          3 {txt}{c |}{res}        13 
+7  {txt}       2.5 {c |}{res}         4         10 {txt}{c |}{res}        14 
+8  {txt}       3.0 {c |}{res}         7          6 {txt}{c |}{res}        13 
+9  {txt}       3.5 {c |}{res}        13          2 {txt}{c |}{res}        15 
+10 {txt}       4.0 {c |}{res}        10          0 {txt}{c |}{res}        10 
+11 {txt}       4.5 {c |}{res}         4          0 {txt}{c |}{res}         4 
+12 {txt}       5.0 {c |}{res}         1          0 {txt}{c |}{res}         1 
+13                              {txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+14           Total {c |}{res}        52         22 {txt}{c |}{res}        74 </code></pre>
+</div>
+</div>
+<p>I left this to last because it looks annoying to do. Unfortunately, my patience for dealing with Stata log files has run out as I write this blog post, so let’s pretend this last one is homework for you to figure out ;)</p>
+<p>Hopefully though I’ve demonstrated that, with a little bit of work, you can get results out of Stata log files. Once you’ve done that, it’s business as usual as you write up your Quarto report!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/benharrap\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
