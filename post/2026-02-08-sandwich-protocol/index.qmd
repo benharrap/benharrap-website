@@ -1,0 +1,55 @@
+---
+format: html
+title: "The role of perceived sandwich origin on gustatory satisfaction: a study protocol"
+author: Ben Harrap
+date: 2026-02-08
+toc: true
+image: sandwich.jpg
+categories: 
+  - research
+---
+
+::: {.columns}
+:::: {.column width=60%}
+I distinctly remember being a child and being very annoyed that no matter what I tried, I couldn't make a sandwich that tasted as good as if my parents had made it for me. A grated-cheese sandwich is a rudimentary creation, but my parents made it with some kind of magic (love) that I just couldn't replicate. 
+
+Naturally, I've dwelt on this for years and have arrived at the hypothesis that I will never be able to make the same meal, using the same ingredients, taste as good as if someone else had made it for me. But like any good scientist, I want to prove this. So here's my sandwich experiment which has been ticking along in my subconscious for well over a decade[^1].
+::::
+:::: {.column width=5%}
+::::
+:::: {.column width=35%}
+![A grated cheese sandwich](sandwich.jpg)
+::::
+:::
+
+[^1]: If there's any food manufacturers out there with \$\$\$ to make this happen, get in touch
+
+## The experiment
+
+To understand the role of perceived sandwich origin on gustatory satisfaction, participants will be asked to take a bite of four sandwiches and rate their enjoyment of each. Participants will be required to bring two sandwiches to the experiment — one of their own making, and one made by their preferred sandwich-making parent (PSMP). Participants will place these sandwiches in the first room on a table, next to a sandwich procured from a convenience store and a control sandwich (made by the chief investigator), where no information is provided about its origin.
+
+After observing all four sandwiches, participants will be seated at a table in a dark, quiet room to maximise participants' gustatory senses and reduce their ability to distinguish between sandwiches. Once in this room, participants will be presented with one piece of sandwich at a time and informed of its origin, then asked to take a single bite and provide a rating of its tastiness. Between sandwiches, participants will be required to drink carbonated water in order to reset their palette for the next sandwich.
+
+Unbeknownst to participants, only the control sandwich will be presented, having been cut across opposite corners, yielding four triangular-shaped pieces. Thus, any difference in rating cannot be due to differences in sandwich preparation skills and therefore can be attributed to the perceived source of the sandwich. To control for the impact of reducing hunger with each bite taken, participants will be randomly allocated to a pre-generated sandwich presentation sequence, which will also mitigate presentation-order effects.
+
+Upon completing the task, participants will be ushered into the first room where they will observe a single triangular piece of sandwich missing from each sandwich on the table, to maintain the story and reduce opportunity for study details to be disclosed to the broader population.
+
+### Participants
+
+Like all good psychological research, participants will be drawn from a pool of undergraduate students who are required to participate in these kinds of studies in order to graduate.
+
+### Covariates
+
+Self-rated hunger at the time of participation will be collected using a 5-point Likert scale with anchors at "not at all hungry" to "ravenous".
+
+Participants will be asked to indicate whether they are crust-eaters, for a sub-study examining the relationship between crust consumption and hair curliness.
+
+Ongoing cohabitation with their PSMP will be measured as a proxy for background opportunity to consume a PSMP-made sandwich, as it is theorised that fewer opportunities to eat a sandwich made by their PSMP leads to greater novelty and enjoyment of said sandwich when consumption occurs.
+
+### Eligibility criteria
+
+Students with self-reported childhood experience of sandwich consumption will be eligible to participate, as the theory suggests there must be a cultural familiarity with sandwich consumption for both the participant and their PSMP.
+
+Since a PSMP-prepared sandwich is a key perceived source, participants with a poor relationship with, or inability to obtain a sandwich from, their PSMP will be excluded.
+
+People with nyctophobia will also be excluded.
