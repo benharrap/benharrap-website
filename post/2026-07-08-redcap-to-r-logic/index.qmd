@@ -1,0 +1,85 @@
+---
+title: "Converting REDCap branching logic into R"
+draft: true
+author: "Ben Harrap"
+date: 2026-07-08
+categories:
+  - programming
+  - R
+  - REDCap
+---
+
+## Step 0: Use the REDCap API
+
+If you're not using the REDCap API to access the data, let me introduce you to the [REDCapR package](https://ouhscbbmc.github.io/REDCapR/){target="_blank"}. The key functinos we will use are:
+
+- `redcap_read()` to access data
+- `redcap_read_metadata()` to access the data dictionary
+
+This saves you having to repeatedly download the data and dictionary and avoids you storing data locally.
+
+With the data and dictionary read in to the environment, we can start step 1.
+
+## Step 1: Convert branching logic
+
+### Anatomy of REDCap branching logic
+
+Let's start with a simple example, where age must be greater than or equal to 18. This is expressed as
+
+```
+[age] >= '18'
+```
+
+The age variable (or field name as REDCap calls it) is always referred to using square brackets. This is true for every variable except for checkboxes. Each checkbox option is stored as a separate column. For example, the question "Do you like cats, dogs, and/or mice?" has the field name `animal` and the checkboxes for cats, dogs, and mice with codes corresponding to 1, 2, and 3 respectively.
+
+To reference a checkbox response, REDCap uses its code in conjunction with the field name. Branching logic targeting the 'dogs' checkbox would then be
+
+```
+[animal(2)] = '1'
+```
+
+Once you start combining conditions, REDCap uses brackets as you might expect. If we were to use branching logic on age and either cats or dogs, it would be
+
+```
+[age] >= '18' and ([animal(1)] = '1' or [animal(2)] = '1')
+```
+
+### Parlez vous R, REDCap? 
+
+Now we understand the anatomy of REDCap branching logic, it's useful to compare how operators are expressed in REDCap vs. R:
+
+```{r}
+library(tibble)
+library(gt)
+tibble(
+  Operator = c("Greater than","Greater than or equals","Less than","Less than or equals","Equal","Not equal","And","Or"),
+  REDCap = c(">",">=","<","<=","=","<>","and","or"),
+  R = c(">",">=","<","<=","==","!=","&","|")
+) |> 
+  gt()
+```
+
+Note that `==`, `!=`, `&` and `|` are not the same.
+
+### Nein, ich spreche R nicht
+
+So we have a schema for operators and how variables are written, now we need to translate into Rspeak.
+
+Fortunately, this is made straightforward thanks to `stringr::str_replace_all()`
+
+```{r}
+
+```
+
+1. Replace the operators that need replacing
+2. Remove square brackets and optional checkbox identifiers
+3. Convert cases of 'is not missing' to use `is.na()`
+4. Replace 
+
+The code annotations above explain each of the steps. 
+
+This code works on the premise that there are spaces between the operators (`and`, `or` ) in the branching logic. I think this is actually a requirement but I mention this anyway
+
+## Step 2: Get the target variables
+
+## Step 3: Parse the logic as code
