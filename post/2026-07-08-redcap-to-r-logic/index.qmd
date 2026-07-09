@@ -1,22 +1,65 @@
 ---
 title: "Converting REDCap branching logic into R"
-draft: true
 author: "Ben Harrap"
 date: 2026-07-08
+toc: true
 categories:
   - programming
   - R
   - REDCap
 ---
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tinytable)
+library(tibble)
+library(dplyr)
+library(stringr)
+library(purrr)
+library(tidyr)
+library(rlang)
+```
+
+In cleaning a dataset, I encode information about data missingness. One such category of missingness is "not asked", for questions that were not displayed to participants due to their response to an earlier question.
+
+If you use REDCap to gather data, the conditions used to control the display of questions are called "branching logic". REDCap provides details of the branching logic in the data dictionary, which we can use to automate the encoding of this missingness category!
 
 ## Step 0: Use the REDCap API
 
-If you're not using the REDCap API to access the data, let me introduce you to the [REDCapR package](https://ouhscbbmc.github.io/REDCapR/){target="_blank"}. The key functinos we will use are:
+If you're not using the REDCap API to access the data, let me introduce you to the [REDCapR package](https://ouhscbbmc.github.io/REDCapR/). The key functions we will use are:
 
 - `redcap_read()` to access data
 - `redcap_read_metadata()` to access the data dictionary
 
 This saves you having to repeatedly download the data and dictionary and avoids you storing data locally.
+
+Let's pretend we have the following dataset:
+
+```{r}
+data <- tibble(
+  record_id = c(1,2,3,4,5),
+  age = c(16,18,20,24,26),
+  has_pets = c(1,0,1,1,0),
+  pet_rating = c(1,NA,2,1,NA),
+  pet_insurance = c(NA,0,1,0,1)
+) |> 
+  mutate(across(!record_id, as.character))
+tt(data)
+```
+
+Everything is a character at this point, which is relevant to be able to use `dplyr::rows_update()` later on.
+
+We also have this dictionary from REDCap, noting this is only a few of the columns that REDCap provides:
+
+```{r}
+dictionary <- tibble(
+  field_name = c("record_id", "age", "has_pets", "pet_rating","pet_insurance"),
+  field_type = c("text", "text", "yesno", "radio","yesno"),
+  branching_logic = c(NA,NA,NA,"[has_pets] = '1'","[has_pets] = '1' and [age] >= '18'")
+)
+tt(dictionary)
+```
 
 With the data and dictionary read in to the environment, we can start step 1.
 
@@ -24,62 +67,152 @@ With the data and dictionary read in to the environment, we can start step 1.
 
 ### Anatomy of REDCap branching logic
 
-Let's start with a simple example, where age must be greater than or equal to 18. This is expressed as
+Let's look at the branching logic for `pet_rating`, where `has_pets` must be `1` for the question to be shown.
 
 ```
-[age] >= '18'
+[has_pets] = '1'
 ```
 
-The age variable (or field name as REDCap calls it) is always referred to using square brackets. This is true for every variable except for checkboxes. Each checkbox option is stored as a separate column. For example, the question "Do you like cats, dogs, and/or mice?" has the field name `animal` and the checkboxes for cats, dogs, and mice with codes corresponding to 1, 2, and 3 respectively.
+A variable (or field name as REDCap calls it) is always referred to using square brackets. This is true for every variable except for checkboxes, which also incorporate round brackets. I won't go into checkboxes here — they're annoying and require extra data cleaning.
 
-To reference a checkbox response, REDCap uses its code in conjunction with the field name. Branching logic targeting the 'dogs' checkbox would then be
-
-```
-[animal(2)] = '1'
-```
-
-Once you start combining conditions, REDCap uses brackets as you might expect. If we were to use branching logic on age and either cats or dogs, it would be
+Once you start combining conditions, REDCap uses brackets as you might expect. If the branching logic wanted to target people aged outside of 18 to 25 who have pets it would be:
 
 ```
-[age] >= '18' and ([animal(1)] = '1' or [animal(2)] = '1')
+([age] < '18' or [age] > '25') and [has_pets] = '1'
 ```
 
 ### Parlez vous R, REDCap? 
 
-Now we understand the anatomy of REDCap branching logic, it's useful to compare how operators are expressed in REDCap vs. R:
+Now we understand the anatomy of REDCap branching logic, let's compare how operators are expressed in REDCap vs. R:
 
 ```{r}
-library(tibble)
-library(gt)
+#| echo: false
 tibble(
   Operator = c("Greater than","Greater than or equals","Less than","Less than or equals","Equal","Not equal","And","Or"),
   REDCap = c(">",">=","<","<=","=","<>","and","or"),
   R = c(">",">=","<","<=","==","!=","&","|")
 ) |> 
-  gt()
+  tt()
 ```
 
 Note that `==`, `!=`, `&` and `|` are not the same.
 
 ### Nein, ich spreche R nicht
 
-So we have a schema for operators and how variables are written, now we need to translate into Rspeak.
+With our knowledge of how REDCap expresses variables and operators, we now need to translate into Rspeak.
 
 Fortunately, this is made straightforward thanks to `stringr::str_replace_all()`
 
 ```{r}
-
+dictionary <- dictionary |>
+    mutate(
+      converted_logic = str_replace_all(
+        branching_logic,
+        c(
+          " and " = " & ", # <1>
+          " or " = " \\| ", # <1>
+          "\\[([[:alnum:]_]+)\\] = ''" = "is.na(\\1)", # <2>
+          "\\[([[:alnum:]_]+)\\] <> ''" = "!is.na(\\1)", # <2>
+          " <> " = " != ", # <3>
+          " = " = " == ", # <3>
+          "\\(1\\)\\]" = "", # <4>
+          "\\[" = "", # <5>
+          "\\]" = "" # <5>
+        )
+      )
+    )
 ```
 
-1. Replace the operators that need replacing
-2. Remove square brackets and optional checkbox identifiers
-3. Convert cases of 'is not missing' to use `is.na()`
-4. Replace 
+1. Note the pipe `|` needs to be escaped and that the spaces around `and` and `or` are intentional. REDCap requires spaces around these operators and by incorporating the spaces in the pattern we won't accidentally target a variable that has `and` or `or` in its name
+2. Instances where the branching logic looks for missing data are handled next, to prevent them being handled in parts 4 and 5. We're targeting any combination of letters/numbers `[:alnum:]` and underscores contained within square brackets, that are followed by (not) equals to missing `''`. By making use of regex groups `\\1`, if there are multiple conditions based on missingness within the same branching logic, they'll all be handled.
+3. Convert the remaining equals and not equals operators
+4. This step targets how checkboxes are expressed in branching logic. It might depend on how you clean/name your variables, but I've included it as I ended up using it for my context.
+5. Remove remaining square brackets.
 
-The code annotations above explain each of the steps. 
+The code annotations above explain each of the steps, but you can see the result below
 
-This code works on the premise that there are spaces between the operators (`and`, `or` ) in the branching logic. I think this is actually a requirement but I mention this anyway
+```{r}
+#| echo: false
+tt(dictionary)
+```
 
-## Step 2: Get the target variables
+## Step 2: Parse the converted logic as code
 
-## Step 3: Parse the logic as code
+Before we use the logic, we need to do one more step. The branching logic as it currently stands will be `TRUE` if the criteria are met, which means the question *was* asked. We care about the question *not* being asked, and we also want to make sure we're only going to affect observations with missing data.
+
+To reflect this, we need to add an `is.na()` condition for the variable (`field_name`), and negate the converted logic by wrapping it `!()`
+
+```{r}
+branching_logic <- dictionary |> 
+  filter(!is.na(branching_logic)) |> 
+  mutate(
+    not_asked = paste0("is.na(", field_name, ") & !(", converted_logic, ")")
+  ) |> 
+  select(field_name, not_asked)
+
+tt(branching_logic)
+```
+
+Now we have the code in a format acceptable to R, we can use [`rlang::parse_expr()`](https://rlang.r-lib.org/reference/parse_expr.html) to execute the strings as code.
+
+Since I'm iterating over many variables in my dataset, I wrote a function to return the rows that need to have their missing data encoded:
+
+```{r}
+records_not_asked <- function(original_data, variable){
+    logic <- branching_logic |> 
+      # Keep just the variable of interest
+      filter(field_name == variable) |> 
+      # Pull out the logic
+      pull(not_asked)
+    
+    original_data |> 
+      # Apply the logic to the input data using parse_expr()
+      filter(!!parse_expr(logic)) |> 
+      # Update that variable to be -888888
+      mutate(
+        field_name = variable,
+        value = "-888888") |>
+      # Return only record_id and input column
+      select(record_id, field_name, value)
+  }
+```
+
+The reason for returning data in this format is because I intend to use [`dplyr::rows_update()`](https://dplyr.tidyverse.org/reference/rows.html) to update the original dataset, rather than try and do all of this in one pipe.
+
+## Step 3: Find records that need updating
+
+With the function ready to iterate over columns that have branching logic, we can use `purrr::map()` to iterate over the data
+
+```{r}
+records_to_update <- bind_rows(
+  map(
+    pull(branching_logic, field_name),
+    \(x) records_not_asked(data, x)
+  )
+)
+
+tt(records_to_update)
+```
+
+## Step 4: Update the records
+
+With this list we can then safely update the values in the original dataset
+
+```{r}
+data_updated <- data |> 
+    pivot_longer(
+      cols = all_of(records_to_update$field_name),
+      names_to = "field_name",
+      values_to = "value"
+    ) |>
+    rows_update(records_to_update, by = c("record_id", "field_name")) |>
+    # Reshape the updated variables back to wide format
+    pivot_wider(
+      names_from = field_name,
+      values_from = value
+    ) |>
+    # Order the variables as originally specified
+    select(all_of(names(data)))
+
+tt(data_updated)
+```

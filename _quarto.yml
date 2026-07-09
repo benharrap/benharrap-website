@@ -18,6 +18,7 @@ website:
   
 format:
   html:
+    link-external-newwindow: true
     grid:
       body-width: 1000px
       sidebar-width: 200px

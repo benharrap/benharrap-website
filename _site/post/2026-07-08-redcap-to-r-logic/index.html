@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ben Harrap">
+<meta name="dcterms.date" content="2026-07-08">
+
+<title>Converting REDCap branching logic into R – Ben Harrap</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../..//img/randy.png" rel="icon" type="image/png">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b9ce572d2f44e59dc276b4e69aca11a8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-10a5ce40affb4eca28d8357ac6fd9e5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet">
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="benharrap" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ffddd6" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XYMGR0N804"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XYMGR0N804');
+</script>
+
+
+<meta property="og:title" content="Converting REDCap branching logic into R – Ben Harrap">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://benharrap.com/img/randy-og.png">
+<meta property="og:site_name" content="Ben Harrap">
+<meta property="og:image:alt" content="A white and fawn greyhound with its tongue poking out, wearing a black cowboy hat and red neckerchief">
+<meta property="og:image:height" content="459">
+<meta property="og:image:width" content="900">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Ben Harrap</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#step-0-use-the-redcap-api" id="toc-step-0-use-the-redcap-api" class="nav-link active" data-scroll-target="#step-0-use-the-redcap-api">Step 0: Use the REDCap API</a></li>
+  <li><a href="#step-1-convert-branching-logic" id="toc-step-1-convert-branching-logic" class="nav-link" data-scroll-target="#step-1-convert-branching-logic">Step 1: Convert branching logic</a>
+  <ul class="collapse">
+  <li><a href="#anatomy-of-redcap-branching-logic" id="toc-anatomy-of-redcap-branching-logic" class="nav-link" data-scroll-target="#anatomy-of-redcap-branching-logic">Anatomy of REDCap branching logic</a></li>
+  <li><a href="#parlez-vous-r-redcap" id="toc-parlez-vous-r-redcap" class="nav-link" data-scroll-target="#parlez-vous-r-redcap">Parlez vous R, REDCap?</a></li>
+  <li><a href="#nein-ich-spreche-r-nicht" id="toc-nein-ich-spreche-r-nicht" class="nav-link" data-scroll-target="#nein-ich-spreche-r-nicht">Nein, ich spreche R nicht</a></li>
+  </ul></li>
+  <li><a href="#step-2-parse-the-converted-logic-as-code" id="toc-step-2-parse-the-converted-logic-as-code" class="nav-link" data-scroll-target="#step-2-parse-the-converted-logic-as-code">Step 2: Parse the converted logic as code</a></li>
+  <li><a href="#step-3-find-records-that-need-updating" id="toc-step-3-find-records-that-need-updating" class="nav-link" data-scroll-target="#step-3-find-records-that-need-updating">Step 3: Find records that need updating</a></li>
+  <li><a href="#step-4-update-the-records" id="toc-step-4-update-the-records" class="nav-link" data-scroll-target="#step-4-update-the-records">Step 4: Update the records</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Converting REDCap branching logic into R</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">programming</div>
+    <div class="quarto-category">R</div>
+    <div class="quarto-category">REDCap</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ben Harrap </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 8, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In cleaning a dataset, I encode information about data missingness. One such category of missingness is “not asked”, for questions that were not displayed to participants due to their response to an earlier question.</p>
+<p>If you use REDCap to gather data, the conditions used to control the display of questions are called “branching logic”. REDCap provides details of the branching logic in the data dictionary, which we can use to automate the encoding of this missingness category!</p>
+<section id="step-0-use-the-redcap-api" class="level2">
+<h2 class="anchored" data-anchor-id="step-0-use-the-redcap-api">Step 0: Use the REDCap API</h2>
+<p>If you’re not using the REDCap API to access the data, let me introduce you to the <a href="https://ouhscbbmc.github.io/REDCapR/">REDCapR package</a>. The key functions we will use are:</p>
+<ul>
+<li><code>redcap_read()</code> to access data</li>
+<li><code>redcap_read_metadata()</code> to access the data dictionary</li>
+</ul>
+<p>This saves you having to repeatedly download the data and dictionary and avoids you storing data locally.</p>
+<p>Let’s pretend we have the following dataset:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">record_id =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>,<span class="dv">24</span>,<span class="dv">26</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">has_pets =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">pet_rating =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="cn">NA</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="cn">NA</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pet_insurance =</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">!</span>record_id, as.character))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tt</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_p74yz8119cijzvbnxct9 = TinyTable.createTableFunctions("tinytable_p74yz8119cijzvbnxct9");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 } ], css_id: 'tinytable_css_rmkn7irsilhrev0o2dpq',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_3obtnsa3738u7xmqy4o6',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_p74yz8119cijzvbnxct9.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_p74yz8119cijzvbnxct9 td.tinytable_css_rmkn7irsilhrev0o2dpq, #tinytable_p74yz8119cijzvbnxct9 th.tinytable_css_rmkn7irsilhrev0o2dpq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_p74yz8119cijzvbnxct9 td.tinytable_css_3obtnsa3738u7xmqy4o6, #tinytable_p74yz8119cijzvbnxct9 th.tinytable_css_3obtnsa3738u7xmqy4o6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_p74yz8119cijzvbnxct9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">record_id</th>
+                <th scope="col" data-row="0" data-col="2">age</th>
+                <th scope="col" data-row="0" data-col="3">has_pets</th>
+                <th scope="col" data-row="0" data-col="4">pet_rating</th>
+                <th scope="col" data-row="0" data-col="5">pet_insurance</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">1</td>
+                  <td data-row="1" data-col="2">16</td>
+                  <td data-row="1" data-col="3">1</td>
+                  <td data-row="1" data-col="4">1</td>
+                  <td data-row="1" data-col="5">NA</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">2</td>
+                  <td data-row="2" data-col="2">18</td>
+                  <td data-row="2" data-col="3">0</td>
+                  <td data-row="2" data-col="4">NA</td>
+                  <td data-row="2" data-col="5">0</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">3</td>
+                  <td data-row="3" data-col="2">20</td>
+                  <td data-row="3" data-col="3">1</td>
+                  <td data-row="3" data-col="4">2</td>
+                  <td data-row="3" data-col="5">1</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">4</td>
+                  <td data-row="4" data-col="2">24</td>
+                  <td data-row="4" data-col="3">1</td>
+                  <td data-row="4" data-col="4">1</td>
+                  <td data-row="4" data-col="5">0</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">5</td>
+                  <td data-row="5" data-col="2">26</td>
+                  <td data-row="5" data-col="3">0</td>
+                  <td data-row="5" data-col="4">NA</td>
+                  <td data-row="5" data-col="5">1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Everything is a character at this point, which is relevant to be able to use <code>dplyr::rows_update()</code> later on.</p>
+<p>We also have this dictionary from REDCap, noting this is only a few of the columns that REDCap provides:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dictionary <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">field_name =</span> <span class="fu">c</span>(<span class="st">"record_id"</span>, <span class="st">"age"</span>, <span class="st">"has_pets"</span>, <span class="st">"pet_rating"</span>,<span class="st">"pet_insurance"</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">field_type =</span> <span class="fu">c</span>(<span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"yesno"</span>, <span class="st">"radio"</span>,<span class="st">"yesno"</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">branching_logic =</span> <span class="fu">c</span>(<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="st">"[has_pets] = '1'"</span>,<span class="st">"[has_pets] = '1' and [age] &gt;= '18'"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tt</span>(dictionary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_fh78rpp0ma6dope7wyzt = TinyTable.createTableFunctions("tinytable_fh78rpp0ma6dope7wyzt");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 } ], css_id: 'tinytable_css_xiz7zqy0ib04p95q888l',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_ny0yozaapbq2qc78c03j',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_fh78rpp0ma6dope7wyzt.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_fh78rpp0ma6dope7wyzt td.tinytable_css_xiz7zqy0ib04p95q888l, #tinytable_fh78rpp0ma6dope7wyzt th.tinytable_css_xiz7zqy0ib04p95q888l {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_fh78rpp0ma6dope7wyzt td.tinytable_css_ny0yozaapbq2qc78c03j, #tinytable_fh78rpp0ma6dope7wyzt th.tinytable_css_ny0yozaapbq2qc78c03j {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_fh78rpp0ma6dope7wyzt" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">field_name</th>
+                <th scope="col" data-row="0" data-col="2">field_type</th>
+                <th scope="col" data-row="0" data-col="3">branching_logic</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">record_id</td>
+                  <td data-row="1" data-col="2">text</td>
+                  <td data-row="1" data-col="3">NA</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">age</td>
+                  <td data-row="2" data-col="2">text</td>
+                  <td data-row="2" data-col="3">NA</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">has_pets</td>
+                  <td data-row="3" data-col="2">yesno</td>
+                  <td data-row="3" data-col="3">NA</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">pet_rating</td>
+                  <td data-row="4" data-col="2">radio</td>
+                  <td data-row="4" data-col="3">[has_pets] = '1'</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">pet_insurance</td>
+                  <td data-row="5" data-col="2">yesno</td>
+                  <td data-row="5" data-col="3">[has_pets] = '1' and [age] &gt;= '18'</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>With the data and dictionary read in to the environment, we can start step 1.</p>
+</section>
+<section id="step-1-convert-branching-logic" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-convert-branching-logic">Step 1: Convert branching logic</h2>
+<section id="anatomy-of-redcap-branching-logic" class="level3">
+<h3 class="anchored" data-anchor-id="anatomy-of-redcap-branching-logic">Anatomy of REDCap branching logic</h3>
+<p>Let’s look at the branching logic for <code>pet_rating</code>, where <code>has_pets</code> must be <code>1</code> for the question to be shown.</p>
+<pre><code>[has_pets] = '1'</code></pre>
+<p>A variable (or field name as REDCap calls it) is always referred to using square brackets. This is true for every variable except for checkboxes, which also incorporate round brackets. I won’t go into checkboxes here — they’re annoying and require extra data cleaning.</p>
+<p>Once you start combining conditions, REDCap uses brackets as you might expect. If the branching logic wanted to target people aged outside of 18 to 25 who have pets it would be:</p>
+<pre><code>([age] &lt; '18' or [age] &gt; '25') and [has_pets] = '1'</code></pre>
+</section>
+<section id="parlez-vous-r-redcap" class="level3">
+<h3 class="anchored" data-anchor-id="parlez-vous-r-redcap">Parlez vous R, REDCap?</h3>
+<p>Now we understand the anatomy of REDCap branching logic, let’s compare how operators are expressed in REDCap vs.&nbsp;R:</p>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_fpgxc6qyd9ipy6o8pdab = TinyTable.createTableFunctions("tinytable_fpgxc6qyd9ipy6o8pdab");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '8', j: 1 }, { i: '8', j: 2 }, { i: '8', j: 3 } ], css_id: 'tinytable_css_66ng4626fvq3xujdyv2w',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_7tyd8qwag9hdjriyvslj',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_fpgxc6qyd9ipy6o8pdab.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_fpgxc6qyd9ipy6o8pdab td.tinytable_css_66ng4626fvq3xujdyv2w, #tinytable_fpgxc6qyd9ipy6o8pdab th.tinytable_css_66ng4626fvq3xujdyv2w {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_fpgxc6qyd9ipy6o8pdab td.tinytable_css_7tyd8qwag9hdjriyvslj, #tinytable_fpgxc6qyd9ipy6o8pdab th.tinytable_css_7tyd8qwag9hdjriyvslj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_fpgxc6qyd9ipy6o8pdab" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">Operator</th>
+                <th scope="col" data-row="0" data-col="2">REDCap</th>
+                <th scope="col" data-row="0" data-col="3">R</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Greater than</td>
+                  <td data-row="1" data-col="2">&gt;</td>
+                  <td data-row="1" data-col="3">&gt;</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">Greater than or equals</td>
+                  <td data-row="2" data-col="2">&gt;=</td>
+                  <td data-row="2" data-col="3">&gt;=</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Less than</td>
+                  <td data-row="3" data-col="2">&lt;</td>
+                  <td data-row="3" data-col="3">&lt;</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">Less than or equals</td>
+                  <td data-row="4" data-col="2">&lt;=</td>
+                  <td data-row="4" data-col="3">&lt;=</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Equal</td>
+                  <td data-row="5" data-col="2">=</td>
+                  <td data-row="5" data-col="3">==</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">Not equal</td>
+                  <td data-row="6" data-col="2">&lt;&gt;</td>
+                  <td data-row="6" data-col="3">!=</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">And</td>
+                  <td data-row="7" data-col="2">and</td>
+                  <td data-row="7" data-col="3">&amp;</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">Or</td>
+                  <td data-row="8" data-col="2">or</td>
+                  <td data-row="8" data-col="3">|</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Note that <code>==</code>, <code>!=</code>, <code>&amp;</code> and <code>|</code> are not the same.</p>
+</section>
+<section id="nein-ich-spreche-r-nicht" class="level3">
+<h3 class="anchored" data-anchor-id="nein-ich-spreche-r-nicht">Nein, ich spreche R nicht</h3>
+<p>With our knowledge of how REDCap expresses variables and operators, we now need to translate into Rspeak.</p>
+<p>Fortunately, this is made straightforward thanks to <code>stringr::str_replace_all()</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>dictionary <span class="ot">&lt;-</span> dictionary <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">converted_logic =</span> <span class="fu">str_replace_all</span>(</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>        branching_logic,</span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-6" class="code-annotation-target"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">" and "</span> <span class="ot">=</span> <span class="st">" &amp; "</span>,</span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">" or "</span> <span class="ot">=</span> <span class="st">" </span><span class="sc">\\</span><span class="st">| "</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-5-8" class="code-annotation-target"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"</span><span class="sc">\\</span><span class="st">[([[:alnum:]_]+)</span><span class="sc">\\</span><span class="st">] = ''"</span> <span class="ot">=</span> <span class="st">"is.na(</span><span class="sc">\\</span><span class="st">1)"</span>,</span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">"</span><span class="sc">\\</span><span class="st">[([[:alnum:]_]+)</span><span class="sc">\\</span><span class="st">] &lt;&gt; ''"</span> <span class="ot">=</span> <span class="st">"!is.na(</span><span class="sc">\\</span><span class="st">1)"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-5-10" class="code-annotation-target"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>          <span class="st">" &lt;&gt; "</span> <span class="ot">=</span> <span class="st">" != "</span>,</span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>          <span class="st">" = "</span> <span class="ot">=</span> <span class="st">" == "</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-5-12" class="code-annotation-target"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a>          <span class="st">"</span><span class="sc">\\</span><span class="st">(1</span><span class="sc">\\</span><span class="st">)</span><span class="sc">\\</span><span class="st">]"</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-5-13" class="code-annotation-target"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a>          <span class="st">"</span><span class="sc">\\</span><span class="st">["</span> <span class="ot">=</span> <span class="st">""</span>,</span>
+<span id="annotated-cell-5-14"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a>          <span class="st">"</span><span class="sc">\\</span><span class="st">]"</span> <span class="ot">=</span> <span class="st">""</span></span>
+<span id="annotated-cell-5-15"><a href="#annotated-cell-5-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="annotated-cell-5-16"><a href="#annotated-cell-5-16" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="annotated-cell-5-17"><a href="#annotated-cell-5-17" aria-hidden="true" tabindex="-1"></a>    )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="6,7" data-code-annotation="1">Note the pipe <code>|</code> needs to be escaped and that the spaces around <code>and</code> and <code>or</code> are intentional. REDCap requires spaces around these operators and by incorporating the spaces in the pattern we won’t accidentally target a variable that has <code>and</code> or <code>or</code> in its name</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="8,9" data-code-annotation="2">Instances where the branching logic looks for missing data are handled next, to prevent them being handled in parts 4 and 5. We’re targeting any combination of letters/numbers <code>[:alnum:]</code> and underscores contained within square brackets, that are followed by (not) equals to missing <code>''</code>. By making use of regex groups <code>\\1</code>, if there are multiple conditions based on missingness within the same branching logic, they’ll all be handled.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="10,11" data-code-annotation="3">Convert the remaining equals and not equals operators</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="12" data-code-annotation="4">This step targets how checkboxes are expressed in branching logic. It might depend on how you clean/name your variables, but I’ve included it as I ended up using it for my context.</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="13,14" data-code-annotation="5">Remove remaining square brackets.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>The code annotations above explain each of the steps, but you can see the result below</p>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_1cry7apwjt9oigk2b91u = TinyTable.createTableFunctions("tinytable_1cry7apwjt9oigk2b91u");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 } ], css_id: 'tinytable_css_0kumap3li9a76elp5dc2',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_uiob3wn37bte1hl03x7s',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_1cry7apwjt9oigk2b91u.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_1cry7apwjt9oigk2b91u td.tinytable_css_0kumap3li9a76elp5dc2, #tinytable_1cry7apwjt9oigk2b91u th.tinytable_css_0kumap3li9a76elp5dc2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_1cry7apwjt9oigk2b91u td.tinytable_css_uiob3wn37bte1hl03x7s, #tinytable_1cry7apwjt9oigk2b91u th.tinytable_css_uiob3wn37bte1hl03x7s {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_1cry7apwjt9oigk2b91u" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">field_name</th>
+                <th scope="col" data-row="0" data-col="2">field_type</th>
+                <th scope="col" data-row="0" data-col="3">branching_logic</th>
+                <th scope="col" data-row="0" data-col="4">converted_logic</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">record_id</td>
+                  <td data-row="1" data-col="2">text</td>
+                  <td data-row="1" data-col="3">NA</td>
+                  <td data-row="1" data-col="4">NA</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">age</td>
+                  <td data-row="2" data-col="2">text</td>
+                  <td data-row="2" data-col="3">NA</td>
+                  <td data-row="2" data-col="4">NA</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">has_pets</td>
+                  <td data-row="3" data-col="2">yesno</td>
+                  <td data-row="3" data-col="3">NA</td>
+                  <td data-row="3" data-col="4">NA</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">pet_rating</td>
+                  <td data-row="4" data-col="2">radio</td>
+                  <td data-row="4" data-col="3">[has_pets] = '1'</td>
+                  <td data-row="4" data-col="4">has_pets == '1'</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">pet_insurance</td>
+                  <td data-row="5" data-col="2">yesno</td>
+                  <td data-row="5" data-col="3">[has_pets] = '1' and [age] &gt;= '18'</td>
+                  <td data-row="5" data-col="4">has_pets == '1' &amp; age &gt;= '18'</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</section>
+</section>
+<section id="step-2-parse-the-converted-logic-as-code" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-parse-the-converted-logic-as-code">Step 2: Parse the converted logic as code</h2>
+<p>Before we use the logic, we need to do one more step. The branching logic as it currently stands will be <code>TRUE</code> if the criteria are met, which means the question <em>was</em> asked. We care about the question <em>not</em> being asked, and we also want to make sure we’re only going to affect observations with missing data.</p>
+<p>To reflect this, we just need to add an <code>is.na()</code> condition and invert the converted logic expression using <code>!()</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>branching_logic <span class="ot">&lt;-</span> dictionary <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(branching_logic)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">not_asked =</span> <span class="fu">paste0</span>(<span class="st">"is.na("</span>, field_name, <span class="st">") &amp; !("</span>, converted_logic, <span class="st">")"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(field_name, not_asked)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tt</span>(branching_logic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_no4iky8i0bd2sgnptqwm = TinyTable.createTableFunctions("tinytable_no4iky8i0bd2sgnptqwm");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 } ], css_id: 'tinytable_css_88h9in6sf9jczbdd40s9',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 } ], css_id: 'tinytable_css_ws6okzcp9inkd71kd5fv',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_no4iky8i0bd2sgnptqwm.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_no4iky8i0bd2sgnptqwm td.tinytable_css_88h9in6sf9jczbdd40s9, #tinytable_no4iky8i0bd2sgnptqwm th.tinytable_css_88h9in6sf9jczbdd40s9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_no4iky8i0bd2sgnptqwm td.tinytable_css_ws6okzcp9inkd71kd5fv, #tinytable_no4iky8i0bd2sgnptqwm th.tinytable_css_ws6okzcp9inkd71kd5fv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_no4iky8i0bd2sgnptqwm" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">field_name</th>
+                <th scope="col" data-row="0" data-col="2">not_asked</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">pet_rating</td>
+                  <td data-row="1" data-col="2">is.na(pet_rating) &amp; !(has_pets == '1')</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">pet_insurance</td>
+                  <td data-row="2" data-col="2">is.na(pet_insurance) &amp; !(has_pets == '1' &amp; age &gt;= '18')</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Now we have the code in a format acceptable to R, we can use <a href="https://rlang.r-lib.org/reference/parse_expr.html"><code>rlang::parse_expr()</code></a> to execute the strings as code.</p>
+<p>Since I’m iterating over many columns in my dataset, I wrote a function to return the rows that need to have their missing data encoded:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>records_not_asked <span class="ot">&lt;-</span> <span class="cf">function</span>(uncoded_data, column){</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    logic <span class="ot">&lt;-</span> branching_logic <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Keep just the variable of interest</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(field_name <span class="sc">==</span> column) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Pull out the logic</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(not_asked)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    uncoded_data <span class="sc">|&gt;</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Apply the logic to the input data using parse_expr()</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="sc">!!</span><span class="fu">parse_expr</span>(logic)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Update that column to be -888888</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">field_name =</span> column,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">value =</span> <span class="st">"-888888"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Return only record_id and input column</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(record_id, field_name, value)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The reason for returning data in this format is because I intend to use <code>dplyr::rows_update()</code> to update the original dataset, rather than try and do all of this in one pipe.</p>
+</section>
+<section id="step-3-find-records-that-need-updating" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-find-records-that-need-updating">Step 3: Find records that need updating</h2>
+<p>With the function ready to iterate over columns that have branching logic, we can use <code>purrr::map()</code> to iterate over the data</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>records_to_update <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(branching_logic, field_name),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    \(x) <span class="fu">records_not_asked</span>(data, x)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tt</span>(records_to_update)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_ax4t1wpnl8l1f2iqrkmu = TinyTable.createTableFunctions("tinytable_ax4t1wpnl8l1f2iqrkmu");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '3', j: 1 }, { i: '3', j: 2 }, { i: '3', j: 3 } ], css_id: 'tinytable_css_2oz8hxfldpeymbsltofh',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_ief1l1vt0dzl3rtqu9rx',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_ax4t1wpnl8l1f2iqrkmu.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_ax4t1wpnl8l1f2iqrkmu td.tinytable_css_2oz8hxfldpeymbsltofh, #tinytable_ax4t1wpnl8l1f2iqrkmu th.tinytable_css_2oz8hxfldpeymbsltofh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_ax4t1wpnl8l1f2iqrkmu td.tinytable_css_ief1l1vt0dzl3rtqu9rx, #tinytable_ax4t1wpnl8l1f2iqrkmu th.tinytable_css_ief1l1vt0dzl3rtqu9rx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_ax4t1wpnl8l1f2iqrkmu" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">record_id</th>
+                <th scope="col" data-row="0" data-col="2">field_name</th>
+                <th scope="col" data-row="0" data-col="3">value</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">2</td>
+                  <td data-row="1" data-col="2">pet_rating</td>
+                  <td data-row="1" data-col="3">-888888</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">5</td>
+                  <td data-row="2" data-col="2">pet_rating</td>
+                  <td data-row="2" data-col="3">-888888</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">1</td>
+                  <td data-row="3" data-col="2">pet_insurance</td>
+                  <td data-row="3" data-col="3">-888888</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</section>
+<section id="step-4-update-the-records" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-update-the-records">Step 4: Update the records</h2>
+<p>With this list we can then safely update the values in the original dataset</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_updated <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">cols =</span> <span class="fu">all_of</span>(records_to_update<span class="sc">$</span>field_name),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_to =</span> <span class="st">"field_name"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rows_update</span>(records_to_update, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"record_id"</span>, <span class="st">"field_name"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reshape the updated variables back to wide format</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> field_name,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> value</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Order the variables as originally specified</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">names</span>(data)))</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tt</span>(data_updated)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_19g0zkeu1xcjib2brkan = TinyTable.createTableFunctions("tinytable_19g0zkeu1xcjib2brkan");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 } ], css_id: 'tinytable_css_o9o9ny7ummwzdpx5lcrq',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_if1lsjfwebyir760daj2',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_19g0zkeu1xcjib2brkan.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_19g0zkeu1xcjib2brkan td.tinytable_css_o9o9ny7ummwzdpx5lcrq, #tinytable_19g0zkeu1xcjib2brkan th.tinytable_css_o9o9ny7ummwzdpx5lcrq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_19g0zkeu1xcjib2brkan td.tinytable_css_if1lsjfwebyir760daj2, #tinytable_19g0zkeu1xcjib2brkan th.tinytable_css_if1lsjfwebyir760daj2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_19g0zkeu1xcjib2brkan" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">record_id</th>
+                <th scope="col" data-row="0" data-col="2">age</th>
+                <th scope="col" data-row="0" data-col="3">has_pets</th>
+                <th scope="col" data-row="0" data-col="4">pet_rating</th>
+                <th scope="col" data-row="0" data-col="5">pet_insurance</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">1</td>
+                  <td data-row="1" data-col="2">16</td>
+                  <td data-row="1" data-col="3">1</td>
+                  <td data-row="1" data-col="4">1</td>
+                  <td data-row="1" data-col="5">-888888</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">2</td>
+                  <td data-row="2" data-col="2">18</td>
+                  <td data-row="2" data-col="3">0</td>
+                  <td data-row="2" data-col="4">-888888</td>
+                  <td data-row="2" data-col="5">0</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">3</td>
+                  <td data-row="3" data-col="2">20</td>
+                  <td data-row="3" data-col="3">1</td>
+                  <td data-row="3" data-col="4">2</td>
+                  <td data-row="3" data-col="5">1</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">4</td>
+                  <td data-row="4" data-col="2">24</td>
+                  <td data-row="4" data-col="3">1</td>
+                  <td data-row="4" data-col="4">1</td>
+                  <td data-row="4" data-col="5">0</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">5</td>
+                  <td data-row="5" data-col="2">26</td>
+                  <td data-row="5" data-col="3">0</td>
+                  <td data-row="5" data-col="4">-888888</td>
+                  <td data-row="5" data-col="5">1</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/benharrap\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

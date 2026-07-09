@@ -7,5 +7,6 @@ Thumbs.db
 .DS_Store
 /.quarto/
 .httr-oauth
+/dev
 
 **/*.quarto_ipynb
