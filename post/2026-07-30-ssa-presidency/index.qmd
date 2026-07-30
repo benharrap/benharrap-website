@@ -1,0 +1,46 @@
+---
+title: "Get to know the new President of the Statistical Society of Australia (it's me)"
+author: "Ben Harrap"
+date: 2026-07-30
+toc: true
+categories:
+  - community
+  - SSA
+  - self
+---
+
+I'm excited to announce... Or am I pleased to announce? Maybe I'm thrilled to announce!? Oh wait this isn't LinkedIn.
+
+Hello! Is it me you're looking for? I hope so. I'm the Statistical Society of Australia's (SSA) incoming President. Statistically improbable events notwithstanding, I'll be taking on the role for two years starting from our [AGM in August](https://statsoc.org.au/event-6757923).
+
+I've written this post for two reasons. One, for people who don't know me (and maybe those who do too), to get to know me a little better. Two, to lay out my hopes and aspirations for what I want to achieve in the role, as something to reflect back on once my time's up.
+
+## About me
+
+I'm originally from Dorset, a lovely county in England's rural south-west. Since coming to Australia in the late 2000s, I've lived in Perth, Melbourne, Ballarat, and now Canberra. Of all these places, Canberra has been my favourite — cycling here feels safe and the winter weather is beautiful. I do miss the coast though.
+
+My job? I guess I'm an academic, I work at [Yardhura Walani](https://yardhurawalani.com.au/our-story/). Do I do statistics? Yep. Data science? Sure. Data engineering? I suppose so. My made up title on the socials is "doer of data things". I like this nondescript title because while I do highly technical work that touches on all of the aforementioned professions, none of them feel like the right descriptor. 
+
+Maybe my ambivalence is because I don't think I'm a great statistician? Or a great data scientist, data engineer, etc. etc. I reckon I'm at least a 'good enough' \<insert job title\> though, and that's usually enough (but also hello imposter syndrome). That said, I did just put 'Statistician' on my census form, I don't think 'doer of data things' is on the ANZSCO list of occupations.
+
+I'm non-binary and neurodivergent. I'm saying this with hopes of being an example for people like me, who might not have thought they could take on this kind of role. 'If you can't see it you can't be it', as they say. But I also want to say that these characteristics don't define me. Yeah, they're a relevant part of my identity. But I, like most humans, am more than a collection of labels.
+
+Anyways, hopefully you know me a little better now. Come up and say hi when you see me next :)
+
+## Hopes and aspirations
+
+So, what am I hoping to achieve as SSA President for the next couple of years? I've laid out some themes below, but it boils down to community building. 
+
+### Volunteers, where art thou?
+
+For the past year as Vice President, I've been listening to the challenges, concerns, and hopes of the various branches, sections, networks, and committees of the SSA. They are the lifeblood of the SSA, and yet everyone is finding it hard to find volunteers. I'm hoping 
+
+If you have ever attended our events, been to our conferences, gotten accredited as a statistician, won our awards, read our newsletter, you've benefited from volunteer time. And that's our goal! We volunteer because we care about the statistical community, we want to see it thrive, and we're willing to put in time and effort to make that happen. But the reality is we always need more volunteers. People's contributions vary greatly in time, energy, scope, but what matters is that they contribute. 
+
+I'll write a separate post about why **you** should volunteer (yes, you reading this!), but fundamentally it's about reciprocity and community. If you want to find out how you can contribute, reach out to your local branch, contact a section or network you're interested in. If you really don't know where to start, send me a message! 
+
+### A home for data science
+
+Data science features in our strategic planning document and we regularly refer to "statistics and data science" in how we talk abour our community. Saying things is the easy part though, fortunately we're already doing things too. Most notably is our partnership with the Australian Data Science Network — we're hosting the ADSN conference this year!
+
+Earlier in the year I also set up the SSA's [Data Science Special Interest Group](https://statsoc.org.au/Data-science-special-interest-group). It's the first step in a longer journey toward growing our community of people who do data things. I do want to acknowledge the many members, who've been part of the SSA for years, who identify as data scientists. I'm hoping we can have more of you :)
