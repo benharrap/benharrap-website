@@ -3,7 +3,6 @@ title: "Basil Pesto"
 author: "Ben Harrap"
 date: 2021-04-24
 categories: 
-  - food
   - self
 image: "ingredients.png"
 ---

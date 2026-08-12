@@ -6,7 +6,7 @@ date: 2025-06-12
 toc: false
 categories: 
   - R
-  - programming
+  - code
   - quarto
 ---
 

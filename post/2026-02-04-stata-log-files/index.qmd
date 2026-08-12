@@ -7,7 +7,7 @@ toc: true
 categories: 
   - R
   - Stata
-  - programming
+  - code
 ---
 
 ```{r}

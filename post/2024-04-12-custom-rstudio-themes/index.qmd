@@ -6,7 +6,7 @@ date: 2024-05-26
 toc: true
 categories: 
   - R
-  - programming
+  - code
   - design
 ---
 

@@ -6,8 +6,7 @@ date: 2025-05-23
 toc: true
 categories: 
   - R
-  - programming
-  - data
+  - code
 ---
 
 Sometimes you ask for help and people provide you with solutions using functions you didn't know exist. That happened to me today and made me realise that I should look through the list of functions provided in the `tidyverse` packages I regularly use. So I did that and I discovered some cool functions that I should definitely be using!

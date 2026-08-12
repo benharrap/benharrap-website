@@ -6,7 +6,7 @@ date: 2025-07-14
 toc: false
 categories: 
   - R
-  - programming
+  - code
 ---
 
 I posted this question on Bluesky the other day, because I wasn't sure whether a row-wise or column-wise solution would perform better for the problem I was trying to solve.

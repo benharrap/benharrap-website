@@ -6,7 +6,7 @@ date: 2025-09-24
 toc: false
 categories: 
   - R
-  - programming
+  - code
   - strings
 ---
 

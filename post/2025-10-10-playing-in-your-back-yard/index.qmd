@@ -6,7 +6,7 @@ date: 2025-10-10
 toc: false
 categories: 
   - academia
-  - programming
+  - code
   - statistics
 ---
 

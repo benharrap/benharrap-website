@@ -1,7 +1,7 @@
 ---
 title: "Get to know the new President of the Statistical Society of Australia (it's me)"
 author: "Ben Harrap"
-date: 2026-07-30
+date: 2026-08-12
 toc: true
 categories:
   - community
@@ -11,7 +11,7 @@ categories:
 
 I'm excited to announce... Or am I pleased to announce? Maybe I'm thrilled to announce!? Oh wait this isn't LinkedIn.
 
-Hello! Is it me you're looking for? I hope so. I'm the Statistical Society of Australia's (SSA) incoming President. Statistically improbable events notwithstanding, I'll be taking on the role for two years starting from our [AGM in August](https://statsoc.org.au/event-6757923).
+Hello! Is it me you're looking for? I hope so. I'm the Statistical Society of Australia's (SSA) new President. Statistically improbable events notwithstanding, I'll be in this role for an exciting couple of years.
 
 I've written this post for two reasons. One, for people who don't know me (and maybe those who do too), to get to know me a little better. Two, to lay out my hopes and aspirations for what I want to achieve in the role, as something to reflect back on once my time's up.
 
@@ -19,11 +19,11 @@ I've written this post for two reasons. One, for people who don't know me (and m
 
 I'm originally from Dorset, a lovely county in England's rural south-west. Since coming to Australia in the late 2000s, I've lived in Perth, Melbourne, Ballarat, and now Canberra. Of all these places, Canberra has been my favourite — cycling here feels safe and the winter weather is beautiful. I do miss the coast though.
 
-My job? I guess I'm an academic, I work at [Yardhura Walani](https://yardhurawalani.com.au/our-story/). Do I do statistics? Yep. Data science? Sure. Data engineering? I suppose so. My made up title on the socials is "doer of data things". I like this nondescript title because while I do highly technical work that touches on all of the aforementioned professions, none of them feel like the right descriptor. 
+My job? I guess I'm an academic — I work at [Yardhura Walani](https://yardhurawalani.com.au/our-story/). Do I do statistics? Yep. Data science? Sure. Data engineering? I suppose so. My made up title on the socials is "doer of data things". I like this nondescript title because while I do highly technical work that touches on all of the aforementioned professions, none of them alone feel like the right descriptor. 
 
-Maybe my ambivalence is because I don't think I'm a great statistician? Or a great data scientist, data engineer, etc. etc. I reckon I'm at least a 'good enough' \<insert job title\> though, and that's usually enough (but also hello imposter syndrome). That said, I did just put 'Statistician' on my census form, I don't think 'doer of data things' is on the ANZSCO list of occupations.
+Maybe my ambivalence is because I don't think I'm a great statistician? Or a great data scientist, data engineer, etc. etc. I reckon I'm at least a 'good enough' \<insert job title\> though, and that's usually sufficient (but also hello imposter syndrome). That said, I did put 'Statistician' on my census form yesterday, I don't think 'doer of data things' is on the ANZSCO list of occupations.
 
-As for my time in SSA, back in 2018 I started out as the secretary of the then-called Victorian branch. I took over as President of the branch in 2023, and soon after renamed it to the Victorian & Tasmanian branch to reflect who the branch actually served. I handed over the reins early (thanks Alun!), as I moved to Canberra in 2024 and it didn't seem appropriate to continue as the branch president whilst living interstate. Outside of my branch involvement, I was part of the organising committee for the 2021 Early Career and Student Statistician Conference, and a member of the inaugural Equity, Diversity, and Inclusion committee. And finally, here we are as the President of the SSA!
+As for my time in SSA, back in 2018 I started out as the secretary of the then-called Victorian branch. I took over as President of the branch in 2023, and soon after renamed it to the Victorian & Tasmanian branch to reflect who the branch actually served. I handed over the reins early (thanks Alun!), as I moved to Canberra in 2024. Outside of my branch involvement, I was part of the organising committee for the 2021 Early Career and Student Statistician Conference, and a member of the inaugural Equity, Diversity, and Inclusion committee. And finally, here we are as the President of the SSA!
 
 A final couple of things — I'm non-binary and neurodivergent. I'm saying this with hopes of being an example for people like me, who might not have thought they could take on this kind of role. 'If you can't see it you can't be it', as they say. But I also want to say that these characteristics don't define me. Yeah, they're a relevant part of my identity. But I, like most humans, am more than a collection of labels.
 
@@ -39,7 +39,13 @@ For the past year as Vice President, I've been listening to the challenges, conc
 
 If you have ever attended our events, been to our conferences, gotten accredited as a statistician, won our awards, read our newsletter, you've benefited from volunteer time. And that's our goal! We volunteer because we care about the statistical community, we want to see it thrive, and we're willing to put in time and effort to make that happen. But the reality is we always need more volunteers. People's contributions vary greatly in time, energy, scope, but what matters is that they contribute. 
 
-I'll write a separate post about why **you** should volunteer (yes, you reading this!), but fundamentally it's about reciprocity and community. If you want to find out how you can contribute, reach out to your local branch, contact a section or network you're interested in. If you really don't know where to start, send me a message! 
+I'll write a separate post about why **you** should volunteer (yes, you reading this!), but fundamentally it's about reciprocity and community. If you want to find out how you can contribute, reach out to your local branch, contact a section or network you're interested in. If you really don't know where to start, send me a message!
+
+### Community building
+
+Our community is incredibly diverse, both in terms of the individuals who comprise it and the disciplines and interests represented. But since the lockdowns of the covid pandemic, the way people engage with the events we put on hasn't been the same.
+
+People are looking for community, for spaces to connect, share, and learn, and it was evident at the Australian Statistical Conference last year — people were loving the opportunity to chat, catch up, and make new connections. Our branches, sections, networks, and special interest groups have done, and continue to do, a tremendous job making spaces for people to connect. I'm hoping I can make their work easier, but also foster more cross-collaboration within our society and outwardly with statistics-adjacent groups and organisations.
 
 ### A home for data science
 
