@@ -1337,6 +1337,27 @@
     "text": "Want to say hi? Send me a message!\nYou can always contact me on social media too:\n Bluesky\n LinkedIn\n GitHub\n Buy me a coffee\n\n\n\n\n\n\nYour name \nEmail address \nMessage\n\n\nSend message"
   },
   {
+    "objectID": "tools/quarto-slide-themer.html",
+    "href": "tools/quarto-slide-themer.html",
+    "title": "Ben Harrap",
+    "section": "",
+    "text": "Slide\n      \n      \n    \n\n    \n      Text\n      \n      \n      \n        \n        Apply to all plain text\n      \n      \n      \n    \n\n    \n      Code\n      \n      \n      \n        \n        Overrule syntax highlighting\n        This forces all code to a single colour, overruling the colour scheme that applies colour to certain syntactic elements (e.g. numbers, operators)\n      \n\n      \n      \n        \n        Apply to all backgrounds\n      \n      \n    \n\n    \n      Contrast \n      \n      WCAG 2.1. Which thresholds apply follows the rendered size: from 24px\n      (18.66px bold) text counts as large and needs 3:1 for AA and 4.5:1 for AAA, below that\n      4.5:1 and 7:1. Hover a row for the size it was measured at.\n    \n\n  \n\n  \n\n    \n      \n    \n\n    \n      \n        Aspect\n        \n      \n      Randomise\n      Reset\n      Open in new tab\n      Reload deck"
+  },
+  {
+    "objectID": "tools/quarto-slide-themer/slides.html#this-is-the-slide-title",
+    "href": "tools/quarto-slide-themer/slides.html#this-is-the-slide-title",
+    "title": "This is the title slide",
+    "section": "This is the slide title",
+    "text": "This is the slide title\nThis is some regular text and this is inline code.\n\nThis is an unordered\n\nlist of items\n\n\nHere is a link, some italic text, and some bold text.\n\nAnd a block quote!"
+  },
+  {
+    "objectID": "tools/quarto-slide-themer/slides.html#code-and-output",
+    "href": "tools/quarto-slide-themer/slides.html#code-and-output",
+    "title": "This is the title slide",
+    "section": "Code and output",
+    "text": "Code and output\n\nmodel &lt;- lm(\n  mpg ~ hp + wt + gear,\n  data = mtcars\n)\n# Return a summary of the model\nsummary(model)\n\n\nCall:\nlm(formula = mpg ~ hp + wt + gear, data = mtcars)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3.3712 -1.9017 -0.3444  0.9883  6.0655 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 32.013657   4.632264   6.911 1.64e-07 ***\nhp          -0.036786   0.009891  -3.719 0.000888 ***\nwt          -3.197811   0.846546  -3.777 0.000761 ***\ngear         1.019981   0.851408   1.198 0.240963    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 2.574 on 28 degrees of freedom\nMultiple R-squared:  0.8352,    Adjusted R-squared:  0.8176 \nF-statistic: 47.31 on 3 and 28 DF,  p-value: 4.334e-11"
+  },
+  {
     "objectID": "post/2025-07-28-joke/index.html",
     "href": "post/2025-07-28-joke/index.html",
     "title": "Why don’t statisticians like getting feedback?",

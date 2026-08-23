@@ -1,0 +1,585 @@
+/* themer.css — layout and chrome for the control panel. Deliberately neutral so it
+   does not compete with whatever palette is being previewed. */
+
+:root {
+  --ui-bg: #ffffff;
+  --ui-panel: #f7f7f8;
+  --ui-border: #dcdce0;
+  --ui-text: #1f2124;
+  --ui-muted: #6b6f76;
+  --ui-accent: #2a6fdb;
+  --ui-ok: #1a7f4b;
+  --ui-warn: #a8560a;
+  --ui-bad: #b3261e;
+  --ui-code-bg: #f2f2f4;
+  --ui-radius: 6px;
+}
+
+/* Only if the surrounding Quarto site is running a dark theme. */
+body.quarto-dark {
+  --ui-bg: #16181b;
+  --ui-panel: #1d2024;
+  --ui-border: #33373d;
+  --ui-text: #e6e8ea;
+  --ui-muted: #9aa0a8;
+  --ui-accent: #6fa8ff;
+  --ui-ok: #4ec98a;
+  --ui-warn: #e0a04b;
+  --ui-bad: #f2867c;
+  --ui-code-bg: #23262b;
+}
+
+.themer-tool { color: var(--ui-text); }
+
+.themer {
+  display: grid;
+  grid-template-columns: minmax(230px, 265px) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Grid items default to min-width:auto, and pre.export's min-content is its
+   longest unwrappable line. Without this the code pane widens the whole track. */
+.themer-controls,
+.themer-output { min-inline-size: 0; }
+
+
+/* ------------------------------------------------------------------ panel */
+
+.themer-panel {
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-panel);
+  padding: 0.8rem 1.1rem 1rem;
+}
+
+.themer-panel + .themer-panel { margin-top: 0.6rem; }
+
+/* Collapsible panes. The contrast panel is a plain <section>, so it is always open. */
+details.pane { padding: 0; }
+
+details.pane > summary {
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ui-muted);
+  list-style: none;
+}
+
+details.pane > summary::-webkit-details-marker { display: none; }
+
+details.pane > summary::before {
+  content: '\203A';
+  display: inline-block;
+  inline-size: 0.8em;
+  margin-inline-end: 0.35rem;
+  transform: rotate(0deg);
+  transition: transform 120ms;
+}
+
+details.pane[open] > summary::before { transform: rotate(90deg); }
+details.pane > summary:hover { color: var(--ui-accent); }
+details.pane[open] > summary { color: var(--ui-text); }
+details.pane > *:not(summary) { padding-inline: 1.1rem; }
+details.pane > *:last-child { padding-block-end: 1rem; }
+
+.group-label {
+  margin: 0.9rem 0 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ui-muted);
+}
+
+.themer-panel > h2 {
+  font-size: 0.78rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ui-muted);
+  margin: 0 0 0.85rem;
+  border: 0;
+  padding: 0;
+}
+
+.field { margin-bottom: 0.8rem; }
+.field:last-child { margin-bottom: 0; }
+
+.field { margin-bottom: 0.55rem; }
+
+/* One row per field: the SCSS variable moved into a hover-only tip so it costs no
+   vertical space. */
+.field-label {
+  position: relative;
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 0.22rem;
+}
+
+.field-name { border-bottom: 1px dotted var(--ui-border); }
+.field-label:hover .field-name { border-bottom-color: var(--ui-accent); }
+
+.scss-tip {
+  position: absolute;
+  inset-block-end: calc(100% + 5px);
+  inset-inline-start: 0;
+  z-index: 20;
+  padding: 0.16rem 0.4rem;
+  border-radius: 3px;
+  background: var(--ui-text);
+  color: var(--ui-bg);
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 90ms ease;
+}
+
+.field-label:hover .scss-tip,
+.field:focus-within .scss-tip { opacity: 1; }
+
+.hint {
+  display: block;
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: var(--ui-muted);
+}
+
+/* Backgrounds that are following the linked one, rather than set independently. */
+.field-linked { opacity: 0.55; }
+
+.field-head {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.22rem;
+}
+
+.field-head .field-label { margin-bottom: 0; }
+
+/* Info notes. Deliberately a sibling of .field-label, not a child, so hovering
+   the icon does not also trigger the label's SCSS tip. */
+.info {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ui-muted);
+  font-size: 0.78rem;
+  cursor: default;
+}
+
+.info:hover, .info:focus { color: var(--ui-accent); outline: none; }
+
+.info-tip {
+  position: absolute;
+  inset-block-end: calc(100% + 6px);
+  inset-inline-start: -0.4rem;
+  z-index: 30;
+  inline-size: max-content;
+  max-inline-size: 15rem;
+  padding: 0.3rem 0.45rem;
+  border-radius: 4px;
+  background: var(--ui-text);
+  color: var(--ui-bg);
+  font-size: 0.7rem;
+  font-weight: 400;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: start;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 90ms ease;
+}
+
+/* :focus rather than :focus-visible, so the note also opens on click and stays
+   reachable for anyone tabbing through. */
+.info:hover .info-tip, .info:focus .info-tip { opacity: 1; }
+
+/* Inside a .check row the icon follows the label text. */
+.check .info { margin-inline-start: 0.15rem; align-self: flex-start; margin-block-start: 0.1rem; }
+.check .info-tip { inset-inline-start: auto; inset-inline-end: -0.4rem; }
+
+/* ------------------------------------------------------------------ colours */
+
+.colour-row { display: flex; gap: 0.45rem; align-items: stretch; }
+
+input[type="color"] {
+  inline-size: 2.4rem;
+  block-size: 1.9rem;
+  padding: 2px;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-bg);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+input.hex,
+.themer-tool input[type="text"] {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  block-size: 1.9rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-size: 0.85rem;
+}
+
+input.hex { font-family: var(--bs-font-monospace, monospace); text-transform: lowercase; }
+
+/* .field-label is inline-block, so the typeface input has to be told to take its
+   own line rather than sitting beside it. */
+.themer-tool input.font-input {
+  display: block;
+  inline-size: 100%;
+}
+
+.themer-tool input:focus-visible,
+.themer-tool button:focus-visible,
+.themer-tool a.btn-ui:focus-visible {
+  outline: 2px solid var(--ui-accent);
+  outline-offset: 1px;
+}
+
+/* ------------------------------------------------------------------ numbers */
+
+.themer-tool input.number {
+  display: block;
+  inline-size: 100%;
+  block-size: 1.9rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-family: var(--bs-font-monospace, monospace);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.themer-tool select.select {
+  block-size: 1.9rem;
+  padding: 0 0.4rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-size: 0.8rem;
+}
+
+/* Aspect ratio sits with the preview controls, not with the theme parameters. */
+.deck-aspect {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--ui-muted);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ fonts */
+
+.sample {
+  margin-top: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px dashed var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-bg);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sample-mono { font-size: 0.8rem; }
+
+/* Typeface availability warnings */
+
+.font-status {
+  margin: 0.3rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.font-status:empty { display: none; }
+.font-status.muted, .font-status.checking { color: var(--ui-muted); }
+.font-status.ok { color: var(--ui-ok); }
+.font-status.warn { color: var(--ui-warn); }
+.font-status.bad { color: var(--ui-bad); font-weight: 600; }
+
+.font-status.checking::before,
+.font-status.ok::before { content: ''; }
+.font-status.warn::before { content: '\26A0\FE0E  '; }
+.font-status.bad::before { content: '\26A0\FE0E  '; }
+
+/* Ring the input itself, so the problem is visible without reading the note. */
+.field-warn input[type="text"] { border-color: var(--ui-warn); }
+.field-bad input[type="text"] { border-color: var(--ui-bad); }
+
+.field-warn .sample, .field-bad .sample { border-style: solid; }
+.field-warn .sample { border-color: var(--ui-warn); }
+.field-bad .sample { border-color: var(--ui-bad); }
+
+.check {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.84rem;
+  margin-top: 0.9rem;
+}
+
+.check input { margin-top: 0.2rem; flex: 0 0 auto; }
+.check .hint { display: block; }
+
+/* ------------------------------------------------------------------ presets */
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 0.5rem;
+}
+
+.preset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.4rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.preset:hover { border-color: var(--ui-accent); }
+
+.preset-chips {
+  display: flex;
+  gap: 3px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid var(--ui-border);
+}
+
+.preset-chips i {
+  display: block;
+  flex: 1 1 0;
+  block-size: 14px;
+  border-radius: 2px;
+}
+
+.preset-name { font-size: 0.72rem; line-height: 1.15; color: var(--ui-muted); }
+
+/* ------------------------------------------------------------------ actions */
+
+.actions { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+.themer-tool .btn-ui {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.themer-tool .btn-ui:hover { border-color: var(--ui-accent); color: var(--ui-accent); }
+.themer-tool .btn-ui.flash { border-color: var(--ui-ok); color: var(--ui-ok); }
+
+/* ------------------------------------------------------------------ contrast */
+
+.cx-summary {
+  float: right;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+
+.cx-summary.ok { color: var(--ui-ok); }
+.cx-summary.warn { color: var(--ui-warn); }
+.cx-summary:empty { display: none; }
+
+.cx-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 0.45rem;
+  align-items: center;
+  font-size: 0.8rem;
+  padding: 0.22rem 0;
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.cx-row:last-child { border-bottom: 0; }
+
+/* The label is drawn in the two colours it measures, so it is its own sample. */
+.cx-label {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.12rem 0.35rem;
+  border-radius: 3px;
+}
+
+.cx-value {
+  font-family: var(--bs-font-monospace, monospace);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.76rem;
+}
+
+.cx-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.08rem 0.3rem;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+}
+
+.cx-badge.pass { color: var(--ui-ok); }
+.cx-badge.fail { color: var(--ui-warn); opacity: 0.55; }
+
+.cx-row.warn .cx-value { color: var(--ui-warn); font-weight: 600; }
+
+/* ------------------------------------------------------------------ output column */
+
+/* Sticky and height-capped so the deck and the SCSS stay on screen together
+   while the parameters on the left are scrolled. The SCSS pane is the only
+   flexible child, so it absorbs whatever height is left over. */
+.themer-output {
+  position: sticky;
+  top: 1rem;
+  max-block-size: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-block-size: 0;
+  padding-right: 60px;
+}
+
+/* --deck-cap bounds the deck's height; themer.js emits the matching
+   aspect-ratio and width, since the ratio is now a control. Constraining the
+   width rather than the height keeps the canvas box exact and hands any leftover
+   height to the SCSS pane. */
+.deck-frame {
+  position: relative;
+  flex: 0 0 auto;
+  --deck-cap: 68vh;
+  inline-size: min(100%, calc(var(--deck-cap) * 16 / 9));
+  margin-inline: auto;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  overflow: hidden;
+  background: var(--ui-panel);
+}
+
+.deck-frame iframe {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+  display: block;
+}
+
+.deck-bar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--ui-muted);
+}
+
+.deck-bar a.btn-ui { text-decoration: none; }
+
+/* ------------------------------------------------------------------ export */
+
+/* The generated SCSS is the whole panel: no header row, and the copy button
+   floats over the top-right corner of the code itself. */
+.export-panel {
+  position: relative;
+  flex: 1 1 auto;
+  min-block-size: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  /* Flex, not `block-size: 100%` on the child: this panel's own height comes from
+     the column, so a percentage height on the pane would have nothing to resolve
+     against and fall back to auto. */
+  display: flex;
+  overflow: hidden;
+}
+
+/* The pane reserves a stable scrollbar gutter, so a fixed offset clears the
+   scrollbar instead of sitting on top of it. */
+.export-copy {
+  position: absolute;
+  inset-block-start: 0.5rem;
+  inset-inline-end: 1.35rem;
+  z-index: 2;
+  padding: 0.3rem 0.45rem;
+  line-height: 1;
+}
+
+.export-copy i { font-size: 0.95rem; }
+
+.themer-tool pre.export {
+  flex: 1 1 auto;
+  inline-size: 100%;
+  margin: 0;
+  min-block-size: 6rem;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  padding: 0.7rem 0.8rem 1.2rem;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius);
+  background: var(--ui-code-bg);
+  color: var(--ui-text);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.themer-tool .note { font-size: 0.8rem; color: var(--ui-muted); margin: 0; }
+.themer-tool .note code { font-size: 0.95em; }
+
+/* ------------------------------------------------------------------ narrow
+
+   Kept last on purpose: a media query adds no specificity, so these overrides
+   must come after the rules they undo. */
+
+@media (max-width: 1100px) {
+  .themer { grid-template-columns: minmax(0, 1fr); }
+
+  /* Stacked, so both columns take their natural height. */
+  .themer-output {
+    position: static;
+    max-block-size: none;
+    display: block;
+  }
+
+  .deck-frame { inline-size: 100%; }
+  .deck-bar { margin-top: 0.6rem; }
+  .export-panel { display: block; overflow: visible; margin-top: 1rem; }
+  .themer-tool pre.export { max-block-size: 30rem; }
+}

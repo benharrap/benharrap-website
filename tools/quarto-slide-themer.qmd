@@ -1,0 +1,98 @@
+---
+page-layout: full
+toc: false
+format:
+  html:
+    css: quarto-slide-themer/themer.css
+    include-after-body:
+      - text: |
+          <script src="quarto-slide-themer/theme-core.js"></script>
+          <script src="quarto-slide-themer/fonts.js"></script>
+          <script src="quarto-slide-themer/themer.js"></script>
+---
+
+```{=html}
+<style id="themer-preview-css"></style>
+
+<div class="themer-tool">
+<div class="themer">
+
+  <div class="themer-controls">
+
+    <!-- The preset swatches are built and wired as usual; drop the `hidden`
+         attribute to show them again. -->
+    <div id="presets" class="preset-grid" hidden></div>
+
+    <details class="themer-panel pane" id="pane-slide">
+      <summary>Slide</summary>
+      <div id="slide-colour-fields"></div>
+      <div id="slide-size-fields"></div>
+    </details>
+
+    <details class="themer-panel pane" id="pane-text">
+      <summary>Text</summary>
+      <div id="text-font-field"></div>
+      <div id="text-body-field"></div>
+      <div class="check">
+        <input type="checkbox" id="link-text-colors">
+        <label for="link-text-colors">Apply to all plain text</label>
+      </div>
+      <div id="text-colour-fields"></div>
+      <div id="text-link-field"></div>
+    </details>
+
+    <details class="themer-panel pane" id="pane-code">
+      <summary>Code</summary>
+      <div id="code-font-field"></div>
+      <div id="code-text-field"></div>
+      <div class="check">
+        <input type="checkbox" id="flat-code">
+        <label for="flat-code">Overrule syntax highlighting</label>
+        <span class="info" tabindex="0" role="note" aria-label="This forces all code to a single colour, overruling the colour scheme that applies colour to certain syntactic elements (e.g. numbers, operators)"><i class="bi bi-info-circle" aria-hidden="true"></i><span class="info-tip">This forces all code to a single colour, overruling the colour scheme that applies colour to certain syntactic elements (e.g. numbers, operators)</span></span>
+      </div>
+
+      <div id="code-block-bg-field"></div>
+      <div class="check">
+        <input type="checkbox" id="link-code-bg">
+        <label for="link-code-bg">Apply to all backgrounds</label>
+      </div>
+      <div id="code-bg-fields"></div>
+    </details>
+
+    <section class="themer-panel">
+      <h2>Contrast <span id="contrast-summary" class="cx-summary"></span></h2>
+      <div id="contrast"></div>
+      <p class="note">WCAG 2.1. Which thresholds apply follows the rendered size: from 24px
+      (18.66px bold) text counts as large and needs 3:1 for AA and 4.5:1 for AAA, below that
+      4.5:1 and 7:1. Hover a row for the size it was measured at.</p>
+    </section>
+
+  </div>
+
+  <div class="themer-output">
+
+    <div class="deck-frame">
+      <iframe id="deck" src="quarto-slide-themer/slides.html" title="Example RevealJS slides" allowfullscreen></iframe>
+    </div>
+
+    <div class="deck-bar">
+      <label class="deck-aspect" for="sel-aspect">
+        <span>Aspect</span>
+        <select id="sel-aspect" class="select" title="Preview only — for a real deck set width and height under format: revealjs"></select>
+      </label>
+      <button type="button" class="btn-ui" id="btn-random">Randomise</button>
+      <button type="button" class="btn-ui" id="btn-reset">Reset</button>
+      <a class="btn-ui" id="open-deck" href="quarto-slide-themer/slides.html" target="_blank" rel="noopener">Open in new tab</a>
+      <button type="button" class="btn-ui" id="btn-reload">Reload deck</button>
+    </div>
+
+    <section class="themer-panel export-panel">
+      <button type="button" class="btn-ui export-copy" id="btn-copy" title="Copy" aria-label="Copy the SCSS"><i class="bi bi-clipboard" aria-hidden="true"></i></button>
+      <pre id="out-scss" class="export" aria-label="Generated custom.scss"></pre>
+    </section>
+
+  </div>
+
+</div>
+</div>
+```

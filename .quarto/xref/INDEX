@@ -169,5 +169,20 @@
   },
   "post/2026-08-12-ssa-presidency/index.qmd": {
     "index.html": "7715562f"
+  },
+  "themer.qmd": {
+    "themer.html": "0b7de3ae"
+  },
+  "tools/quarto-slide-themer/themer-files/slides.qmd": {
+    "slides.html": "43fec996"
+  },
+  "quarto-slide-themer.qmd": {
+    "quarto-slide-themer.html": "2d738563"
+  },
+  "tools/quarto-slide-themer/slides.qmd": {
+    "slides.html": "7aa9ce57"
+  },
+  "tools/quarto-slide-themer.qmd": {
+    "quarto-slide-themer.html": "9b4702cc"
   }
 }

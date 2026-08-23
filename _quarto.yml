@@ -1,5 +1,8 @@
 project:
   type: website
+  resources:
+    - tools/quarto-slide-themer/*.js
+    - tools/quarto-slide-themer/*.css
 
 website:
   title: "Ben Harrap"
@@ -15,6 +18,10 @@ website:
       - publications.qmd
       - cv.qmd
       - contact.qmd
+      - text: "Tools"
+        menu:
+        - text: "Quarto Slide Themer"
+          href: tools/quarto-slide-themer.qmd
   
 format:
   html:

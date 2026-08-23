@@ -1,0 +1,35 @@
+---
+title: "This is the title slide"
+subtitle: "Here is a subtitle"
+author: Anne Author
+format:
+  revealjs:
+    include-in-header:
+      - text: |
+          <script src="theme-core.js"></script>
+          <script src="fonts.js"></script>
+          <script src="theme-bridge.js"></script>
+---
+
+## This is the slide title
+
+This is some regular text `and this is inline code`.
+
+-   This is an unordered
+    - list of items
+
+[Here is a link](https://en.wikipedia.org/wiki/Special:Random), *some italic text*, **and some bold text**.
+
+> And a block quote!
+
+## Code and output
+
+```{r}
+#| echo: true
+model <- lm(
+  mpg ~ hp + wt + gear,
+  data = mtcars
+)
+# Return a summary of the model
+summary(model)
+```
