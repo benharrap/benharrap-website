@@ -436,7 +436,7 @@
 
     var deckUrl = window.location.origin +
       window.location.pathname.replace(/[^/]*$/, '') +
-      'themer-files/slides.html#theme=' + Core.encode(theme);
+      'quarto-slide-themer/slides.html#theme=' + Core.encode(theme);
     document.getElementById('open-deck').href = deckUrl;
   }
 
