@@ -1,5 +1,5 @@
 ---
-title: "Limited Learning Mode — Why LLMs are my last resort"
+title: "Limited Learning Mode: Why LLMs are my last resort"
 author: "Ben Harrap"
 date: 2026-09-08
 toc: true
