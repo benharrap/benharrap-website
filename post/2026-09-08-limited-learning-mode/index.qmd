@@ -1,0 +1,56 @@
+---
+title: "Limited Learning Mode — Why LLMs are my last resort"
+author: "Ben Harrap"
+date: 2026-09-08
+toc: true
+categories:
+  - code
+  - research
+---
+
+I was running an Intro to R workshop the other day and in the workshop material I'd included content on error messages, how to read them, and a checklist for steps to take when debugging code:
+
+1. Read the error message
+2. Look at your code
+3. Read the documentation
+4. Web search
+5. Ask the community for help
+6. Ask an LLM
+
+In the break, an attendee asked me whether I used LLMs for coding and why they're last on the list. It was a great question, because it got me to put into words several thoughts I've been having about LLM usage.
+
+To answer the first question, I replied that I use LLMs for things that don't *matter*. That is, there are no consequences if the code is bad or wrong. At work, the code I write performs jobs that other people depend on, so I'm accountable if something is wrong. I'm also teaching others how the codebase works, which I can't do if I don't understand it myself. Given this, the other circumstance I use LLMs is when the problem is narrowly defined and the output is easily verifiable.
+
+As for why LLMs are last on the list, well, that's the rest of this post.
+
+## Levels of processing
+
+Many moons ago, during my psychology degree, I learned about [levels of processing](https://en.wikipedia.org/wiki/Levels_of_processing_model#Neural_evidence). The tl;dr is that deeper processing forms stronger neural pathways and improves recall, compared to shallow processing. Whether the theory is true is immaterial, it's a nice framework for thinking about the above list.
+
+The first three require you to connect your own dots. In doing so, you figure out what the problem is, why it is a problem, and why the solution works — all of which is requires a deeper level of processing, making stronger connections. So the next time the solution is called for, you're in a much better position to 
+
+For the latter three, and in particular asking LLMs, it's very easy to copy-paste code, check the output is correct, and not worry about why it solves your problem. Of course you can prod Claude to explain why something is a solution, but being given the answer doesn't embed things in my brain the same way the earlier steps on the list do.
+
+## The friends we made along the way
+
+Being able to read documentation is a skill in itself, especially in open-source contexts where the quality of documentation varies enormously. But, it's really important to learn. Teach a man to fish yadda yadda yadda... 
+
+It's important for obvious reasons, but in reading documentation so often I've also learned other things that I wasn't actually there to find out. Every time this happens, I add another entry to my series ['Ben Actually Reads The Documentation'](https://bsky.app/profile/bharrap.bsky.social/post/3muysk4jjik2i). I feel like I'm harping on about learning, but that's really what it's all about. 
+
+The journey from point 1 to point 6 on the list is usually full of wrong-turns and dead-ends. But in going on that journey, I invariably come across solutions for problems I didn't realise I had (or have yet to encounter). All of this learning also builds your capacity to recognise where the solutions you've figured out can apply to problems in other contexts.
+
+## People like to help
+
+I've noticed, at least in the online communities I'm part of, that people like to help. I like to help people out too! It's a rewarding feeling, knowing the solution to someone elses problem and being able to help them out. It's also part of how you build a community — putting yourself out there and being there for others.
+
+Also, chatting with people about your problems, or helping them with theirs, is a great way to get to know what others are working on. There's a few people I've met through Slack workspaces troubleshooting coding problems, that I've connected with in real life.
+
+## Work as play
+
+I've been feeling pretty burned out recently, but one of the things I love about my job is the problem-solving. Solving puzzles is fun, whether it's a jigsaw puzzle or a complex coding problem. To be frank, I have no interest in outsourcing a fun part of my job to an LLM. What do I get in return? Shitty code to review? BORING.
+
+## Disclaimer
+
+You can of course still learn things from LLMs. I have myself! That's why they're on the list.
+
+Maybe it's a skill issue on my part, but I've not been particularly impressed by the output of LLMs. Often it's verbose and redundant and has a bad code smell. My code smells fabulous, obviously.

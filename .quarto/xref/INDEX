@@ -184,5 +184,8 @@
   },
   "tools/quarto-slide-themer.qmd": {
     "quarto-slide-themer.html": "9b4702cc"
+  },
+  "post/2026-09-08-limited-learning-mode/index.qmd": {
+    "index.html": "cf8fe5d9"
   }
 }
