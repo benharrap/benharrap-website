@@ -27,7 +27,7 @@ As for why LLMs are last on the list, well, that's the rest of this post.
 
 Many moons ago, during my psychology degree, I learned about [levels of processing](https://en.wikipedia.org/wiki/Levels_of_processing_model#Neural_evidence). The tl;dr is that deeper processing forms stronger neural pathways and improves recall, compared to shallow processing. Whether the theory is true is immaterial, it's a nice framework for thinking about the above list.
 
-The first three require you to connect your own dots. In doing so, you figure out what the problem is, why it is a problem, and why the solution works — all of which is requires a deeper level of processing, making stronger connections. So the next time the solution is called for, you're in a much better position to 
+The first three require you to connect your own dots. In doing so, you figure out what the problem is, why it is a problem, and why the solution works — all of which is requires a deeper level of processing, making stronger connections. So the next time the solution is called for, you're in a much better position to remember the solution (or avoid creating the problem in the first place).
 
 For the latter three, and in particular asking LLMs, it's very easy to copy-paste code, check the output is correct, and not worry about why it solves your problem. Of course you can prod Claude to explain why something is a solution, but being given the answer doesn't embed things in my brain the same way the earlier steps on the list do.
 
@@ -49,8 +49,4 @@ Also, chatting with people about your problems, or helping them with theirs, is 
 
 I've been feeling pretty burned out recently, but one of the things I love about my job is the problem-solving. Solving puzzles is fun, whether it's a jigsaw puzzle or a complex coding problem. To be frank, I have no interest in outsourcing a fun part of my job to an LLM. What do I get in return? Shitty code to review? BORING.
 
-## Disclaimer
-
-You can of course still learn things from LLMs. I have myself! That's why they're on the list.
-
-Maybe it's a skill issue on my part, but I've not been particularly impressed by the output of LLMs. Often it's verbose and redundant and has a bad code smell. My code smells fabulous, obviously.
+You can of course still learn things from LLMs. I have myself! That's why they're on the list. Maybe it's a skill issue on my part, but I've not been particularly impressed by the output of LLMs. Often it's verbose and redundant and has a bad code smell. My code smells fabulous, obviously.
