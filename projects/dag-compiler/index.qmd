@@ -1,0 +1,24 @@
+---
+pagetitle: "DAG compiler"
+description: "Compile published DAGs for the same outcome into one graph."
+page-layout: custom
+toc: false
+css: dag-compiler.css
+resources:
+  - data/supplied_dags.csv
+  - data/compiled_dags.csv
+  - data/compiled_edges.csv
+  - lib/d3.min.js
+  - lib/dagre.min.js
+  - dagc-core.js
+  - dag-compiler.js
+include-after-body:
+  text: |
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/dagre.min.js"></script>
+    <script src="dagc-core.js"></script>
+    <script src="dag-compiler.js"></script>
+---
+
+::: {#dag-compiler-app data-supplied="data/supplied_dags.csv"}
+:::

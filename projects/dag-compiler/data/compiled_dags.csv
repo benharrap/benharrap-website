@@ -1,0 +1,144 @@
+"outcome","exposure","n_dags","dag_ids","nodes","node_counts","n_edges","n_opposing","n_cycle_edges","tie_rule","dag_code","dag_code_strict"
+"Cardiovascular disease","Physical activity",11,"dag01; dag02; dag03; dag04; dag05; dag06; dag07; dag08; dag09; dag10; dag11","Physical activity; SES; Age; Health; Sex; Smoking; BMI; Education; Distance; Hospitalisation; Diet","Physical activity (11); SES (11); Age (9); Health (5); Sex (5); Smoking (5); BMI (4); Education (4); Distance (2); Hospitalisation (2); Diet (1)",25,2,6,"recent","dag {
+Age
+BMI
+""Cardiovascular disease"" [outcome]
+Diet
+Distance
+Education
+Health
+Hospitalisation
+""Physical activity"" [exposure]
+SES
+Sex
+Smoking
+Age -> ""Cardiovascular disease""
+Age -> ""Physical activity""
+Age -> SES
+BMI -> ""Cardiovascular disease""
+BMI -> Smoking
+""Cardiovascular disease"" -> Hospitalisation
+Diet -> BMI
+Diet -> ""Cardiovascular disease""
+Distance -> ""Physical activity""
+Education -> ""Physical activity""
+Education -> SES
+Health -> ""Cardiovascular disease""
+Health -> Education
+Health -> SES
+""Physical activity"" -> BMI
+""Physical activity"" -> ""Cardiovascular disease""
+""Physical activity"" -> Hospitalisation
+SES -> ""Cardiovascular disease""
+SES -> Diet
+SES -> Health
+SES -> ""Physical activity""
+SES -> Smoking
+Sex -> ""Cardiovascular disease""
+Smoking -> BMI
+Smoking -> ""Cardiovascular disease""
+}","dag {
+Age
+BMI
+""Cardiovascular disease"" [outcome]
+Diet
+Distance
+Education
+Health
+Hospitalisation
+""Physical activity"" [exposure]
+SES
+Sex
+Smoking
+Age -> ""Cardiovascular disease""
+Age -> ""Physical activity""
+Age -> SES
+BMI -> ""Cardiovascular disease""
+BMI -> Smoking
+""Cardiovascular disease"" -> Hospitalisation
+Diet -> BMI
+Diet -> ""Cardiovascular disease""
+Distance -> ""Physical activity""
+Education -> ""Physical activity""
+Education -> SES
+Health -> ""Cardiovascular disease""
+""Physical activity"" -> BMI
+""Physical activity"" -> ""Cardiovascular disease""
+""Physical activity"" -> Hospitalisation
+SES -> ""Cardiovascular disease""
+SES -> Diet
+SES -> Health
+SES -> ""Physical activity""
+SES -> Smoking
+Sex -> ""Cardiovascular disease""
+Smoking -> ""Cardiovascular disease""
+}"
+"Depression","Physical activity",6,"dag12; dag13; dag14; dag15; dag16; dag17","Physical activity; SES; Age; Loneliness; Sex; Sleep; Chronic illness; Social support; Alcohol; BMI","Physical activity (6); SES (6); Age (5); Loneliness (3); Sex (3); Sleep (3); Chronic illness (2); Social support (2); Alcohol (1); BMI (1)",24,3,11,"recent","dag {
+Age
+Alcohol
+BMI
+""Chronic illness""
+Depression [outcome]
+Loneliness
+""Physical activity"" [exposure]
+SES
+Sex
+Sleep
+""Social support""
+Age -> ""Chronic illness""
+Age -> Depression
+Age -> ""Physical activity""
+Alcohol -> Depression
+BMI -> Depression
+""Chronic illness"" -> Depression
+""Chronic illness"" -> ""Physical activity""
+Depression -> Sleep
+Loneliness -> Depression
+Loneliness -> ""Physical activity""
+Loneliness -> Sleep
+""Physical activity"" -> BMI
+""Physical activity"" -> Depression
+""Physical activity"" -> Loneliness
+""Physical activity"" -> Sleep
+SES -> Alcohol
+SES -> ""Chronic illness""
+SES -> Depression
+SES -> ""Physical activity""
+Sex -> Depression
+Sleep -> Depression
+Sleep -> Loneliness
+""Social support"" -> Depression
+""Social support"" -> Loneliness
+}","dag {
+Age
+Alcohol
+BMI
+""Chronic illness""
+Depression [outcome]
+Loneliness
+""Physical activity"" [exposure]
+SES
+Sex
+Sleep
+""Social support""
+Age -> ""Chronic illness""
+Age -> Depression
+Age -> ""Physical activity""
+Alcohol -> Depression
+BMI -> Depression
+""Chronic illness"" -> Depression
+""Chronic illness"" -> ""Physical activity""
+Loneliness -> Depression
+Loneliness -> ""Physical activity""
+""Physical activity"" -> BMI
+""Physical activity"" -> Depression
+""Physical activity"" -> Sleep
+SES -> Alcohol
+SES -> ""Chronic illness""
+SES -> Depression
+SES -> ""Physical activity""
+Sex -> Depression
+Sleep -> Depression
+""Social support"" -> Depression
+""Social support"" -> Loneliness
+}"

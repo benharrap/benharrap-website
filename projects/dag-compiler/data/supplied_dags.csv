@@ -1,0 +1,302 @@
+"dag_id","outcome","exposure","nodes","dag_code","doi","title","authors","year","date","journal"
+"dag01","Cardiovascular disease","Physical activity","Age; Health; Physical activity; SES","dag {
+SES;
+Age;
+""Physical activity"";
+""Cardiovascular disease"";
+Health;
+Health -> SES
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+Age -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2011.014","Socioeconomic position, prior health and physical activity in relation to incident cardiovascular disease","Nguyen, T.; Halvorsen, K.; Mbeki, L.",2011,"2011-09-20","Journal of Illustrative Epidemiology"
+"dag02","Cardiovascular disease","Physical activity","Health; Physical activity; SES","dag {
+SES;
+""Physical activity"";
+""Cardiovascular disease"";
+Health;
+SES -> Health
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2004.031","Does socioeconomic status confound the association between physical activity and cardiovascular disease?","Rossi, G.; Achterberg, P.",2004,"2004-03-15","Causal Methods Quarterly"
+"dag03","Cardiovascular disease","Physical activity","Age; Physical activity; SES; Sex","dag {
+SES;
+Age;
+Sex;
+""Physical activity"";
+""Cardiovascular disease"";
+Age -> SES
+Sex -> ""Cardiovascular disease""
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+Age -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2017.112","Age, sex and socioeconomic status as confounders of physical activity and cardiovascular risk","Kowalczyk, A.; Tanaka, H.; Oyelaran, F.",2017,"2017-05-08","Annals of Hypothetical Health Research"
+"dag04","Cardiovascular disease","Physical activity","Physical activity; SES","dag {
+SES;
+""Physical activity"";
+""Cardiovascular disease"";
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2004.007","Leisure-time physical activity and coronary heart disease in a population sample","Fairbairn, J.; Delacroix, M.",2004,"2004-03-15","Journal of Illustrative Epidemiology"
+"dag05","Cardiovascular disease","Physical activity","Age; BMI; Physical activity; SES; Smoking","dag {
+SES;
+Age;
+Smoking;
+BMI;
+""Physical activity"";
+""Cardiovascular disease"";
+SES -> Smoking
+Smoking -> BMI
+Smoking -> ""Cardiovascular disease""
+BMI -> ""Cardiovascular disease""
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+Age -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2011.052","Smoking, body mass and socioeconomic gradients in physical activity and cardiovascular disease","Lindqvist, S.; Moreno, C.; Aziz, R.",2011,"2011-03-02","Population Health Examples"
+"dag06","Cardiovascular disease","Physical activity","Age; Education; Health; Physical activity; SES","dag {
+Education;
+SES;
+Health;
+Age;
+""Physical activity"";
+""Cardiovascular disease"";
+Education -> SES
+Education -> ""Physical activity""
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+SES -> Health
+Health -> ""Cardiovascular disease""
+Age -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2015.088","Education, socioeconomic status and health as pathways between physical activity and cardiovascular outcomes","O'Sullivan, D.; Parekh, N.",2015,"2015-10-14","Causal Methods Quarterly"
+"dag07","Cardiovascular disease","Physical activity","Age; BMI; Education; Physical activity; SES; Sex; Smoking","dag {
+Education;
+SES;
+Age;
+Sex;
+BMI;
+Smoking;
+""Physical activity"";
+""Cardiovascular disease"";
+Education -> SES
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+""Physical activity"" -> BMI
+BMI -> ""Cardiovascular disease""
+BMI -> Smoking
+Smoking -> ""Cardiovascular disease""
+Sex -> ""Cardiovascular disease""
+Age -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2019.203","Body mass index as a mediator of the effect of physical activity on cardiovascular disease","Haddad, Y.; Brennan, E.; Ivanova, D.; Chu, W.",2019,"2019-06-12","International Journal of Example Studies"
+"dag08","Cardiovascular disease","Physical activity","Age; Distance; Education; Health; Hospitalisation; Physical activity; SES","dag {
+Distance;
+Age;
+Health;
+Education;
+SES;
+""Physical activity"";
+""Cardiovascular disease"";
+Hospitalisation;
+Distance -> ""Physical activity""
+Age -> ""Physical activity""
+Age -> ""Cardiovascular disease""
+Health -> Education
+Health -> ""Cardiovascular disease""
+Education -> SES
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+""Physical activity"" -> Hospitalisation
+""Cardiovascular disease"" -> Hospitalisation
+}
+","10.5555/dagbase.2021.017","Distance to recreational facilities as an instrument for physical activity: implications for hospital-based studies","Mahlangu, T.; Sorensen, B.",2021,"2021-02-25","Annals of Hypothetical Health Research"
+"dag09","Cardiovascular disease","Physical activity","Age; BMI; Education; Health; Physical activity; SES; Sex; Smoking","dag {
+Age;
+Sex;
+Education;
+SES;
+Smoking;
+Health;
+BMI;
+""Physical activity"";
+""Cardiovascular disease"";
+Age -> SES
+Age -> ""Cardiovascular disease""
+Sex -> ""Cardiovascular disease""
+Education -> SES
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+SES -> Smoking
+SES -> Health
+Smoking -> ""Cardiovascular disease""
+Health -> ""Cardiovascular disease""
+""Physical activity"" -> BMI
+BMI -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2023.141","A consolidated causal model of physical activity and cardiovascular disease across the life course","Whitcombe, R.; Ibarra, L.; Takahashi, M.; Novak, P.",2023,"2023-08-01","Population Health Examples"
+"dag10","Cardiovascular disease","Physical activity","Age; Distance; Hospitalisation; Physical activity; SES; Sex; Smoking","dag {
+Distance;
+Age;
+Sex;
+SES;
+Smoking;
+""Physical activity"";
+""Cardiovascular disease"";
+Hospitalisation;
+Distance -> ""Physical activity""
+Age -> SES
+Age -> ""Cardiovascular disease""
+Sex -> ""Cardiovascular disease""
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+SES -> Smoking
+Smoking -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+""Physical activity"" -> Hospitalisation
+""Cardiovascular disease"" -> Hospitalisation
+}
+","10.5555/dagbase.2025.066","Selection into hospital cohorts and collider bias in studies of physical activity and cardiovascular disease","Okonkwo, C.; Larsen, I.; Petrov, A.",2025,"2025-06-02","Journal of Illustrative Epidemiology"
+"dag11","Cardiovascular disease","Physical activity","Age; BMI; Diet; Physical activity; SES; Sex; Smoking","dag {
+SES;
+Age;
+Sex;
+Diet;
+Smoking;
+BMI;
+""Physical activity"";
+""Cardiovascular disease"";
+SES -> ""Physical activity""
+SES -> ""Cardiovascular disease""
+SES -> Diet
+SES -> Smoking
+Diet -> BMI
+Diet -> ""Cardiovascular disease""
+""Physical activity"" -> BMI
+BMI -> ""Cardiovascular disease""
+Smoking -> ""Cardiovascular disease""
+Age -> ""Cardiovascular disease""
+Sex -> ""Cardiovascular disease""
+""Physical activity"" -> ""Cardiovascular disease""
+}
+","10.5555/dagbase.2025.120","Diet, physical activity and cardiovascular disease: a target trial emulation protocol","Castellanos, M.; Brightwater, J.",2025,"2025-06-02","Causal Methods Quarterly"
+"dag12","Depression","Physical activity","Age; Physical activity; SES","dag {
+SES;
+Age;
+""Physical activity"";
+Depression;
+SES -> ""Physical activity""
+SES -> Depression
+Age -> Depression
+""Physical activity"" -> Depression
+}
+","10.5555/dagbase.2009.044","Physical activity and depressive symptoms in middle-aged adults","Eriksen, H.; Mwangi, P.",2009,"2009-07-21","Journal of Illustrative Psychiatry"
+"dag13","Depression","Physical activity","Age; Chronic illness; Physical activity; SES","dag {
+SES;
+Age;
+""Chronic illness"";
+""Physical activity"";
+Depression;
+SES -> ""Chronic illness""
+Age -> ""Chronic illness""
+""Chronic illness"" -> ""Physical activity""
+""Chronic illness"" -> Depression
+SES -> ""Physical activity""
+SES -> Depression
+""Physical activity"" -> Depression
+}
+","10.5555/dagbase.2012.075","Chronic illness as a common cause of physical inactivity and depression","Abernethy, S.; Kimura, Y.; Delgado, R.",2012,"2012-01-30","Population Health Examples"
+"dag14","Depression","Physical activity","Age; Loneliness; Physical activity; SES; Sex; Sleep","dag {
+SES;
+Age;
+Sex;
+Sleep;
+Loneliness;
+""Physical activity"";
+Depression;
+""Physical activity"" -> Sleep
+Sleep -> Depression
+Sleep -> Loneliness
+Loneliness -> Depression
+Sex -> Depression
+SES -> ""Physical activity""
+SES -> Depression
+Age -> ""Physical activity""
+Age -> Depression
+""Physical activity"" -> Depression
+}
+","10.5555/dagbase.2016.019","Sleep as a pathway from physical activity to depression","Fitzgerald, C.; Osei, K.",2016,"2016-11-23","Journal of Illustrative Psychiatry"
+"dag15","Depression","Physical activity","Loneliness; Physical activity; SES; Sleep; Social support","dag {
+SES;
+""Social support"";
+Loneliness;
+Sleep;
+""Physical activity"";
+Depression;
+""Physical activity"" -> Loneliness
+Loneliness -> Depression
+Loneliness -> Sleep
+""Social support"" -> Loneliness
+""Social support"" -> Depression
+SES -> ""Physical activity""
+SES -> Depression
+Depression -> Sleep
+""Physical activity"" -> Depression
+}
+","10.5555/dagbase.2016.162","Loneliness, social support and the physical activity-depression association","Vasquez, L.; Holmberg, A.; Singh, R.",2016,"2016-11-23","International Journal of Example Studies"
+"dag16","Depression","Physical activity","Age; BMI; Chronic illness; Physical activity; SES; Sex; Sleep","dag {
+SES;
+Age;
+Sex;
+""Chronic illness"";
+Sleep;
+BMI;
+""Physical activity"";
+Depression;
+""Physical activity"" -> Sleep
+Sleep -> Depression
+""Chronic illness"" -> ""Physical activity""
+""Chronic illness"" -> Depression
+Age -> ""Chronic illness""
+""Physical activity"" -> BMI
+BMI -> Depression
+SES -> ""Physical activity""
+SES -> Depression
+Sex -> Depression
+""Physical activity"" -> Depression
+}
+","10.5555/dagbase.2020.091","Physical activity, body mass and depression in people with chronic illness","Thornbury, E.; Nakamura, T.",2020,"2020-04-17","Annals of Hypothetical Health Research"
+"dag17","Depression","Physical activity","Age; Alcohol; Loneliness; Physical activity; SES; Sex; Social support","dag {
+SES;
+Age;
+Sex;
+Alcohol;
+Loneliness;
+""Social support"";
+""Physical activity"";
+Depression;
+Loneliness -> ""Physical activity""
+Loneliness -> Depression
+""Social support"" -> Loneliness
+Alcohol -> Depression
+SES -> Alcohol
+SES -> ""Physical activity""
+SES -> Depression
+Age -> Depression
+Sex -> Depression
+""Physical activity"" -> Depression
+}
+","10.5555/dagbase.2024.038","Reverse pathways: loneliness, physical activity and depression in older adults","Adeyemi, O.; Lachance, M.; Kowal, B.",2024,"2024-09-05","Journal of Illustrative Psychiatry"
