@@ -187,5 +187,11 @@
   },
   "post/2026-09-08-limited-learning-mode/index.qmd": {
     "index.html": "cf8fe5d9"
+  },
+  "tools/rstudio-themer.qmd": {
+    "rstudio-themer.html": "e29874d6"
+  },
+  "projects/dag-compiler/index.qmd": {
+    "index.html": "ea3a6e8a"
   }
 }

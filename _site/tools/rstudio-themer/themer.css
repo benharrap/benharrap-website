@@ -1,0 +1,179 @@
+/* themer.css — layout for the RStudio themer. Everything is scoped under .rst-app. */
+
+/* ---------- app: colours and the two-pane layout ---------- */
+.rst-app {
+  --rst-bg: #ffffff;
+  --rst-surface: #f6f7f9;
+  --rst-border: #d9dde3;
+  --rst-text: #1f2328;
+  --rst-muted: #5d6670;
+  --rst-accent: #2f6fdb;
+  --rst-accent-text: #ffffff;
+  --rst-radius: 8px;
+  --rst-flash: rgba(47, 111, 219, 0.18);   /* accent, see-through: highlight for a row found from the Palette */
+  color: var(--rst-text);
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+@media (prefers-color-scheme: dark) {
+  .rst-app { --rst-bg: #16181d; --rst-surface: #1f2228; --rst-border: #343a44; --rst-text: #e6e8eb; --rst-muted: #9aa3ad; --rst-accent: #6b9cff; --rst-accent-text: #0d1117; --rst-flash: rgba(107, 156, 255, 0.24); }
+}
+/* follow Quarto's light/dark toggle when there is one */
+body.quarto-light .rst-app { --rst-bg: #ffffff; --rst-surface: #f6f7f9; --rst-border: #d9dde3; --rst-text: #1f2328; --rst-muted: #5d6670; --rst-accent: #2f6fdb; --rst-accent-text: #fff; --rst-flash: rgba(47, 111, 219, 0.18); }
+body.quarto-dark .rst-app { --rst-bg: #16181d; --rst-surface: #1f2228; --rst-border: #343a44; --rst-text: #e6e8eb; --rst-muted: #9aa3ad; --rst-accent: #6b9cff; --rst-accent-text: #0d1117; --rst-flash: rgba(107, 156, 255, 0.24); }
+.rst-app *, .rst-app *::before, .rst-app *::after { box-sizing: border-box; }
+
+/* ---------- form controls ---------- */
+.rst-app input[type="text"], .rst-app input[type="number"], .rst-app select {
+  font: inherit; color: var(--rst-text); background: var(--rst-bg);
+  border: 1px solid var(--rst-border); border-radius: 6px; padding: 0.35rem 0.5rem; min-height: 2.1rem;
+}
+.rst-app input[type="color"] {
+  width: 2.1rem; height: 2.1rem; padding: 2px; border: 1px solid var(--rst-border); border-radius: 6px; background: var(--rst-bg); cursor: pointer;
+}
+.rst-app input:disabled { cursor: not-allowed; }
+.rst-app button {
+  font: inherit; cursor: pointer; color: var(--rst-text); background: var(--rst-bg);
+  border: 1px solid var(--rst-border); border-radius: 6px; padding: 0.4rem 0.75rem; min-height: 2.1rem;
+}
+.rst-app button:hover:not(:disabled) { border-color: var(--rst-accent); }
+.rst-app button:disabled { opacity: 0.5; cursor: not-allowed; }
+.rst-app button.rst-primary { background: var(--rst-accent); border-color: var(--rst-accent); color: var(--rst-accent-text); font-weight: 600; }
+.rst-app input[type="text"]:focus-visible, .rst-app input[type="number"]:focus-visible, .rst-app select:focus-visible,
+.rst-app button:focus-visible, .rst-app input[type="color"]:focus-visible, .rst-app summary:focus-visible {
+  outline: 2px solid var(--rst-accent); outline-offset: 2px;
+}
+.rst-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.rst-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- left pane ---------- */
+.rst-controls { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.rst-group { margin: 0; background: var(--rst-surface); border: 1px solid var(--rst-border); border-radius: var(--rst-radius); padding: 0.75rem 0.85rem; }
+.rst-group > summary { cursor: pointer; color: var(--rst-text); font-weight: 600; list-style-position: inside; }   /* Quarto mutes summaries */
+.rst-group[open] > summary { margin-bottom: 0.6rem; }
+
+/* Theme card: labels in one column, the Base theme dropdown and name box in the other */
+.rst-theme { display: flex; flex-direction: column; gap: 0.6rem; }
+.rst-theme-grid { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; gap: 0.5rem 0.75rem; }
+.rst-theme-grid > label { font-weight: 500; }
+.rst-app .rst-theme-grid > select, .rst-app .rst-theme-grid > input { width: 100%; min-width: 0; }
+.rst-app button.rst-download { margin-left: auto; }   /* Download sits at the right of the Undo / Help / Reset row */
+
+/* Help dialog */
+.rst-help {
+  width: min(36rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow: auto; padding: 1.1rem 1.35rem 0.4rem;
+  color: var(--rst-text); background: var(--rst-bg); border: 1px solid var(--rst-border); border-radius: var(--rst-radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25); line-height: 1.5;
+}
+.rst-help::backdrop { background: rgba(0, 0, 0, 0.4); }
+.rst-help-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem; }
+.rst-help h2 { margin: 0; padding: 0; border: 0; font-size: 1.15rem; font-weight: 700; line-height: 1.3; }   /* undo Quarto's heading underline */
+.rst-app button.rst-help-close { flex: 0 0 auto; width: 2rem; height: 2rem; min-height: 0; padding: 0; font-size: 1.3rem; line-height: 1; color: var(--rst-muted); }
+.rst-help ol { margin: 0 0 0.9rem; padding-left: 1.4rem; }
+.rst-help li { margin: 0.3rem 0; }
+.rst-help p { margin: 0 0 0.75rem; }
+.rst-app .rst-help code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.92em; color: inherit; background: var(--rst-surface); padding: 0.05em 0.3em; border-radius: 4px; }
+
+
+/* colour rows: swatch | label | On/Off or style button (or a gap) | hex */
+.rst-fields { display: flex; flex-direction: column; gap: 0.45rem; }
+.rst-field { display: grid; grid-template-columns: 2.1rem minmax(0, 1fr) 3.6rem 4.6rem; gap: 0.5rem; align-items: center; }
+.rst-field[hidden] { display: none; }
+/* a colour that's switched off or not in use: dim the swatch, name and hex box, but not the description */
+.rst-field.is-unused > :not(.rst-onoff):not(.rst-field-text), .rst-field.is-unused .rst-name { opacity: 0.5; }
+/* a row found by clicking its colour on the Palette tab: highlighted, then fading out */
+.rst-field.is-flash { border-radius: 6px; animation: rst-flash 2s ease-out; }
+@keyframes rst-flash {
+  0%, 55% { background-color: var(--rst-flash); box-shadow: 0 0 0 4px var(--rst-flash); }   /* the shadow extends the tint past the row's edges */
+  100% { background-color: transparent; box-shadow: 0 0 0 4px transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rst-field.is-flash { animation: none; background-color: var(--rst-flash); box-shadow: 0 0 0 4px var(--rst-flash); }
+}
+.rst-field-text { position: relative; min-width: 0; }
+.rst-option-label { grid-column: 1 / 3; font-weight: 500; }
+.rst-select-row select { grid-column: 3 / 5; min-width: 0; width: 100%; font-size: 0.85rem; padding: 0.3rem 0.35rem; }
+.rst-app input.rst-hex { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85rem; width: 100%; padding: 0.3rem 0.35rem; text-align: center; }
+.rst-subhead { margin: 0.5rem 0 0; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rst-muted); }
+
+/* On/Off and Italic/Bold buttons */
+.rst-app button.rst-onoff {
+  min-height: 1.75rem; padding: 0 0.35rem; font-size: 0.78rem; font-weight: 600;
+  border-radius: 999px; color: var(--rst-muted); background: var(--rst-bg); border: 1px solid var(--rst-border);
+}
+.rst-app button.rst-onoff.is-on { color: var(--rst-accent-text); background: var(--rst-accent); border-color: var(--rst-accent); }
+.rst-app button.rst-style { font-weight: 500; color: var(--rst-text); }
+.rst-app button.rst-style.is-italic { font-style: italic; }
+.rst-app button.rst-style.is-bold { font-weight: 700; }
+
+/* descriptions: shown above a setting's name on hover, after a tap on touch screens, or while
+   the keyboard is on its row */
+.rst-name { font-weight: 500; }
+.rst-hint {
+  display: none; position: absolute; z-index: 30; bottom: calc(100% + 4px); left: 0; transform: translateX(var(--dx, 0px));
+  width: max-content; max-width: min(240px, 75vw); padding: 0.4rem 0.55rem; pointer-events: none;
+  background-color: var(--rst-text); color: var(--rst-bg); border-radius: 6px;
+  font-size: 0.78rem; line-height: 1.35; font-weight: 400; text-align: left; white-space: normal;
+}
+.rst-hint-note { display: block; margin-bottom: 0.3rem; }   /* examples or extra uses, above the description */
+.rst-hint.is-open { display: block; }
+@media (hover: hover) { .rst-name:hover + .rst-hint { display: block; } }
+
+/* ---------- right pane: tabs and previews, filling the height of the window ---------- */
+.rst-preview { min-width: 0; align-self: stretch; }
+/* --rst-top: room for a fixed Quarto navbar, measured by themer.js */
+.rst-sticky { position: sticky; top: var(--rst-top, 1rem); display: flex; flex-direction: column; gap: 0.75rem; height: calc(100vh - var(--rst-top, 1rem) - 1rem); min-height: 420px; padding: 2px; }
+.rst-tabs { flex: 0 0 auto; display: flex; gap: 0.25rem; border-bottom: 1px solid var(--rst-border); overflow-x: auto; }
+.rst-app .rst-tab {
+  flex: 0 0 auto; white-space: nowrap; padding: 0.4rem 0.8rem; color: var(--rst-muted);
+  border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent;
+}
+.rst-app .rst-tab.is-on { color: var(--rst-text); border-bottom-color: var(--rst-accent); font-weight: 600; }
+.rst-tab code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.92em; background: none; color: inherit; padding: 0; }
+.rst-preview-host { flex: 1 1 auto; min-height: 0; border-radius: var(--rst-radius); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--rst-border); overflow: hidden; }
+.rst-preview-host[hidden] { display: none; }
+
+/* .rstheme tab */
+.rst-css-host { position: relative; background: var(--rst-surface); }
+.rst-css { height: 100%; margin: 0; padding: 0.75rem 1rem; overflow: auto; white-space: pre; color: var(--rst-text); background: transparent; border: 0; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8rem; }
+.rst-app button.rst-copy { position: absolute; top: 0.6rem; right: 1.4rem; z-index: 1; min-height: 1.9rem; padding: 0.25rem 0.7rem; font-size: 0.85rem; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+
+/* Palette tab: every colour in use as borderless squares that touch; drag (or Space + arrow keys) to reorder */
+.rst-palette-host { position: relative; display: flex; flex-direction: column; background: var(--rst-surface); overflow: auto; }
+.rst-palette-host[hidden] { display: none; }
+/* menu bar: Show [Editor] [R code] [Quarto] [Terminal] ... [Reset order] */
+.rst-palette-bar { flex: 0 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; padding: 0.5rem 0.9rem; background: var(--rst-bg); border-bottom: 1px solid var(--rst-border); }
+.rst-palette-show { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.rst-palette-lbl { margin-right: 0.15rem; font-size: 0.85rem; font-weight: 600; color: var(--rst-muted); }
+.rst-app .rst-palette-bar button { min-height: 1.9rem; padding: 0.2rem 0.7rem; font-size: 0.85rem; }
+.rst-app .rst-palette-bar button.rst-toggle { border-radius: 999px; color: var(--rst-muted); }
+.rst-app .rst-palette-bar button.rst-toggle[aria-pressed="true"] { color: var(--rst-accent-text); background: var(--rst-accent); border-color: var(--rst-accent); font-weight: 600; }
+.rst-palette-info { flex: 0 0 auto; margin: 0; padding: 0.55rem 0.9rem; min-height: 1.5em; display: flex; align-items: center; gap: 0.5rem; color: var(--rst-muted); font-size: 0.85rem; }
+.rst-palette-info code { font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--rst-text); background: none; padding: 0; }
+.rst-palette-chip { flex: 0 0 auto; width: 0.95rem; height: 0.95rem; border-radius: 3px; box-shadow: 0 0 0 1px var(--rst-border); }
+/* columns are set by fitPalette(); this is the fallback */
+.rst-palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); padding: 0 0.9rem 0.9rem; }
+.rst-swatch { position: relative; aspect-ratio: 1 / 1; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.rst-swatch:focus { outline: none; }
+.rst-swatch:focus-visible { z-index: 1; outline: 2px solid var(--rst-text); outline-offset: -2px; box-shadow: inset 0 0 0 4px var(--rst-bg); }
+.rst-swatch.is-grabbed, .rst-swatch.is-dragging { z-index: 2; box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+.rst-swatch.is-grabbed { transform: scale(1.08); }
+.rst-swatch.is-grabbed:focus-visible { box-shadow: 0 6px 18px rgba(0,0,0,.35), inset 0 0 0 4px var(--rst-bg); }
+.rst-swatch.is-dragging { pointer-events: none; cursor: grabbing; }
+
+/* ---------- narrow screens: preview first, then the controls ---------- */
+@media (max-width: 860px) {
+  .rst-app { grid-template-columns: minmax(0, 1fr); }
+  .rst-preview { order: -1; }
+  .rst-sticky { position: static; height: auto; min-height: 0; }
+  .rst-preview-host { flex: 0 0 auto; height: 70vh; min-height: 380px; }
+}
+@media (max-width: 520px) {
+  .rst-app .rst-tab { padding-left: 0.55rem; padding-right: 0.55rem; }
+  .rst-palette-bar { padding: 0.5rem 0.7rem; }
+  .rst-app .rst-palette-bar button { padding: 0.2rem 0.5rem; }
+}
