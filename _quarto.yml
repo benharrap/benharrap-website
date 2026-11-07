@@ -22,6 +22,8 @@ website:
         menu:
         - text: "Quarto Slide Themer"
           href: tools/quarto-slide-themer.qmd
+        - text: "RStudio Theme Builder"
+          href: tools/rstudio-themer.qmd
   
 format:
   html:

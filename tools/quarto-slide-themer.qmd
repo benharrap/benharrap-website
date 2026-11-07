@@ -1,14 +1,12 @@
 ---
 page-layout: full
 toc: false
-format:
-  html:
-    css: quarto-slide-themer/themer.css
-    include-after-body:
-      - text: |
-          <script src="quarto-slide-themer/theme-core.js"></script>
-          <script src="quarto-slide-themer/fonts.js"></script>
-          <script src="quarto-slide-themer/themer.js"></script>
+css: quarto-slide-themer/themer.css
+include-after-body:
+  text: |
+    <script src="quarto-slide-themer/theme-core.js"></script>
+    <script src="quarto-slide-themer/fonts.js"></script>
+    <script src="quarto-slide-themer/themer.js"></script>
 ---
 
 ```{=html}
