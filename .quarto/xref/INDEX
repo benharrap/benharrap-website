@@ -193,5 +193,8 @@
   },
   "projects/dag-compiler/index.qmd": {
     "index.html": "ea3a6e8a"
+  },
+  "post/2026-11-08-rosalie-theme/index.qmd": {
+    "index.html": "dde46cb0"
   }
 }

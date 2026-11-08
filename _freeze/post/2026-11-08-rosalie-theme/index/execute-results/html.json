@@ -1,0 +1,17 @@
+{
+  "hash": "00139a90ce3189f7468a89017e0837a7",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Art as RStudio themes\"\nauthor: \"Ben Harrap\"\ndate: \"2026-11-08\"\ncategories:\n  - code\n  - R\n  - design\nimage: rosalie-1.jpg\n---\n\nAs is becoming the norm for my RStudio theme inspirations, I was inspired by something I saw. This time, it was the works of Rosalie Gascoigne at the National Gallery of Australia.\n\nI took some quick snaps (I'm no art photographer, apologies), to use as a reference image when creating the RStudio theme.\n\n![The marriage feast (left) and Summer stack (right)](rosalie-1.jpg)\n\nMy typical approach is to pop an image into a colour picker tool ([like this](https://imagecolorpicker.com/)), using it to pick out colours I like and get their hex codes. \n\n\n::: {.cell}\n\n```{.r .cell-code}\nscales::show_col(c(\n  \"#fbe9e1\",\n  \"#6d865a\",\n  \"#c4ac94\",\n  \"#df7f6d\",\n  \"#fce4c9\",\n  \"#37746d\",\n  \"#b58f37\",\n  \"#db5d38\",\n  \"#c4ced9\",\n  \"#273b36\",\n  \"#dc9624\",\n  \"#b04633\",\n  \"#9db0b4\",\n  \"#291c16\"\n))\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\nWith these colours in hand, I set to making the theme. This time around, however, it was much easier to produce the theme now that I have an [RStudio theme builder](../../tools/rstudio-themer.qmd) (a tool I've been wanting for some time).\n\n## Rosalie\n\nSo here it is, the `rosalie` RStudio theme. Now available from my [`rsthemes`](https://github.com/benharrap/rsthemes) GitHub repo. \n\n![](code.png)\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
